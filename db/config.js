@@ -10,7 +10,7 @@ mongoose.connect('mongodb://localhost/data/db', {
 	server: {reconnectTries: Number.MAX_VALUE}
 });
 
-var db = mongoose.connection();
+var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
