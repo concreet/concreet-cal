@@ -19,6 +19,18 @@
   },
   "homepage": "https://github.com/t886515/concreet-cal#readme",
   "dependencies": {
-    "express": "^4.15.3"
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babelify": "^7.3.0",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "express": "^4.15.3",
+    "jquery": "^3.2.1",
+    "jsx": "^0.9.89",
+    "mongoose": "^4.11.5",
+    "nodemon": "^1.11.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   }
 }
