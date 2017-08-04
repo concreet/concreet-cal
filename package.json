@@ -1,0 +1,24 @@
+{
+  "name": "concreet-cal",
+  "version": "1.0.0",
+  "description": "Finds available meeting times and allows quick sending of gcal invites to attendees",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/t886515/concreet-cal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/t886515/concreet-cal/issues"
+  },
+  "homepage": "https://github.com/t886515/concreet-cal#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
