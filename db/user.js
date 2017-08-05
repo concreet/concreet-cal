@@ -1,12 +1,15 @@
 var mongoose = require('mongoose');
+var findOrCreate = require('mongoose-findorcreate')
 
 var userSchema = mongoose.Schema({
-	first_name: String,
-	last_name: String,
-	google_id: String,
-	email_address: String,
+	firstName: String,
+	lastName: String,
+	googleId: String,
+	emailAddress: String,
 	isSignedUp: {type: Boolean, default: false},
 });
+
+userSchema.plugin(findOrCreate);
 
 var User = mongoose.model('User', userSchema);
 
