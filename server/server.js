@@ -15,7 +15,6 @@ app.use(express.static(__dirname + '..'));
 // } );
 
 app.get('/bundle.js', browserify('./client/index.js', {
-<<<<<<< HEAD
   transform: [ [ require('babelify'), { presets: [ 'es2015', 'react' ] } ] ]
 }));
 

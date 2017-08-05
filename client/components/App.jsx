@@ -1,5 +1,5 @@
 import React from 'react';
-import Dashboard from './Dashboard.jsx';
+// import Dashboard from './Dashboard.jsx';
 import SplashLogin from './SplashLogin.jsx';
 import * as UserModel from '../models/user.js';
 
@@ -21,9 +21,7 @@ class App extends React.Component {
     return (
       <div className="app">
         <h1>Events Manager</h1>
-          {this.state.signedIn && <Dashboard></Dashboard>}
-          {!this.state.signedIn && <SplashLogin></SplashLogin>}
-        
+        <SplashLogin />        
       </div>
     );
   }

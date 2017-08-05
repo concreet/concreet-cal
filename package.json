@@ -33,6 +33,7 @@
     "nodemon": "^1.11.0",
     "path": "^0.12.7",
     "react": "^15.6.1",
+    "react-bootstrap": "^0.31.2",
     "react-dom": "^15.6.1"
   }
 }
