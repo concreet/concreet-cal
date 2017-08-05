@@ -1,5 +1,5 @@
 import React from 'react';
-import Dashboard from './Dashboard.jsx';
+// import Dashboard from './Dashboard.jsx';
 import SplashLogin from './SplashLogin.jsx';
 import * as UserModel from '../models/user.js';
 
@@ -24,6 +24,9 @@ class App extends React.Component {
           {this.state.signedIn && <Dashboard/>}
           
         
+
+
+
       </div>
     );
   }

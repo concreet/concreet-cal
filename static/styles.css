@@ -1,0 +1,44 @@
+body {
+    margin: 0px;
+}
+
+.splash {
+    background-color: rgba(44, 62, 80,1.0);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-align: center;
+    color: white;
+    height: 100vh;
+}
+
+.logoImage {
+    margin: 20px 0px 0px 0px;
+    max-width: 150px;
+    max-height: 150px;
+}
+
+.appName {
+    margin-bottom: 0px;
+}
+.tagline {
+    margin-top: 0px;
+}
+
+.meetingImage {
+    max-width: 25%;
+    margin: 0px;
+    padding: 0px;
+    display: inline-block;
+    float: left;
+}
+
+.signinButton {
+    background-color: white; /* Green */
+    border: none;
+    color: rgba(107, 107, 107,1.0);
+    padding: 12px 30px;
+    margin: 0px 0px 20px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}

@@ -19,6 +19,8 @@ app.get('/bundle.js', browserify('./client/index.js', {
   transform: [ [ require('babelify'), { presets: [ 'es2015', 'react' ] } ] ]
 }));
 
+
+
 app.get('/', (req, res) => {
 	//res.sendFile('/Users/BChilds/Desktop/concreet-cal/index.html');
 	res.sendFile(path.join(__dirname, '../', 'index.html'));
