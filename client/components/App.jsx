@@ -20,7 +20,6 @@ class App extends React.Component {
     //can do if statement here to decide on rendering the splashlogin or the dashboard
     return (
       <div className="app">
-        <h1>Events Manager</h1>
         <SplashLogin />        
       </div>
     );
