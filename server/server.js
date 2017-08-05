@@ -5,6 +5,8 @@ var express = require('express');
 var bodyparser = require('body-parser');
 var handler = require('./responseHandler.js');
 var path = require('path');
+var passport = require('./passport.js')
+var browserify = require('browserify');
 
 var app = express();
 app.use(express.static(__dirname + '..'));
@@ -12,6 +14,10 @@ app.use(express.static(__dirname + '..'));
 // app.get( (req, res) => {
 // 	res.sendFile(__dirname )
 // } );
+
+// app.get('/bundle.js', browserify('./client/index.js', {
+//   transform: [ [ require('babelify'), { presets: ['es2015', 'react'] } ] ]
+// }));
 
 app.get('/', (req, res) => {
 	//res.sendFile('/Users/BChilds/Desktop/concreet-cal/index.html');

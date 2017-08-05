@@ -9,27 +9,30 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/t886515/concreet-cal.git"
+    "url": "git+https://github.com/concreet/concreet-cal.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/t886515/concreet-cal/issues"
+    "url": "https://github.com/concreet/concreet-cal/issues"
   },
-  "homepage": "https://github.com/t886515/concreet-cal#readme",
+  "homepage": "https://github.com/concreet/concreet-cal#readme",
   "dependencies": {
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babelify": "^7.3.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
+    "browserify": "^14.4.0",
     "cors": "^2.8.4",
     "express": "^4.15.3",
     "jquery": "^3.2.1",
     "jsx": "^0.9.89",
     "mongoose": "^4.11.5",
     "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
+    "passport-google-oauth": "^1.0.0",
     "path": "^0.12.7",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
