@@ -7,7 +7,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      signedIn: false,
+      signedIn: true,
 
     }
   }
@@ -21,8 +21,8 @@ class App extends React.Component {
     return (
       <div className="app">
         <h1>Events Manager</h1>
-          {this.state.signedIn && <Dashboard></Dashboard>}
-          {!this.state.signedIn && <SplashLogin></SplashLogin>}
+          {this.state.signedIn && <Dashboard/>}
+          
         
       </div>
     );
@@ -31,5 +31,5 @@ class App extends React.Component {
 
 export default App;
 
-// {this.state.signedIn && <Dashboard></Dashboard>}
-//         {!this.state.signedIn && <SplashLogin></SplashLogin>}
+
+// {!this.state.signedIn && <SplashLogin></SplashLogin>}
