@@ -14,11 +14,13 @@ class SplashLogin extends React.Component {
 	}
 
 	render() {
-		<div className="splash">
-			<h1 className="appName">Concreet</h1>
-			<h4 className="tagline">Never miss a meeting again</h4>
-			<a onClick={this.handleLogin.bind(this)}>Sign in with google</a>
-		</div>
+		return (
+			<div className="splash">
+				<h1 className="appName">Concreet</h1>
+				<h4 className="tagline">Never miss a meeting again</h4>
+				<a onClick={this.handleLogin.bind(this)}>Sign in with google</a>
+			</div>
+		)
 	}
 }
 
