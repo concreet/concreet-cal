@@ -6,7 +6,7 @@ var bodyparser = require('body-parser');
 var handler = require('./responseHandler.js');
 var path = require('path');
 var passport = require('./passport.js')
-var browserify = require('browserify');
+var browserify = require('browserify-middleware');
 
 var app = express();
 app.use(express.static(__dirname + '..'));
@@ -15,15 +15,16 @@ app.use(express.static(__dirname + '..'));
 // 	res.sendFile(__dirname )
 // } );
 
-// app.get('/bundle.js', browserify('./client/index.js', {
-//   transform: [ [ require('babelify'), { presets: ['es2015', 'react'] } ] ]
-// }));
+app.get('/bundle.js', browserify('./client/index.js', {
+  transform: [ [ require('babelify'), { presets: [ 'es2015', 'react' ] } ] ]
+}));
 
 app.get('/', (req, res) => {
 	//res.sendFile('/Users/BChilds/Desktop/concreet-cal/index.html');
 	res.sendFile(path.join(__dirname, '../', 'index.html'));
 
 }  );
+
 
 var port = process.env.PORT || 8000;
 
