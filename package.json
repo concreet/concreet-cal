@@ -24,6 +24,7 @@
     "babelify": "^7.3.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
+    "browserify-middleware": "^7.1.0",
     "cors": "^2.8.4",
     "express": "^4.15.3",
     "jquery": "^3.2.1",
