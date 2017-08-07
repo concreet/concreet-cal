@@ -1,6 +1,6 @@
 import React from 'react';
 import SidePanel from './SidePanel.jsx';
-import BigCal from './BigCal.jsx';
+import BigCalBasic from './BigCalBasic.jsx';
 import AddEvent from './AddEvent.jsx';
 
 class Dashboard extends React.Component {
@@ -16,8 +16,8 @@ class Dashboard extends React.Component {
     return (
       <div className="dashboard">
         Proof of dashboard
-        <BigCal/>
         <SidePanel/>
+        <BigCalBasic/>
         <AddEvent/>
       </div>
 
