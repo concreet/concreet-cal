@@ -9,7 +9,7 @@ var passport = require('./passport.js')
 var browserify = require('browserify-middleware');
 
 var app = express();
-app.use(express.static(__dirname + '../static'));
+app.use(express.static('static'));
 // serve static files
 // app.get( (req, res) => {
 // 	res.sendFile(__dirname )
