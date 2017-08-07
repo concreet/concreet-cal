@@ -30,6 +30,7 @@
     "express-session": "^1.15.5",
     "jquery": "^3.2.1",
     "jsx": "^0.9.89",
+    "moment": "^2.18.1",
     "mongoose": "^4.11.5",
     "mongoose-findorcreate": "^2.0.0",
     "nodemon": "^1.11.0",
@@ -37,6 +38,7 @@
     "passport-google-oauth": "^1.0.0",
     "path": "^0.12.7",
     "react": "^15.6.1",
+    "react-big-calendar": "^0.14.4",
     "react-bootstrap": "^0.31.2",
     "react-dom": "^15.6.1"
   }
