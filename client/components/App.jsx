@@ -7,7 +7,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      signedIn: true,
+      signedIn: false,
 
     }
   }
@@ -22,8 +22,8 @@ class App extends React.Component {
     //can do if statement here to decide on rendering the splashlogin or the dashboard
     return (
       <div className="app">
-        <h1>Events Manager</h1>
-          {this.state.signedIn && <Dashboard/>}
+        {this.state.signedIn && <Dashboard/>}
+        {!this.state.signedIn && <SplashLogin/>}
       </div>
     );
   }

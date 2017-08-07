@@ -18,26 +18,23 @@ class SplashLogin extends React.Component {
 		return (
 			<div className="splash">
 				<div className="logo">
-					<img className="logoImage" src={"/static/images/logo.png"} />
+					<img className="logoImage" src={"/images/logo.png"} />
 				</div>
 				<h1 className="appName">Concreet</h1>
 				<h4 className="tagline">Never miss a meeting again</h4>
 				<a href="/auth/google"><button className="signinButton">Sign in with Google</button></a>
 				<div>
-					<img className="meetingImage" src={"/static/images/meeting1.jpg"} />
+					<img className="meetingImage" src={"/images/meeting1.jpg"} />
 				</div>
 				<div>
-					<img className="meetingImage" src={"/static/images/meeting2.jpeg"} />
+					<img className="meetingImage" src={"/images/meeting2.jpeg"} />
 				</div>
 				<div>
-					<img className="meetingImage" src={"/static/images/meeting3.jpg"} />
+					<img className="meetingImage" src={"/images/meeting3.jpg"} />
 				</div>
 				<div>
-					<img className="meetingImage" src={"/static/images/meeting4.jpg"} />
+					<img className="meetingImage" src={"/images/meeting4.jpg"} />
 				</div>
-				<h1 className="appName">Concreet</h1>
-				<h4 className="tagline">Never miss a meeting again</h4>
-				<a onClick={this.handleLogin.bind(this)}>Sign in with google</a>
 			</div>
 		)
 	}
