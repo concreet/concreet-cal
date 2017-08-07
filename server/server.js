@@ -7,15 +7,17 @@ var handler = require('./responseHandler.js');
 var path = require('path');
 var passport = require('./passport.js')
 var browserify = require('browserify-middleware');
-
+var cors = require('cors');
 var app = express();
-app.use(express.static('static'));
-// serve static files
-// app.get( (req, res) => {
-// 	res.sendFile(__dirname )
-// } );
+var session = require('express-session');
 
+app.use(express.static('static'));
+
+app.use(cors());
 app.use(bodyparser.json());
+app.use(session({
+	secret: 'mrspancakes',
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -31,19 +33,20 @@ app.get('/', (req, res) => {
 });
 
 app.get('/auth/google', 
-	passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/plus.login'] })
+	passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/plus.login', 'email'] })
 );
 
 app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/' }),
   function(req, res) {
-  	//console.log('no auth');
-    res.redirect('/dash');
+  	//user data
+  	//req._passport.session.user;
+  	res.status(200).send(req.session);
   }
 );
 
-app.get('/dash', (req, res) => {
-	console.log('dash');
+app.get('/session', (req,res) => {
+	res.status(200).send(req.session);
 });
 
 var port = process.env.PORT || 8000;
