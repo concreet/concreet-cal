@@ -40,7 +40,6 @@ app.get('/auth/google/callback',
   function(req, res) {
   	//user data
   	//req._passport.session.user;
-  	console.log(req.session);
   	res.redirect('/');
   }
 );
