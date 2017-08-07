@@ -27,6 +27,7 @@
     "browserify-middleware": "^7.1.0",
     "cors": "^2.8.4",
     "express": "^4.15.3",
+    "express-session": "^1.15.5",
     "jquery": "^3.2.1",
     "jsx": "^0.9.89",
     "mongoose": "^4.11.5",
