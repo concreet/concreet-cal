@@ -19,11 +19,16 @@ passport.use(new GoogleStrategy({
 
 	function(token, tokenSecret, profile, done) {
 	 process.nextTick( () => {
-      return done(null, profile);
+	 		var auth = {
+	 			token: token,
+	 			profile: profile,
+	 		};
+
+      return done(null, auth);
     });
       // console.log('hello, steve');
       // User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      //   return done(err, user);
+      //   return done(err, profile);
       // });
   }
 ));

@@ -28,7 +28,6 @@ app.get('/bundle.js', browserify('./client/index.js', {
 }));
 
 app.get('/', (req, res) => {
-	//res.sendFile('/Users/BChilds/Desktop/concreet-cal/index.html');
 	res.sendFile(path.join(__dirname, '../static/', 'index.html'));
 });
 
@@ -41,7 +40,8 @@ app.get('/auth/google/callback',
   function(req, res) {
   	//user data
   	//req._passport.session.user;
-  	res.status(200).send(req.session);
+  	console.log(req.session);
+  	res.redirect('/');
   }
 );
 
