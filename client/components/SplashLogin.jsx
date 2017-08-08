@@ -27,7 +27,7 @@ class SplashLogin extends React.Component {
 					<img className="meetingImage" src={"/images/meeting1.jpg"} />
 				</div>
 				<div>
-					<img className="meetingImage" src={"/images/meeting2.jpeg"} />
+					<img className="meetingImage" src={"/images/meeting2.jpg"} />
 				</div>
 				<div>
 					<img className="meetingImage" src={"/images/meeting3.jpg"} />
