@@ -19,8 +19,17 @@ class BigCalBasic extends React.Component{
   }
 
   componentWillMount() {
-    CalendarModel.getCalendarList(this.props.user.token, (token, items) => {CalendarModel.getCalendarEvents(token, items, (events) => console.log(events) )});
-    //functions in here will be invoked when App initiate
+    // callback hell to load events into calendar
+    CalendarModel.getCalendarList(this.props.user.token, (token, items) => {
+      CalendarModel.getCalendarEvents(token, items, (eventsList) => {
+        CalendarModel.proccessEvents(eventsList, (processedEvents) => {
+          this.setState({
+            events: processedEvents,
+          })
+          console.log('processedEvents', processedEvents);
+        })
+      })
+    });
 
   }
   render(){
