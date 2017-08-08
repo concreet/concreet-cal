@@ -38,7 +38,7 @@ class BigCalBasic extends React.Component{
         events={this.state.events}
         views={allViews}
         titleAccessor='summary'
-        defaultDate={new Date(2015, 3, 1)}
+        defaultDate={new Date()}
       />
     )
   }
