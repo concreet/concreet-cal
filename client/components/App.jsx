@@ -20,6 +20,7 @@ class App extends React.Component {
       url: '/session',
       contentType: 'application/json',
       success: (data) => {
+        console.log(data, "IS THIS HERE?")
         if (data.passport) {
           this.setState({
             signedIn: true,
