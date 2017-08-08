@@ -1,9 +1,10 @@
 import React from 'react';
 
-class GroupPanelEntry extends React.Component {
+class ContactEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+
 
     }
     //binding functions here
@@ -11,13 +12,12 @@ class GroupPanelEntry extends React.Component {
 
   render() {
     return (
-      <div className="grouppanelentry">
-        Proof of group panel entry
-        <ContactEntry />
+      <div className="contactentry">
+        Proof of Contact Entry 
       </div>
 
     );
   }
 }
 
-export default GroupPanelEntry;
+export default ContactEntry;

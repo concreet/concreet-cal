@@ -14,8 +14,8 @@ class SidePanel extends React.Component {
     return (
       <div className="sidepanel">
         Proof of side panel
-        <GroupPanel/>
-        <GroupPanel/>
+        <ContactEntry />
+        <GroupPanel />
       </div>
 
     );
