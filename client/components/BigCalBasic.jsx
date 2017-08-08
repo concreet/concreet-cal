@@ -20,7 +20,7 @@ class BigCalBasic extends React.Component{
   }
 
   componentWillMount() {
-    CalendarModel.getCalendarList(this.props.user.token, (items) => {console.log(items)});
+    CalendarModel.getCalendarList(this.props.user.token, (token, items) => {CalendarModel.getCalendarEvents(token, items, (events) => console.log(events) )});
     //functions in here will be invoked when App initiate
 
   }
