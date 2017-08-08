@@ -17,7 +17,7 @@ class Dashboard extends React.Component {
       <div className="dashboard">
         Proof of dashboard
         <SidePanel/>
-        <BigCalBasic/>
+        <BigCalBasic user={this.props.user}/>
         <AddEvent/>
       </div>
 

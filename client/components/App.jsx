@@ -9,7 +9,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       signedIn: false,
-
+      user: {}
     }
   }
 
@@ -22,7 +22,8 @@ class App extends React.Component {
       success: (data) => {
         if (data.passport) {
           this.setState({
-            signedIn: true
+            signedIn: true,
+            user: data.passport.user
           })
         }
       }
@@ -35,7 +36,7 @@ class App extends React.Component {
     //can do if statement here to decide on rendering the splashlogin or the dashboard
     return (
       <div className="app">
-        {this.state.signedIn && <Dashboard/>}
+        {this.state.signedIn && <Dashboard user={this.state.user} />}
         {!this.state.signedIn && <SplashLogin/>}
       </div>
     );
