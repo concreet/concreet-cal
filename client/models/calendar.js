@@ -26,7 +26,7 @@ export const getCalendarEvents = function (token, calendarList, cb) {
         Authorization: `Bearer ${token}`
       },
       success: (data) => {
-        cb(data)
+        cb(data.items)
         // console.log('get cal list', data);
       },
       error: (err) => {
@@ -34,4 +34,12 @@ export const getCalendarEvents = function (token, calendarList, cb) {
       }
     })
   }
+}
+
+export const processEvents = function (eventsList, cb) {
+  for (var event of eventsList) {
+    event.end = new Date (event.end.dateTime);
+    event.start = new Date (event.start.dateTime);
+  }
+  cb(eventsList);
 }
