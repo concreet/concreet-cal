@@ -2,7 +2,7 @@ import React from 'react';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import * as CalendarModel from '../models/calendar.js';
-// import events from './events'; old dummy data
+import events from './events';
 
 let allViews = Object.keys(BigCalendar.views).map(k => BigCalendar.views[k])
 
@@ -14,7 +14,7 @@ class BigCalBasic extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      events: []
+      events: events
     }
   }
 

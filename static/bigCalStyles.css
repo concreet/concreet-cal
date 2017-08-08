@@ -22,9 +22,9 @@ button.rbc-input::-moz-focus-inner {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
-      flex-direction: column;
+  flex-direction: column;
   -ms-flex-align: stretch;
-      align-items: stretch;
+  align-items: stretch;
 }
 .rbc-calendar *,
 .rbc-calendar *:before,
@@ -75,9 +75,9 @@ button.rbc-input::-moz-focus-inner {
 .rbc-row-content {
   position: relative;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   z-index: 4;
 }
 .rbc-today {
@@ -230,14 +230,15 @@ button.rbc-input::-moz-focus-inner {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
-      flex-direction: column;
+  flex-direction: column;
   -ms-flex: 1 0 0px;
-      flex: 1 0 0;
+  /* flex: 1 0 0; */
+  /* height: 100px; */
   width: 100%;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   height: 100%;
 }
 .rbc-month-view .rbc-header {
@@ -261,9 +262,9 @@ button.rbc-input::-moz-focus-inner {
   display: flex;
   position: relative;
   -ms-flex-direction: column;
-      flex-direction: column;
+  flex-direction: column;
   -ms-flex: 1 0 0px;
-      flex: 1 0 0;
+  /* flex: 1 0 0; */
   overflow: hidden;
   height: 100%;
 }
@@ -287,9 +288,9 @@ button.rbc-input::-moz-focus-inner {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: row;
-      flex-direction: row;
+  flex-direction: row;
   -ms-flex: 1 0 0px;
-      flex: 1 0 0;
+  /* flex: 1 0 0; */
   overflow: hidden;
 }
 .rbc-day-bg + .rbc-day-bg {
