@@ -48,9 +48,9 @@ app.get('/session', (req,res) => {
 	res.status(200).send(req.session);
 });
 
-//app.get('/addUser', handler.createUser);
+app.get('/users/user/email', handler.addOrFindUser);
 
-//app.post('/createGroup', handler.createGroup);
+app.post('/createGroup', handler.createGroup);
 
 //add /:id
 //app.get('/getGroups, handler.getGroups');

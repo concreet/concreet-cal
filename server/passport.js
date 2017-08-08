@@ -27,7 +27,11 @@ passport.use(new GoogleStrategy({
 	 			profile: profile,
 	 		};
       User.findOrCreate({ googleId: profile.id }, {isSignedUp: true}, function (err, user) {
-      	console.log('user created or found');
+      	if(user.created) {
+      		console.log('user created');
+      	} else {
+      		console.log('user found');
+      	}
       	//return actual user record
       	auth.user = user;
       	//find contact list too
