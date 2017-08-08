@@ -14,7 +14,7 @@ class BigCalBasic extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-
+      events: events
     }
   }
 
@@ -22,7 +22,7 @@ class BigCalBasic extends React.Component{
     // callback hell to load events into calendar
     CalendarModel.getCalendarList(this.props.user.token, (token, items) => {
       CalendarModel.getCalendarEvents(token, items, (eventsList) => {
-        CalendarModel.proccessEvents(eventsList, (processedEvents) => {
+        CalendarModel.processEvents(eventsList, (processedEvents) => {
           this.setState({
             events: processedEvents,
           })
@@ -30,14 +30,14 @@ class BigCalBasic extends React.Component{
         })
       })
     });
-
   }
   render(){
     return (
       <BigCalendar
         {...this.props}
-        events={events}
+        events={this.state.events}
         views={allViews}
+        titleAccessor='summary'
         defaultDate={new Date(2015, 3, 1)}
       />
     )
