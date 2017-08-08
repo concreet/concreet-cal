@@ -1,4 +1,5 @@
 import React from 'react';
+import ContactEntry from './ContactEntry.jsx';
 
 class GroupPanelEntry extends React.Component {
   constructor(props) {

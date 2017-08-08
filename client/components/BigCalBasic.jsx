@@ -26,7 +26,7 @@ class BigCalBasic extends React.Component{
           this.setState({
             events: processedEvents,
           })
-          console.log('processedEvents', processedEvents);
+          // console.log('processedEvents', processedEvents);
         })
       })
     });

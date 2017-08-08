@@ -10,10 +10,21 @@ class ContactEntry extends React.Component {
     //binding functions here
   }
 
+  handleOnClick(){
+    this.props.selectContact(this.props.contact);
+  }
+    
   render() {
+
+
     return (
       <div className="contactentry">
-        Proof of Contact Entry 
+       { this.props.contact && 
+        <div onClick={this.handleOnClick.bind(this)}>
+        <p>First Name: {this.props.contact.firstName} </p>
+        <p>Last Name: {this.props.contact.lastName} </p>
+        </div>
+       }
       </div>
 
     );
