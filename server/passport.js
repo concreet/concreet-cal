@@ -22,27 +22,58 @@ passport.use(new GoogleStrategy({
 	function(token, tokenSecret, profile, done) {
 	 process.nextTick( () => {
 	 	//return token and google profile
-	 		var auth = {
-	 			token: token,
-	 			profile: profile,
-	 		};
-      User.findOrCreate({ googleId: profile.id }, {isSignedUp: true}, function (err, user) {
-      	console.log('user created or found');
+ 		var auth = {
+ 			token: token,
+ 			profile: profile,
+ 		};
+ 		//find on email address. If doesn't exist at all, create
+    User.findOrCreate({ emailAddress: profile.emails[0].value }, 
+    	{ 
+    		isSignedUp: true, 
+    		googleId: profile.id,
+    	})
+    	.then ( (user) => {
+      	if(user.created) {
+      		console.log('user created');
+      		return user.doc;
+      	} else {
+      		console.log('user found');
+      		//check to see if data updated
+      		if(!user.doc.isSignedUp){
+      			user.doc.isSignedUp = true;
+      			user.doc.googleId = profile.id;
+      			return user.doc.save(function (err, user) {
+  						if (err) return console.error(err);
+  						console.log('user saved');
+  						return user;
+      			});
+      		} else {
+      			return user.doc;
+      		}
+    		}
+    	})
+      .then((user) => {
       	//return actual user record
       	auth.user = user;
-      	//find contact list too
-      	Group.findOrCreate({owner_id: user._id, isContactList: true}, {group_name: 'Contact List', isContactList: true})
-      	.then((contactList) => {
-      		//return user's contact list
-      		auth.contactList = contactList;
-      	})
-      	.then( Group.find({owner_id: user._id, isContactList: false}) )
-      	.then( (groups) => {
-      		//return user's Groups
-      		auth.groups = groups;
-	      	return done(null, auth);
-      	});
-      });
+      	return user;
+      })
+    	.then( (user) => {
+    		return Group.findOrCreate({owner_id: user._id, isContactList: true}, {group_name: 'Contact List', isContactList: true})
+    	})
+    	//find contact list too
+    	.then((contactList) => {
+    		//return user's contact list
+    		auth.contactList = contactList;
+    		return;
+    	})
+    	.then( () => {
+    		return Group.find({owner_id: auth.user._id, isContactList: false}); 
+    	})
+    	.then( (groups) => {
+    		//return user's Groups
+    		auth.groups = groups;
+      	return done(null, auth);
+    	});
     });
   }
 ));
