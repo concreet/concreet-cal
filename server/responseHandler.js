@@ -32,10 +32,11 @@ exports.createGroup = (req, res) => {
 //if that user is created, it is created with isVerified = false
 exports.addOrFindUser = (req, res) => {
 	//INPUTS
-	//req.body = { emailAddress: ~ }
-	// User.findOrCreate( { emailAddress: req.body.emailAddress } )
-	// .then( (user) => {
-		res.status(200).send(req);
-	// } );
+	//req.params.email
+	console.log(req.params.email)
+	User.findOrCreate( { emailAddress: req.params.email } )
+	.then( (user) => {
+		res.status(200).send(user.doc);
+	} );
 };
 
