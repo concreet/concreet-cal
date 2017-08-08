@@ -48,6 +48,17 @@ app.get('/session', (req,res) => {
 	res.status(200).send(req.session);
 });
 
+//app.get('/addUser', handler.createUser);
+
+//app.post('/createGroup', handler.createGroup);
+
+//add /:id
+//app.get('/getGroups, handler.getGroups');
+
+//add /:id
+//app.get('/updateGroups', handler.updateGroups);
+
+
 var port = process.env.PORT || 8000;
 
 app.listen(port, () => {

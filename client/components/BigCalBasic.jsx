@@ -1,7 +1,6 @@
 import React from 'react';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
-
 import * as CalendarModel from '../models/calendar.js';
 import events from './events';
 
@@ -24,7 +23,6 @@ class BigCalBasic extends React.Component{
     //functions in here will be invoked when App initiate
 
   }
-
   render(){
     return (
       <BigCalendar
@@ -36,5 +34,6 @@ class BigCalBasic extends React.Component{
     )
   }
 }
+
 
 export default BigCalBasic;

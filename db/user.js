@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var findOrCreate = require('mongoose-findorcreate')
+var findOrCreate = require('mongoose-findorcreate');
 
 var userSchema = mongoose.Schema({
 	firstName: String,
@@ -10,6 +10,9 @@ var userSchema = mongoose.Schema({
 });
 
 userSchema.plugin(findOrCreate);
+
+
+
 
 var User = mongoose.model('User', userSchema);
 
