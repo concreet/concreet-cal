@@ -12,14 +12,18 @@ export const getCalendarList = (token, callback) => {
 
   $.get('https://www.googleapis.com/calendar/v3/users/me/calendarList', searchParams, (data) => {
     // data is an object with an items property that contains an array of calendar data
-    callback(data.items);
+    callback(token, data.items);
   }).fail((err) => {
     console.log(err);
   })
 };
 
-export const getCalendarEvents = function (token, calendarList, cb) {
+export const getCalendarEvents = function (token, calendarList, callback) {
   for (var calendar of calendarList) {
+
+    // replace any pound sign with its escape character. Pound sign interferes with URL search
+    calendar.id = calendar.id.replace('#', '%23')
+
     var oneWeekAgo = moment().subtract(1, 'weeks').format("YYYY-MM-DDTHH:mm:ssZ");
     var oneWeekFromNow = moment().add(1, 'weeks').format("YYYY-MM-DDTHH:mm:ssZ");
 
@@ -27,7 +31,7 @@ export const getCalendarEvents = function (token, calendarList, cb) {
     // give it a time range from one week ago to one week from now.
     // order by start time(ascending). Earliest event will be 0th element in items array
     var searchParams = {
-      access_token: calendarInfo.token, 
+      access_token: token, 
       singleEvents: true, 
       timeMin: oneWeekAgo, 
       timeMax: oneWeekFromNow, 
@@ -41,12 +45,12 @@ export const getCalendarEvents = function (token, calendarList, cb) {
   }
 }
 
-export const processEvents = function (eventsList, cb) {
+export const processEvents = function (eventsList, callback) {
   for (var event of eventsList) {
     event.end = new Date (event.end.dateTime);
     event.start = new Date (event.start.dateTime);
   }
-  cb(eventsList);
+  callback(eventsList);
 }
 
 export const getEventData = (eventInfo, callback) => {
