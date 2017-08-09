@@ -25,8 +25,8 @@ export const getCalendarEvents = function (token, calendarList, callback) {
     // replace any pound sign with its escape character. Pound sign interferes with URL search
     calendar.id = calendar.id.replace('#', '%23')
 
-    var oneWeekAgo = moment().subtract(1, 'weeks').format("YYYY-MM-DDTHH:mm:ssZ");
-    var oneWeekFromNow = moment().add(1, 'weeks').format("YYYY-MM-DDTHH:mm:ssZ");
+    var twoWeeksAgo = moment().subtract(2, 'weeks').format("YYYY-MM-DDTHH:mm:ssZ");
+    var twoWeeksFromNow = moment().add(2, 'weeks').format("YYYY-MM-DDTHH:mm:ssZ");
 
     // params inclue user token, single events to true to avoid returning all recurring events
     // give it a time range from one week ago to one week from now.
@@ -34,8 +34,8 @@ export const getCalendarEvents = function (token, calendarList, callback) {
     var searchParams = {
       access_token: token, 
       singleEvents: true, 
-      timeMin: oneWeekAgo, 
-      timeMax: oneWeekFromNow, 
+      timeMin: twoWeeksAgo, 
+      timeMax: twoWeeksFromNow, 
       orderBy: 'startTime'
     };
 
@@ -71,20 +71,16 @@ export const getEventData = (eventInfo, callback) => {
 export const freeBusy = (queryInfo, callback) => {
   // queryInfo contains token, timeMin, timeMax, and calendar ids
 
+  var calendars = queryInfo.items.map( (calendar) => {
+    return {id: calendar.id}
+  });
+
   // dummy data
   var requestBody = {
-    "items": [
-      {
-        "id": "jordan.n.hoang@gmail.com"
-      },
-      {
-        "id": "hackreactor.com_9kddcjfdij7ak91o0t2bdlpnoo@group.calendar.google.com"
-      }
-    ],
-    "timeMin": "2017-08-01T17:06:02.000Z",
-    "timeMax": "2017-08-09T17:06:02.000Z",
+    "items": calendars,
+    "timeMin": "2017-08-14T05:00:00Z",
+    "timeMax": "2017-08-15T05:00:00Z",
   }
-  //
   
   $.ajax({
     type: "POST",
@@ -97,7 +93,117 @@ export const freeBusy = (queryInfo, callback) => {
       // data returns an object with calendars property 
       // calendars property returns all calendars searched for
       // each calendar has a busy property with array of busy times
-      callback(data);
+
+      // give callback the calendars and their busy property
+      callback(data.calendars);
     }
   })
+};
+
+export const accessControl = (token, calendarId, callback) => {
+
+  var requestBody = {
+    "kind": "calendar#aclRule",
+    "role": "freeBusyReader",
+    "scope": {
+      "value": "jordan.n.hoang@gmail.com",
+      "type": "user"
+    }
+  };
+
+  $.ajax({
+    type: "POST",
+    url: `https://www.googleapis.com/calendar/v3/calendars/jordan.n.hoang@utexas.edu/acl`,
+    headers: {Authorization: `Bearer ${token}`},
+    data: JSON.stringify(requestBody),
+    contentType: 'application/json',
+    dataType: 'json',
+    success: (data) => {
+      callback(data)
+    }
+
+  });
+}
+
+export const findAvailableSlots = (meetingLength, calendars) => {
+  // meetingLength should be in minutes
+  // calendars is the result of a freeBusy query which is
+  // a calendars object with each key being a unique email address
+  // each property has a value that is an object with a busy property
+  // value of busy property is an array of objects that include start and end property of busy times
+
+  var busyTimes = []
+  for (var calendar in calendars) {
+    for (var busyTime of calendars[calendar].busy) {
+      busyTimes.push({start: new Date(busyTime.start).toTimeString().split(' ')[0], end: new Date(busyTime.end).toTimeString().split(' ')[0]})
+    }
+  }
+
+  var settings = {
+      timeSlotGap: 30,
+      // no meeting earlier than 8:00
+      minTime: moment("080000", "HHmmss", true).format("HH:mm:ss"),
+      // last meeting should end at 18:00
+      // subtract meeting length from 18:00 so that last meeting time slot wont go past 18:00
+      maxTime: moment("180000", "HHmmss", true).subtract(meetingLength, 'minutes').format("HH:mm:ss")
+  };
+
+  var getTimeDate = (time) => {
+      var timeParts = time.split(':');
+      var d = new Date();
+      d.setHours(timeParts[0]);
+      d.setMinutes(timeParts[1]);
+      d.setSeconds(timeParts[2]);
+      return d;
+  }
+
+  var getTimeSlots = (startDate, endDate, interval) => {
+      var slots = [];
+
+      var intervalMillis = interval * 60 * 1000;
+
+      while (startDate <= endDate) {
+          // So that you get "00" if we're on the hour.
+          var mins = (startDate.getMinutes() + '0').slice(0, 2);
+          var secs = (startDate.getSeconds() + '0').slice(0,2);
+          // if hours is single digit, add the leading 0 so that time comparisons will work
+          if (startDate.getHours() < 10) {
+            slots.push('0' + startDate.getHours() + ':' + mins + ':' + secs);  
+          } else {
+            slots.push(startDate.getHours() + ':' + mins + ':' + secs); 
+          }
+          startDate.setTime(startDate.getTime() + intervalMillis);
+      }
+      
+      return slots;
+  }
+
+  var slots = getTimeSlots(getTimeDate(settings.minTime), getTimeDate(settings.maxTime), settings.timeSlotGap);
+
+  var getOpenSlots = (busyTimes, allSlots) => {
+
+    var openSlots = allSlots.slice();
+
+    for (var busySlot of busyTimes) {
+      var i = openSlots.length;
+      // iterate backwards to not interfere with indexes and splicing
+      while (i--) {
+        var currentSlot = moment(openSlots[i].split(':').join(''), "HHmmss", true);
+        var overlapTime = currentSlot.add(meetingLength, 'minutes').format('HH:mm:ss')
+
+        // checks if slot is within a busy slot
+        if (openSlots[i] >= busySlot.start && openSlots[i] < busySlot.end) {
+          openSlots.splice(i, 1)
+        // checks if a meeting during a free slot will overlap with the next busy slot
+        // ex: free at 13:30 but an hour meeting would overlap with a 14:00 busy time
+        } else if (overlapTime > busySlot.start && overlapTime <= busySlot.end) {
+          openSlots.splice(i, 1)
+        }
+      }
+    }
+
+    return openSlots;
+  };
+  // return an array of start times for available slots
+  return getOpenSlots(busyTimes, slots)
 };
