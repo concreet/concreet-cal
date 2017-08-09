@@ -40,6 +40,8 @@
     "react": "^15.6.1",
     "react-big-calendar": "^0.14.4",
     "react-bootstrap": "^0.31.2",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "react-modal": "^2.2.2",
+    "rodal": "^1.2.10"
   }
 }
