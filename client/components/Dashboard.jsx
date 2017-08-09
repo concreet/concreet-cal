@@ -33,11 +33,17 @@ class Dashboard extends React.Component {
 
 
 
-  // componentDidMount() {
-  //   //make ajax calls to server to retrieve all these data from database
-  //   //make use of props.
-  //   //console.log(this.state.allContacts[0].contacts)
-  // }
+  componentDidMount() {
+    window.getGroup(this.props.user.user._id, (data)=>{
+      console.log(data, 'did this ever run?');
+      this.setState({
+        allGroups: data
+      })
+    })
+    //make ajax calls to server to retrieve all these data from database
+    //make use of props.
+    //console.log(this.state.allContacts[0].contacts)
+  }
 
   handleSelectedGroup(group) {
     console.log(this.state.selectedGroup, 'the GROUP before ');
@@ -89,7 +95,11 @@ class Dashboard extends React.Component {
   }
 
   handleAddGroup(groupname) {
-    console.log('check if add group proc', groupname)
+    window.addGroup(groupname, this.props.user.user,(sucess)=> {
+      console.log(sucess, 'whatsthis')
+      console.log('successfully added');
+    })
+    //console.log('check if add group proc', groupname)
     //will do a post request to the database to add a new group
     //then do a get request to reset state of all groups
     // this.setState({
@@ -99,6 +109,7 @@ class Dashboard extends React.Component {
 
   handleAddContact(gmail) {
     console.log('check if add contact proc', gmail)
+    //window.addContactToGroup()
     //will do a post request to the databse to add a new contact
     //then do a get request to set contacts
     // this.setState({

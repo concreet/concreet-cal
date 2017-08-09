@@ -15,20 +15,30 @@ class App extends React.Component {
 
   componentWillMount() {
     //functions in here will be invoked when App initiate
-    $.ajax({
-      type: "GET",
-      url: '/session',
-      contentType: 'application/json',
-      success: (data) => {
-        console.log(data, "IS THIS HERE?")
-        if (data.passport) {
-          this.setState({
-            signedIn: true,
-            user: data.passport.user
-          })
-        }
+
+    window.getUser((data) => {
+      if (data.passport) {
+        console.log(data.passport.user, 'HERE?');
+        this.setState({
+          signedIn: true,
+          user: data.passport.user
+        })
       }
     })
+    // $.ajax({
+    //   type: "GET",
+    //   url: '/session',
+    //   contentType: 'application/json',
+    //   success: (data) => {
+    //     console.log(data, "IS THIS HERE?")
+    //     if (data.passport) {
+    //       this.setState({
+    //         signedIn: true,
+    //         user: data.passport.user
+    //       })
+    //     }
+    //   }
+    // })
   }
           // {this.state.signedIn && <Dashboard></Dashboard>}
           // {!this.state.signedIn && <SplashLogin></SplashLogin>}
