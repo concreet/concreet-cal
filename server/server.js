@@ -52,11 +52,12 @@ app.get('/users/user/:email', handler.addOrFindUser);
 
 app.post('/groups/create', handler.createGroup);
 
-//add /:id
-//app.get('/getGroups, handler.getGroups');
+app.get('/groups/user/:userid', handler.getGroups);
 
-//add /:id
-//app.get('/updateGroups', handler.updateGroups);
+app.get('/contacts/user/:userid', handler.getContactGroup);
+
+app.post('/groups/user/add', handler.addToGroup);
+
 
 
 var port = process.env.PORT || 8000;

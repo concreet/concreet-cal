@@ -1,6 +1,8 @@
 var db = require('../db/config.js');
 var User = require('../db/user.js');
 var Group = require('../db/group.js');
+var utils = require('./utils.js')
+
 
 
 exports.createGroup = (req, res) => {
@@ -33,10 +35,48 @@ exports.createGroup = (req, res) => {
 exports.addOrFindUser = (req, res) => {
 	//INPUTS
 	//req.params.email
-	console.log(req.params.email)
 	User.findOrCreate( { emailAddress: req.params.email } )
 	.then( (user) => {
 		res.status(200).send(user.doc);
 	} );
+};
+
+exports.getGroups = (req, res) => {
+	//inputs
+	//req.params.userid
+	User.findOne({_id: req.params.userid})
+	.then( (user) => {
+		return utils.getGroups(user);
+	})
+	.then( (groups) => {
+		res.status(200).send(groups);
+	});
+};
+
+exports.getContactGroup = (req, res) => {
+	//inputs
+	//req.params.userid
+	User.findOne({_id: req.params.userid})
+	.then( (user) => {
+		return utils.getContactList(user);
+	})
+	.then( (groups) => {
+		res.status(200).send(groups);
+	});
+};
+
+exports.addToGroup = (req, res) => {
+	//inputs
+	//req.body.group
+	//req.body.targetUser
+
+	Group.findOne({_id: req.body.group._id})
+	.then( (group) => {
+		group.contacts.push(req.body.targetUser._id);
+		group.save();
+	})
+	.then( () => {
+		res.sendStatus(200);
+	})
 };
 
