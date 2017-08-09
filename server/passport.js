@@ -3,6 +3,7 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var googleConfig = require('./passportConfig.js');
 var User = require('../db/user.js');
 var Group = require('../db/group.js');
+var utils = require('./utils.js')
 
 
 passport.serializeUser( (user, done) => {
@@ -58,16 +59,18 @@ passport.use(new GoogleStrategy({
       	return user;
       })
     	.then( (user) => {
-    		return Group.findOrCreate({owner_id: user._id, isContactList: true}, {group_name: 'Contact List', isContactList: true})
+    		//gets the user's contact list with contacts populated
+    		return utils.getContactList(user);
     	})
     	//find contact list too
-    	.then((contactList) => {
+    	.then( (contactList) => {
     		//return user's contact list
     		auth.contactList = contactList;
     		return;
     	})
     	.then( () => {
-    		return Group.find({owner_id: auth.user._id, isContactList: false}); 
+    		//get all the user's groups, with contacts populated
+    		return utils.getGroups(auth.user);
     	})
     	.then( (groups) => {
     		//return user's Groups
