@@ -8,6 +8,8 @@ class TimeSlot extends React.Component {
 	handleClick() {
 		console.log(this.props.slotTime);
 		this.props.closeModal()
+
+		//on a click we should create an event
 	}
 
 	render() {
