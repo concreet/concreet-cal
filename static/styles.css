@@ -42,3 +42,30 @@ body {
     display: inline-block;
     font-size: 16px;
 }
+
+.ReactModal__Overlay {
+    z-index: 1000;
+}
+
+.modalTitle {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-align: center
+}
+
+.slotButtonDiv {
+    width: 100%;
+    text-align: center;
+}
+
+.slotButton {
+    display: inline-block;
+    width: 80%;
+    margin: 10px auto;
+    background-color: rgba(44, 62, 80,1.0);
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
