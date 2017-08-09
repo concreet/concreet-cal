@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/auth/google', 
-	passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/plus.login', 'email'] })
+	passport.authenticate('google', { accessType: 'offline', scope: ['https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/calendar.readonly', 'https://www.googleapis.com/auth/plus.login', 'email'] })
 );
 
 app.get('/auth/google/callback', 
@@ -52,11 +52,14 @@ app.get('/users/user/:email', handler.addOrFindUser);
 
 app.post('/groups/create', handler.createGroup);
 
+//userid = user._id
 app.get('/groups/user/:userid', handler.getGroups);
 
 app.get('/contacts/user/:userid', handler.getContactGroup);
 
 app.post('/groups/user/add', handler.addToGroup);
+
+app.get('/users/reauth/:userid', handler.reauth);
 
 
 

@@ -36,6 +36,8 @@
     "nodemon": "^1.11.0",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
+    "passport-google-oauth20": "^1.0.0",
+    "passport-oauth2-refresh": "^1.0.0",
     "path": "^0.12.7",
     "react": "^15.6.1",
     "react-big-calendar": "^0.14.4",

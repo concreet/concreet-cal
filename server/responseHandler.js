@@ -1,8 +1,8 @@
 var db = require('../db/config.js');
 var User = require('../db/user.js');
 var Group = require('../db/group.js');
-var utils = require('./utils.js')
-
+var utils = require('./utils.js');
+var refresh = require('passport-oauth2-refresh');
 
 
 exports.createGroup = (req, res) => {
@@ -10,7 +10,7 @@ exports.createGroup = (req, res) => {
 	//and maybe isContactLast
 
 	//INPUTS
-	//req.body = { user: ~, groupName: ~, isContactList: ~}
+	//req.body = { currentUser: ~, groupName: ~, isContactList: ~}
 	if(!req.body.user) {
 		//if no user, return error
 		res.status(403).send('No user passed down');
@@ -69,7 +69,6 @@ exports.addToGroup = (req, res) => {
 	//inputs
 	//req.body.group
 	//req.body.targetUser
-
 	Group.findOne({_id: req.body.group._id})
 	.then( (group) => {
 		group.contacts.push(req.body.targetUser._id);
@@ -78,5 +77,18 @@ exports.addToGroup = (req, res) => {
 	.then( () => {
 		res.sendStatus(200);
 	})
+};
+
+exports.reauth = (req, res) => {
+	// //inputs
+	// //req.params.userid
+	// User.findOne({_id: req.params.userid})
+	// .then( (user) => {
+	// 	refresh.requestNewAccessToken('google', user.refreshToken, function(err, accessToken, refreshToken) {
+	// 		if(err) return console.log('')
+	// 		if(refreshToken) user.refreshToken = refreshToken;
+			
+	// 	});
+	// })
 };
 
