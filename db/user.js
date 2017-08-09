@@ -7,6 +7,8 @@ var userSchema = mongoose.Schema({
 	googleId: String,
 	emailAddress: String,
 	isSignedUp: {type: Boolean, default: false},
+	accessToken: String,
+	refreshToken: String,
 });
 
 userSchema.plugin(findOrCreate);
