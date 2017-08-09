@@ -13,8 +13,10 @@ exports.getContactList = (user) => {
 		{group_name: 'Contact List', isContactList: true} 
 	)
 	.then( (findOrCreate) => {
-		var group = findOrCreate.doc;
-		return group.populate('contacts', function(err, group) {});
+		return group = findOrCreate.doc;
+	})
+	.then( (group) => {
+		return group.populate('contacts').execPopulate();
 	});
 };
 

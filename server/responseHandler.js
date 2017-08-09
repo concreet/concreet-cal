@@ -80,15 +80,15 @@ exports.addToGroup = (req, res) => {
 };
 
 exports.reauth = (req, res) => {
-	//inputs
-	//req.params.userid
-	User.findOne({_id: req.params.userid})
-	.then( (user) => {
-		refresh.requestNewAccessToken('google', user.refreshToken, function(err, accessToken, refreshToken) {
-			if(err) return console.log('')
-			if(refreshToken) user.refreshToken = refreshToken;
-
-		});
-	})
+	// //inputs
+	// //req.params.userid
+	// User.findOne({_id: req.params.userid})
+	// .then( (user) => {
+	// 	refresh.requestNewAccessToken('google', user.refreshToken, function(err, accessToken, refreshToken) {
+	// 		if(err) return console.log('')
+	// 		if(refreshToken) user.refreshToken = refreshToken;
+			
+	// 	});
+	// })
 };
 
