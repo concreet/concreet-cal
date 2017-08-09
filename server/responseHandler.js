@@ -65,3 +65,18 @@ exports.getContactGroup = (req, res) => {
 	});
 };
 
+exports.addToGroup = (req, res) => {
+	//inputs
+	//req.body.group
+	//req.body.targetUser
+
+	Group.findOne({_id: req.body.group._id})
+	.then( (group) => {
+		group.contacts.push(req.body.targetUser._id);
+		group.save();
+	})
+	.then( () => {
+		res.sendStatus(200);
+	})
+};
+

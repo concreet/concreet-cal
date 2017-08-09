@@ -56,6 +56,8 @@ app.get('/groups/user/:userid', handler.getGroups);
 
 app.get('/contacts/user/:userid', handler.getContactGroup);
 
+app.post('/groups/user/add', handler.addToGroup);
+
 
 
 var port = process.env.PORT || 8000;
