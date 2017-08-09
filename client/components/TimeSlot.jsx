@@ -13,7 +13,7 @@ class TimeSlot extends React.Component {
 	render() {
 		return (
 			<div className="slotButtonDiv">
-			  <button className="slotButton" onClick={this.handleClick.bind(this)}>{this.props.slotTime}</button>
+			  <button className="slotButton" onClick={this.handleClick.bind(this)}>{this.props.slotTime.formatted} - {this.props.slotTime.end}</button>
 			</div>
 		)
 	}

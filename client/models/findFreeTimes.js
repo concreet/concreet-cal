@@ -91,7 +91,7 @@ exports.findAvailableSlots = (meetingLength, calendars, callback) => {
       unformatted: time
     };
 
-    timeData.end = timeMoment.add(meetingLength, 'minutes').format('HH:mm:ss');
+    var end = moment(timeMoment).add(meetingLength, 'minutes').format('HH:mm:ss');
 
     if (time > "12:59:59") {
       timeData.formatted = `${timeMoment.subtract(12, 'hours').format('HH:mm:ss').slice(0,5)} PM`;
@@ -100,11 +100,16 @@ exports.findAvailableSlots = (meetingLength, calendars, callback) => {
     } else {
       timeData.formatted = `${time.slice(0,5)} AM`;
     }
+    // // format end time
+    if (end > "12:59:59") {
+      timeData.test = 'test';
+      timeData.end = `${moment(end.split(':').join(''), "HHmmss", true).subtract(12, 'hours').format('HH:mm:ss').slice(0,5)} PM`;
+    } else if (end > '11:59:59') {
+      timeData.end = `${end.slice(0,5)} PM`;
+    } else {
+      timeData.end = `${end.slice(0,5)} AM`;
+    }
 
-    
-
-
-    console.log('td', timeData)
     return timeData;
   });
 
