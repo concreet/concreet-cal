@@ -74,12 +74,12 @@ class AddEvent extends React.Component {
 
 
     CalendarModel.freeBusy(allContacts, this.props.user.user, queryInfo.timeMin, queryInfo.timeMax, (calendars) => {
-      // receives back calendars object with each key being a unique email address
+      // receives back calendars array with each element being an object with a email address as its only property
       // each property has a value that is an object with a busy property
       // value of busy property is an array of objects that include start and end property of busy times
       findFreeTimes.findAvailableSlots(meetingLength, calendars, (freeSlots) => {
         // passsing back the available slots as well as the selected date in ISO format
-        this.props.updateSlotsAndEventInfo(freeSlots, queryInfo.timeMin, meetingTitle)
+        this.props.updateSlotsAndEventInfo(freeSlots, queryInfo.timeMin, meetingTitle, meetingLength)
       });
     })
 
