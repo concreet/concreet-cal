@@ -11,10 +11,18 @@ class ContactEntry extends React.Component {
   }
 
   handleOnClick(){
-    this.props.selectContact(this.props.contact);
-    this.setState({
-      clicked: !this.state.clicked
-    })
+    if (!this.props.groupPanelCheck) {
+      this.props.selectContact(this.props.contact, true);
+      this.setState({
+        clicked: !this.state.clicked
+      })
+    } else {
+      return;
+      // this.props.selectContact(this.props.contact, false);
+      // this.setState({
+      //   clicked: !this.state.clicked
+      // })
+    }
     // if (this.props.selectedContacts.indexOf(this.props.contact) !== -1) {
     //   this.setState({
     //     clicked: true

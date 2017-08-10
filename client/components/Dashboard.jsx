@@ -11,6 +11,7 @@ class Dashboard extends React.Component {
       selectedGroup: [],
       contact: {},
       selectedContacts: [],
+      selectedContactsFromGroups: [],
       allGroups: [
       { owner_id: 1, group_name: 'test', isContactList: false, contacts: [{firstName: 'Hi', lastName: 'There', googleId: '2sfiewasdfors', emailAddress: 'hithere@gmail.com', isSignedUp: true}] },
       { owner_id: 1, group_name: 'test2', isContactList: false, contacts: [{firstName: 'Hii', lastName: 'Theree', googleId: '59sfiewodfsrs', emailAddress: 'hithere2@gmail.com', isSignedUp: true}] }, 
@@ -65,18 +66,17 @@ class Dashboard extends React.Component {
       this.setState({
         selectedGroup: addGroup
       })
-      group.contacts.forEach((contact) => {
-        console.log(this.state.selectedContacts, 'the array before IN GRUP');
-        this.handleSelectedContacts(this.state.selectContacts, contact)
-      // if (!this.checkExist(this.state.selectedContacts, contact)) {
-        // var neww = this.state.selectedContacts.slice();
-        // neww.push(contact);
-        // // console.log(love, 'what is love?')
-        // this.setState({
-        //   selectedContacts: neww
-        // })
-      })
-      setTimeout(()=> {console.log(this.state.selectedContacts, 'new one IN GROUP');})  
+      // group.contacts.forEach((contact) => {
+      //   console.log(this.state.selectedContacts, 'the array before IN GRUP');
+      //   this.handleSelectedContacts(this.state.selectContacts, contact)
+      // // if (!this.checkExist(this.state.selectedContacts, contact)) {
+      //   // var neww = this.state.selectedContacts.slice();
+      //   // neww.push(contact);
+      //   // // console.log(love, 'what is love?')
+      //   // this.setState({
+      //   //   selectedContacts: neww
+      //   // })
+      // })
     } else {
       var removeGroup = this.state.selectedGroup.slice();
       removeGroup.splice(removeGroup.indexOf(group), 1);
@@ -85,16 +85,17 @@ class Dashboard extends React.Component {
         selectedGroup: removeGroup
       })
 
-      group.contacts.forEach((contact) => {
-        this.handleSelectedContacts(this.state.selectContacts, contact)
-        // var baby = this.state.selectedContacts.slice();
-        // baby.splice(baby.indexOf(contact), 1);
+      // group.contacts.forEach((contact) => {
+      //   this.handleSelectedContacts(this.state.selectContacts, contact)
+      //   // var baby = this.state.selectedContacts.slice();
+      //   // baby.splice(baby.indexOf(contact), 1);
 
-        // this.setState({
-        //   selectedContacts: baby
-        })
+      //   // this.setState({
+      //   //   selectedContacts: baby
+      //   })
       // })
     }
+      setTimeout(()=> {console.log(this.state.selectedGroup, 'new one IN GROUP');})  
   }
 
     // group.contacts.forEach((contact) => {
@@ -146,23 +147,41 @@ class Dashboard extends React.Component {
     return check;
   }
 
-  handleSelectedContacts(contact) {
+  handleSelectedContacts(contact, isContactList) {
     console.log(this.state.selectedContacts, 'the array before ');
-    if (!this.checkExist(this.state.selectedContacts, contact)) {
+    console.log(this.state.selectedContactsFromGroups, 'the array before GORUPOUFOPDSF');
+
+    if (!this.checkExist(this.state.selectedContacts, contact) && isContactList) {
       var addContact = this.state.selectedContacts.slice();
       addContact.push(contact);
       this.setState({
         selectedContacts: addContact
       })
-    } else {
+    } else if (this.checkExist(this.state.selectedContacts, contact) && isContactList) {
       var removeContact = this.state.selectedContacts.slice();
       removeContact.splice(removeContact.indexOf(contact), 1);
 
       this.setState({
         selectedContacts: removeContact
       })
+    } else if (!this.checkExist(this.state.selectedContactsFromGroups, contact) && !isContactList) {
+      var addContactGroup = this.state.selectedContactsFromGroups.slice();
+      addContactGroup.push(contact);
+      this.setState({
+        selectedContactsFromGroups: addContactGroup
+      })
+    } else {
+      var removeContactGroup = this.state.selectedContactsFromGroups.slice();
+      removeContactGroup.splice(removeContactGroup.indexOf(contact), 1);
+
+      this.setState({
+        selectedContactsFromGroups: removeContactGroup
+      })
     }
+
+
     setTimeout(()=> {console.log(this.state.selectedContacts, 'new one');})
+    setTimeout(()=> {console.log(this.state.selectedContactsFromGroups, 'new oneGORUPRUPRUPR');})
 
   }
 
