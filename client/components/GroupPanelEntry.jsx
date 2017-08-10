@@ -40,7 +40,7 @@ class GroupPanelEntry extends React.Component {
           Group: {this.props.group.group_name}
         </div>
         </div>
-        { this.state.clicked && this.props.group.contacts.map((contact) => <ContactEntry contact={contact} selectContact={this.props.selectContact}/>) }  
+        { this.state.clicked && this.props.group.contacts.map((contact) => <ContactEntry groupPanelCheck="correct" contact={contact} selectContact={this.props.selectContact}/>) }  
       </div>
 
     );
