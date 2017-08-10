@@ -11,7 +11,7 @@ class Dashboard extends React.Component {
       selectedGroup: [],
       contact: {},
       selectedContacts: [],
-      selectedContactsFromGroups: [],
+      // selectedContactsFromGroups: [],
       allGroups: [
       { owner_id: 1, group_name: 'test', isContactList: false, contacts: [{firstName: 'Hi', lastName: 'There', googleId: '2sfiewasdfors', emailAddress: 'hithere@gmail.com', isSignedUp: true}] },
       { owner_id: 1, group_name: 'test2', isContactList: false, contacts: [{firstName: 'Hii', lastName: 'Theree', googleId: '59sfiewodfsrs', emailAddress: 'hithere2@gmail.com', isSignedUp: true}] }, 
@@ -37,12 +37,14 @@ class Dashboard extends React.Component {
 
 
   componentDidMount() {
-    UserModel.getGroup(this.props.user.user._id, (group)=>{
-      console.log(group, 'should be group list');
-      this.setState({
-        allGroups: group
-      })
-    })
+    this.resetGroup();
+    this.resetContact();
+    //make ajax calls to server to retrieve all these data from database
+    //make use of props.
+    //console.log(this.state.allContacts[0].contacts)
+  }
+
+  resetContact() {
     UserModel.getContact(this.props.user.user._id, (contact) => {
       console.log(contact, 'should be a contact list from mongoose');
       this.setState({
@@ -51,9 +53,15 @@ class Dashboard extends React.Component {
 
       })
     })
-    //make ajax calls to server to retrieve all these data from database
-    //make use of props.
-    //console.log(this.state.allContacts[0].contacts)
+  }
+
+  resetGroup() {
+    UserModel.getGroup(this.props.user.user._id, (group)=>{
+      console.log(group, 'should be group list');
+      this.setState({
+        allGroups: group
+      })
+    })
   }
 
   handleSelectedGroup(group) {
@@ -66,17 +74,6 @@ class Dashboard extends React.Component {
       this.setState({
         selectedGroup: addGroup
       })
-      // group.contacts.forEach((contact) => {
-      //   console.log(this.state.selectedContacts, 'the array before IN GRUP');
-      //   this.handleSelectedContacts(this.state.selectContacts, contact)
-      // // if (!this.checkExist(this.state.selectedContacts, contact)) {
-      //   // var neww = this.state.selectedContacts.slice();
-      //   // neww.push(contact);
-      //   // // console.log(love, 'what is love?')
-      //   // this.setState({
-      //   //   selectedContacts: neww
-      //   // })
-      // })
     } else {
       var removeGroup = this.state.selectedGroup.slice();
       removeGroup.splice(removeGroup.indexOf(group), 1);
@@ -84,52 +81,10 @@ class Dashboard extends React.Component {
       this.setState({
         selectedGroup: removeGroup
       })
-
-      // group.contacts.forEach((contact) => {
-      //   this.handleSelectedContacts(this.state.selectContacts, contact)
-      //   // var baby = this.state.selectedContacts.slice();
-      //   // baby.splice(baby.indexOf(contact), 1);
-
-      //   // this.setState({
-      //   //   selectedContacts: baby
-      //   })
-      // })
     }
       setTimeout(()=> {console.log(this.state.selectedGroup, 'new one IN GROUP');})  
   }
 
-    // group.contacts.forEach((contact) => {
-    //   console.log(this.state.selectedContacts, 'the array before IN GRUP');
-    //   if (!this.checkExist(this.state.selectedContacts, contact)) {
-    //     var neww = this.state.selectedContacts.slice();
-    //     neww.push(contact);
-    //     // console.log(love, 'what is love?')
-    //     this.setState({
-    //       selectedContacts: neww
-    //     })
-    //   }
-    //   setTimeout(()=> {console.log(this.state.selectedContacts, 'new one IN GROUP');})
-
-      //this.handleSelectedContacts(contact);
-    // })
-    // console.log(this.state.selectedGroup, 'the GROUP before ');
-    // if (this.state.selectedGroup.indexOf(group) === -1) {
-    //   var addGroup = this.state.selectedGroup.slice();
-    //   addGroup.push(group);
-    //   this.setState({
-    //     selectedGroup: addGroup
-    //   })
-      
-    // } else {
-    //   var removeGroup = this.state.selectedGroup.slice();
-    //   removeGroup.splice(removeGroup.indexOf(group), 1);
-
-    //   this.setState({
-    //     selectedGroup: removeGroup
-    //   })
-    // }
-    // setTimeout(()=> {console.log(this.state.selectedGroup, 'new GROUP');})
-  // }
 
   clearSelectedContacts() {
     this.setState({
@@ -149,7 +104,7 @@ class Dashboard extends React.Component {
 
   handleSelectedContacts(contact, isContactList) {
     console.log(this.state.selectedContacts, 'the array before ');
-    console.log(this.state.selectedContactsFromGroups, 'the array before GORUPOUFOPDSF');
+    // console.log(this.state.selectedContactsFromGroups, 'the array before GORUPOUFOPDSF');
 
     if (!this.checkExist(this.state.selectedContacts, contact) && isContactList) {
       var addContact = this.state.selectedContacts.slice();
@@ -164,73 +119,60 @@ class Dashboard extends React.Component {
       this.setState({
         selectedContacts: removeContact
       })
-    } else if (!this.checkExist(this.state.selectedContactsFromGroups, contact) && !isContactList) {
-      var addContactGroup = this.state.selectedContactsFromGroups.slice();
-      addContactGroup.push(contact);
-      this.setState({
-        selectedContactsFromGroups: addContactGroup
-      })
-    } else {
-      var removeContactGroup = this.state.selectedContactsFromGroups.slice();
-      removeContactGroup.splice(removeContactGroup.indexOf(contact), 1);
+    } 
+    //this is for selecting single contacts from other groups implementation - not accomplished yet
 
-      this.setState({
-        selectedContactsFromGroups: removeContactGroup
-      })
-    }
+    // else if (!this.checkExist(this.state.selectedContactsFromGroups, contact) && !isContactList) {
+    //   var addContactGroup = this.state.selectedContactsFromGroups.slice();
+    //   addContactGroup.push(contact);
+    //   this.setState({
+    //     selectedContactsFromGroups: addContactGroup
+    //   })
+    // } else {
+    //   var removeContactGroup = this.state.selectedContactsFromGroups.slice();
+    //   removeContactGroup.splice(removeContactGroup.indexOf(contact), 1);
+
+    //   this.setState({
+    //     selectedContactsFromGroups: removeContactGroup
+    //   })
+    // }
 
 
     setTimeout(()=> {console.log(this.state.selectedContacts, 'new one');})
-    setTimeout(()=> {console.log(this.state.selectedContactsFromGroups, 'new oneGORUPRUPRUPR');})
+    // setTimeout(()=> {console.log(this.state.selectedContactsFromGroups, 'new oneGORUPRUPRUPR');})
 
   }
 
   handleAddGroup(groupname) {
     UserModel.addGroup(groupname, this.props.user.user, (sucess)=> {
-      console.log(sucess, '+++++++++')
-      UserModel.getGroup(this.props.user.user._id, (data)=>{
-        console.log(data, 'did this ever run?');
-        this.setState({
-          allGroups: data
-        })
-    })
+      // console.log(sucess, '+++++++++')
+      this.resetGroup();
     })
   }
 
   handleAddContact(gmail) {
-    console.log('check if add contact proc', gmail);
+    // console.log('check if add contact proc', gmail);
     UserModel.addContact(gmail, (contact) => {
-      console.log(contact, 'this is the stuff from addorfindXXXX', this.state.contact);
-
-      //UserModel.getContact(this.props.user.user._id, (contactGroup) => {
-      // console.log(contactGroup, 'should be the users contact list from mongooseXXXXX');
+      // console.log(contact, 'this is the stuff from addorfindXXXX', this.state.contact);
         UserModel.addContactToGroup(this.state.contact, contact, ()=>{
-          console.log('reached here, should added to the contact list XXX');
-          UserModel.getContact(this.props.user.user._id, (contactGroup2) => {
-            this.setState({
-              allContacts: contactGroup2.contacts
-            })
-          })
+          // console.log('reached here, should added to the contact list XXX');
+          this.resetContact();
         })
-      //})
-
     })
-    //window.addContactToGroup()
-    //will do a post request to the databse to add a new contact
-    //then do a get request to set contacts
-    // this.setState({
-    //   allContacts:
-    // })
   }
 
   handleUpdateGroup(group) {
-    console.log(this.state.selectedContacts, 'whats this')
+    // console.log(this.state.selectedContacts, 'whats this')
     this.state.selectedContacts.forEach((contact)=>{
-      UserModel.addContactToGroup(group, contact, ()=>{
-        console.log('==========================')
-      })
+      if (!this.checkExist(group.contacts, contact)) {
+        UserModel.addContactToGroup(group, contact, ()=>{
+          // console.log('==========================');
+          this.resetGroup();
+        })
+      } else {
+        return;
+      }
     })
-    //do a post request to update contact list for the group in databse
   }
 
   render() {
