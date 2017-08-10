@@ -19,7 +19,7 @@ class AddEvent extends React.Component {
 
   handleEventSubmit(e) {
     var meetingLength = e.target.meetingLength.value
-
+    var meetingTitle = e.target.title.value
     var timeMin = moment(e.target.date.value, "MM/DD/YYYY");
 
     var queryInfo = {
@@ -27,17 +27,13 @@ class AddEvent extends React.Component {
       timeMax: timeMin.add('1', 'days').toISOString()
     }; 
 
-    console.log('QI', queryInfo.timeMin)
-
     CalendarModel.freeBusy(this.props.selectedContacts, this.props.user.user, queryInfo.timeMin, queryInfo.timeMax, (calendars) => {
       // receives back calendars object with each key being a unique email address
       // each property has a value that is an object with a busy property
       // value of busy property is an array of objects that include start and end property of busy times
-      console.log('ran free busy');
-      console.log(calendars);
       findFreeTimes.findAvailableSlots(meetingLength, calendars, (freeSlots) => {
         // passsing back the available slots as well as the selected date in ISO format
-        this.props.updateAvailableSlots(freeSlots, queryInfo.timeMin)
+        this.props.updateSlotsAndEventInfo(freeSlots, queryInfo.timeMin, meetingTitle)
       });
     })
 

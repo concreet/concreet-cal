@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import * as CalendarModel from '../models/calendar.js'
 
 class TimeSlot extends React.Component {
 	constructor(props) {
@@ -18,10 +19,16 @@ class TimeSlot extends React.Component {
 
 		var selectedDateTime = (selectedDate + 'T' + isoTime);
 
+		var endTime = moment(selectedDateTime).add('1', 'hours').toISOString();
+
 		this.props.getEventDateTime(selectedDateTime);
 		console.log('SDT', selectedDateTime);
+		console.log('ET', endTime)
+		console.log('name', this.props.eventTitle)
+		console.log('using contacts but I got 20/20 vision', this.props.selectedContacts);
+		console.log('user', this.props.user)
 
-
+		CalendarModel.addEvent(this.props.selectedContacts, this.props.user.user, this.props.eventTitle, selectedDateTime, endTime, (data) => {})
 
 		this.props.closeModal()
 	}
