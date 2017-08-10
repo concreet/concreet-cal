@@ -12,8 +12,7 @@ class AddEvent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: '',
-      contactsArray: []
+      date: ''
     }
     //binding functions here
     //this.mergeContactsAndGroups = this.mergeContactsAndGroups.bind(this);
@@ -60,17 +59,18 @@ class AddEvent extends React.Component {
     }; 
 
     var allContacts = this.props.selectedContacts.slice();
-    console.log(allContacts, 'ONLY THE SELECTED CONTACTS')
     this.props.selectedGroups.forEach((group)=> {
+      // console.log('group: ', group)
       group.contacts.forEach((contact) => {
         if (!this.checkExist(allContacts, contact)) {
+          // console.log('Contact: ', allContacts)
           allContacts.push(contact);
         }
       })
     })
 
     console.log('QI', queryInfo.timeMin)
-    console.log(allContacts, 'finalizedd')
+    // console.log(allContacts, 'finalizedd')
 
 
     CalendarModel.freeBusy(allContacts, this.props.user.user, queryInfo.timeMin, queryInfo.timeMax, (calendars) => {
