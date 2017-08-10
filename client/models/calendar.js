@@ -126,25 +126,24 @@ export const accessControl = (token, calendarId, callback) => {
   });
 }
 
-export const freeBusy = (group, currentUser, timeMin, timeMax, callback) => {
+export const freeBusy = (queryGroup, currentUser, timeMin, timeMax, callback) => {
 
-var allContactsCalendars = [];
+  var allContactsCalendars = [];
 
-//will be deleted once timeMin and timeMax are passed in
-var timeMin = '2017-08-01T17:06:02.000Z';
-var timeMax =  '2017-08-09T17:06:02.000Z';
+  console.log('inside free busy')
+  console.log(timeMin, timeMax)
 
-
+  console.log(currentUser._id)
 //will be deleted when the current proper user is passed in
-  $.get(`/groups/user/${currentUser._id}`, (data) => {
-    console.log('data', data[0].contacts);
-    var queryGroup = data[0].contacts;
+  // $.get(`/groups/user/${currentUser._id}`, (data) => {
+  //   console.log('data', data[0].contacts);
+  //   var queryGroup = data[0].contacts;
 // end of delete
 
 // add current user to queries
     queryGroup.push(currentUser)
 
-
+    var counter = 0;
 // query freeBusy for all members of
     for (var member of queryGroup) {
       var id = member._id;
@@ -176,13 +175,16 @@ var timeMax =  '2017-08-09T17:06:02.000Z';
         success: function(data) {
           console.log('each cal', data.calendars)
           //add to array that contains all members freeBusytimes
-          allContactsCalendars.push(data.calendars)
+          allContactsCalendars.push(data.calendars);
+          counter++;
+          if (counter === queryGroup.length) {
+            callback(allContactsCalendars);
+          }
         },
         error: function(err) {
           // still need to work out refresh accessToken
         }
       });
     } //for loop end
-    callback(allContactsCalendars);
-  })
+  // })
 }

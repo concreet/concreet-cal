@@ -19,7 +19,9 @@ class BigCalBasic extends React.Component{
     this.state = {
       events: events,
       availableSlots: [],
-      displayModal: false
+      displayModal: false,
+      selectedDate: undefined,
+      eventDateTime: undefined
     }
   }
 
@@ -35,19 +37,32 @@ class BigCalBasic extends React.Component{
         })
       })
     });
+
   }
 
-  updateAvailableSlots(freeSlots) {
+  updateAvailableSlots(freeSlots, selectedDate) {
     this.setState({
       availableSlots: freeSlots,
-      displayModal: true
+      displayModal: true,
+      selectedDate: selectedDate
     })
-    console.log('updating')
+
   }
+
+  // get the selected meeting time in ISO format
+  getEventDateTime(isoDateTime) {
+    this.setState({
+      eventDateTime: isoDateTime
+    })
+  }
+
   render(){
     return (
       <div>
-        <AddEvent token={this.props.user.token} updateAvailableSlots={this.updateAvailableSlots.bind(this)} />
+        <AddEvent 
+          user={this.props.user} 
+          updateAvailableSlots={this.updateAvailableSlots.bind(this)} 
+          selectedContacts={this.props.selectedContacts} />
         <br/>
         <BigCalendar
           {...this.props}
@@ -56,7 +71,12 @@ class BigCalBasic extends React.Component{
           titleAccessor='summary'
           defaultDate={new Date()}
         />
-        {this.state.displayModal && <FreeTimeSlotsModal availableSlots={this.state.availableSlots}/>}
+        {this.state.displayModal && <FreeTimeSlotsModal 
+          availableSlots={this.state.availableSlots} 
+          selectedDate={this.state.selectedDate}
+          getEventDateTime={this.getEventDateTime.bind(this)}
+          />
+        }
       </div>
     )
   }
