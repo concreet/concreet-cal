@@ -32,10 +32,10 @@ export const getCalendarEvents = function (token, calendarList, callback) {
     // give it a time range from one week ago to one week from now.
     // order by start time(ascending). Earliest event will be 0th element in items array
     var searchParams = {
-      access_token: token, 
-      singleEvents: true, 
-      timeMin: startOfMonth, 
-      timeMax: endOfMonth, 
+      access_token: token,
+      singleEvents: true,
+      timeMin: startOfMonth,
+      timeMax: endOfMonth,
       orderBy: 'startTime'
     };
 
@@ -54,145 +54,62 @@ export const processEvents = function (eventsList, callback) {
   callback(eventsList);
 }
 
-export const getEventData = (eventInfo, callback) => {
-  // eventData contains token, calendarId, and eventId properties
-  eventInfo.calendarId = 'hackreactor.com_9kddcjfdij7ak91o0t2bdlpnoo@group.calendar.google.com';
-  eventInfo.eventId = 'hmohhg9pjtr795k22mq17eltvk_20170801T223000Z'
-
-  var searchParams = {
-    access_token: eventInfo.token,
-  }
-
-  $.get(`https://www.googleapis.com/calendar/v3/calendars/${eventInfo.calendarId}/events/${eventInfo.eventId}`, searchParams, (data) => {
-    callback(data);
-  });
-};
-
-// old freeBusy saved for future reference
-// export const freeBusy = (queryInfo, callback) => {
-//   // queryInfo contains token, timeMin, timeMax, and calendar ids
-//
-//   var calendars = queryInfo.items.map( (calendar) => {
-//     return {id: calendar.id}
-//   });
-//
-//   // dummy data
-//   var requestBody = {
-//     "items": calendars,
-//     "timeMin": "2017-08-14T05:00:00Z",
-//     "timeMax": "2017-08-15T05:00:00Z",
-//   }
-//
-//   $.ajax({
-//     type: "POST",
-//     url: `https://www.googleapis.com/calendar/v3/freeBusy`,
-//     headers: {Authorization: `Bearer ${queryInfo.token}`},
-//     data: JSON.stringify(requestBody),
-//     contentType: 'application/json',
-//     dataType: 'json',
-//     success: function(data) {
-//       // data returns an object with calendars property
-//       // calendars property returns all calendars searched for
-//       // each calendar has a busy property with array of busy times
-//
-//       // give callback the calendars and their busy property
-//       callback(data.calendars);
-//     }
-//   })
-// };
-
-export const accessControl = (token, calendarId, callback) => {
-
-  var requestBody = {
-    "kind": "calendar#aclRule",
-    "role": "freeBusyReader",
-    "scope": {
-      "value": "jordan.n.hoang@gmail.com",
-      "type": "user"
-    }
-  };
-
-  $.ajax({
-    type: "POST",
-    url: `https://www.googleapis.com/calendar/v3/calendars/jordan.n.hoang@utexas.edu/acl`,
-    headers: {Authorization: `Bearer ${token}`},
-    data: JSON.stringify(requestBody),
-    contentType: 'application/json',
-    dataType: 'json',
-    success: (data) => {
-      callback(data)
-    }
-
-  });
-}
 
 export const freeBusy = (queryGroup, currentUser, timeMin, timeMax, callback) => {
 
   var allContactsCalendars = [];
 
-//will be deleted when the current proper user is passed in
-  // $.get(`/groups/user/${currentUser._id}`, (data) => {
-  //   console.log('data', data[0].contacts);
-  //   var queryGroup = data[0].contacts;
-// end of delete
-
 // add current user to queries
-    queryGroup.push(currentUser)
+  queryGroup.push(currentUser)
 
-    var counter = 0;
+  var counter = 0;
 // query freeBusy for all members of
-    for (var member of queryGroup) {
-      var id = member._id;
-      var email = member.emailAddress;
-      var accessToken = member.accessToken;
-      var refreshToken = member.refreshToken;
+  for (var member of queryGroup) {
+    var id = member._id;
+    var email = member.emailAddress;
+    var accessToken = member.accessToken;
+    var refreshToken = member.refreshToken;
 
-      // dummy data
-      var requestBody = {
-        "items": [
-          {
-            "id": email
-          },
-          // {
-          //   "id": "hackreactor.com_9kddcjfdij7ak91o0t2bdlpnoo@group.calendar.google.com"
-          // }
-        ],
-        "timeMin": timeMin,
-        "timeMax": timeMax,
-      }
-
-      $.ajax({
-        type: "POST",
-        url: `https://www.googleapis.com/calendar/v3/freeBusy`,
-        headers: {Authorization: `Bearer ${accessToken}`},
-        data: JSON.stringify(requestBody),
-        contentType: 'application/json',
-        dataType: 'json',
-        success: function(data) {
-          console.log('each cal', data.calendars)
-          //add to array that contains all members freeBusytimes
-          allContactsCalendars.push(data.calendars);
-          counter++;
-          if (counter === queryGroup.length) {
-            callback(allContactsCalendars);
-          }
+    // dummy data
+    var requestBody = {
+      "items": [
+        {
+          "id": email
         },
-        error: function(err) {
-          // still need to work out refresh accessToken
+        // {
+        //   "id": "hackreactor.com_9kddcjfdij7ak91o0t2bdlpnoo@group.calendar.google.com"
+        // }
+      ],
+      "timeMin": timeMin,
+      "timeMax": timeMax,
+    }
+
+    $.ajax({
+      type: "POST",
+      url: `https://www.googleapis.com/calendar/v3/freeBusy`,
+      headers: {Authorization: `Bearer ${accessToken}`},
+      data: JSON.stringify(requestBody),
+      contentType: 'application/json',
+      dataType: 'json',
+      success: function(data) {
+        console.log('each cal', data.calendars)
+        //add to array that contains all members freeBusytimes
+        allContactsCalendars.push(data.calendars);
+        counter++;
+        if (counter === queryGroup.length) {
+          callback(allContactsCalendars);
         }
-      });
-    } //for loop end
-  // })
+      },
+      error: function(err) {
+        // still need to work out refresh accessToken
+      }
+    });
+  } //for loop end
 }
-
-//way to call it
-//CalendarModel.addEvent(this.props.selectedContacts, this.props.user.user, 'non-imaginative title', 'timeStart', 'timeEnd' , (data)=>console.log('calendars', data));
-
 
 export const addEvent = (queryGroup, currentUser, title, timeStart, timeEnd, callback) => {
   var accessToken = currentUser.accessToken;
   var calendarId = currentUser.emailAddress;
-  console.log('add event accessToken & eems', accessToken, calendarId);
   var attendees = []
 
   timeStart = {
@@ -203,8 +120,6 @@ export const addEvent = (queryGroup, currentUser, title, timeStart, timeEnd, cal
     "dateTime": timeEnd,
     "timeZone": "America/Chicago"
   };
-
-//end delete
 
   for (var member of queryGroup) {
     var attendee = {
