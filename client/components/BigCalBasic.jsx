@@ -66,6 +66,7 @@ class BigCalBasic extends React.Component{
           selectedContacts={this.props.selectedContacts}
           selectedGroups={this.props.selectedGroups} 
           />
+
         <br/>
         <BigCalendar
           {...this.props}
