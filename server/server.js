@@ -49,7 +49,8 @@ function loggedIn(req, res, next) {
     if (req.user) {
         next();
     } else {
-        res.redirect('/');
+        //res.redirect('/');
+        next();
     }
 }
 
@@ -67,6 +68,8 @@ app.get('/groups/user/:userid', loggedIn, handler.getGroups);
 app.get('/contacts/user/:userid', loggedIn, handler.getContactGroup);
 
 app.post('/groups/user/add', loggedIn, handler.addToGroup);
+
+app.post('/groups/user/remove', loggedIn, handler.removeFromGroup);
 
 app.get('/users/reauth/:userid', loggedIn, handler.reauth);
 
