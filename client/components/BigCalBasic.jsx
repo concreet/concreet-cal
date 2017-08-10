@@ -3,6 +3,9 @@ import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import * as CalendarModel from '../models/calendar.js';
 import events from './events';
+import FreeTimeSlotsModal from './FreeTimeSlotsModal.jsx';
+import findFreeTimes from '../models/findFreeTimes.js';
+import AddEvent from './AddEvent.jsx';
 
 let allViews = Object.keys(BigCalendar.views).map(k => BigCalendar.views[k])
 
@@ -14,7 +17,8 @@ class BigCalBasic extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      events: events
+      events: events,
+      availableSlots: []
     }
   }
 
@@ -34,13 +38,18 @@ class BigCalBasic extends React.Component{
   }
   render(){
     return (
-      <BigCalendar
-        {...this.props}
-        events={this.state.events}
-        views={allViews}
-        titleAccessor='summary'
-        defaultDate={new Date()}
-      />
+      <div>
+        <AddEvent />
+        <br/>
+        <BigCalendar
+          {...this.props}
+          events={this.state.events}
+          views={allViews}
+          titleAccessor='summary'
+          defaultDate={new Date()}
+        />
+        <FreeTimeSlotsModal availableSlots={this.state.availableSlots}/>
+      </div>
     )
   }
 }
