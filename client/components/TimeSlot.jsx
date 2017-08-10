@@ -20,6 +20,7 @@ class TimeSlot extends React.Component {
 
 		this.props.getEventDateTime(selectedDateTime);
 		console.log('SDT', selectedDateTime);
+		console.log('name', this.props.eventTitle)
 
 
 

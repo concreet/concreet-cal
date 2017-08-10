@@ -62,6 +62,7 @@ class FreeTimeSlotsModal extends React.Component {
                   closeModal={this.closeModal.bind(this)} 
                   selectedDate={this.props.selectedDate}
                   getEventDateTime={this.props.getEventDateTime}
+                  eventTitle={this.props.eventTitle}
                   />
               )
             })

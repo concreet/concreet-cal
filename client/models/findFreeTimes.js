@@ -8,11 +8,9 @@ exports.findAvailableSlots = (meetingLength, calendars, callback) => {
   // a calendars object with each key being a unique email address
   // each property has a value that is an object with a busy property
   // value of busy property is an array of objects that include start and end property of busy times
-  console.log('FAS', calendars);
   var busyTimes = []
   for (var calendar of calendars) {
     for (var cal in calendar) {
-      console.log('callll', cal)
       for (var busyTime of calendar[cal].busy) {
         busyTimes.push({start: new Date(busyTime.start).toTimeString().split(' ')[0], end: new Date(busyTime.end).toTimeString().split(' ')[0]})
       }

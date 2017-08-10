@@ -130,10 +130,6 @@ export const freeBusy = (queryGroup, currentUser, timeMin, timeMax, callback) =>
 
   var allContactsCalendars = [];
 
-  console.log('inside free busy')
-  console.log(timeMin, timeMax)
-
-  console.log(currentUser._id)
 //will be deleted when the current proper user is passed in
   // $.get(`/groups/user/${currentUser._id}`, (data) => {
   //   console.log('data', data[0].contacts);
