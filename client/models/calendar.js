@@ -25,17 +25,17 @@ export const getCalendarEvents = function (token, calendarList, callback) {
     // replace any pound sign with its escape character. Pound sign interferes with URL search
     calendar.id = calendar.id.replace('#', '%23')
 
-    var twoWeeksAgo = moment().subtract(2, 'weeks').format("YYYY-MM-DDTHH:mm:ssZ");
-    var twoWeeksFromNow = moment().add(2, 'weeks').format("YYYY-MM-DDTHH:mm:ssZ");
+    var startOfMonth = moment().startOf('month').format("YYYY-MM-DDTHH:mm:ssZ");
+    var endOfMonth = moment().endOf('month').format("YYYY-MM-DDTHH:mm:ssZ");
 
     // params inclue user token, single events to true to avoid returning all recurring events
     // give it a time range from one week ago to one week from now.
     // order by start time(ascending). Earliest event will be 0th element in items array
     var searchParams = {
-      access_token: token,
-      singleEvents: true,
-      timeMin: twoWeeksAgo,
-      timeMax: twoWeeksFromNow,
+      access_token: token, 
+      singleEvents: true, 
+      timeMin: startOfMonth, 
+      timeMax: endOfMonth, 
       orderBy: 'startTime'
     };
 

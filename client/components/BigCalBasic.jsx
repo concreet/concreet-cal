@@ -18,7 +18,8 @@ class BigCalBasic extends React.Component{
     super(props);
     this.state = {
       events: events,
-      availableSlots: []
+      availableSlots: [],
+      displayModal: false
     }
   }
 
@@ -34,12 +35,19 @@ class BigCalBasic extends React.Component{
         })
       })
     });
-    CalendarModel.freeBusy(this.props.selectedContacts, this.props.user.user, 'n/a', 'n/a', (data)=>console.log('calendars', data));
+  }
+
+  updateAvailableSlots(freeSlots) {
+    this.setState({
+      availableSlots: freeSlots,
+      displayModal: true
+    })
+    console.log('updating')
   }
   render(){
     return (
       <div>
-        <AddEvent />
+        <AddEvent token={this.props.user.token} updateAvailableSlots={this.updateAvailableSlots.bind(this)} />
         <br/>
         <BigCalendar
           {...this.props}
@@ -48,7 +56,7 @@ class BigCalBasic extends React.Component{
           titleAccessor='summary'
           defaultDate={new Date()}
         />
-        <FreeTimeSlotsModal availableSlots={this.state.availableSlots}/>
+        {this.state.displayModal && <FreeTimeSlotsModal availableSlots={this.state.availableSlots}/>}
       </div>
     )
   }
