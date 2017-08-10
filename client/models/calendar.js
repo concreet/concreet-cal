@@ -186,3 +186,71 @@ var timeMax =  '2017-08-09T17:06:02.000Z';
     callback(allContactsCalendars);
   })
 }
+
+//way to call it
+//CalendarModel.addEvent(this.props.selectedContacts, this.props.user.user, 'non-imaginative title', 'timeStart', 'timeEnd' , (data)=>console.log('calendars', data));
+
+
+export const addEvent = (queryGroup, currentUser, title, timeStart, timeEnd, callback) => {
+  var accessToken = currentUser.accessToken;
+  var calendarId = currentUser.emailAddress;
+  console.log('add event accessToken & eems', accessToken, calendarId);
+  var attendees = []
+
+
+//delete this THESE ARE TEMPORARY DEFAULTS
+  timeStart = {
+    "dateTime": "2017-08-10T13:00:00",
+    "timeZone": "America/Los_Angeles"
+  };
+  timeEnd = {
+    "dateTime": "2017-08-10T14:00:00",
+    "timeZone": "America/Los_Angeles"
+  };
+  queryGroup = [
+    {
+      _id: '598c7e657b913129c469119b',
+      emailAddress: 'concreetjo@gmail.com',
+      googleId: '100975285035041480697',
+      refreshToken: '1/1UQtnX2oh95M5ler6hWvzA4GGk82twQxe1uTBFUwEUI',
+      accessToken: 'ya29.GlujBM1d2tp5PkefyztEY53sEsgOEyAZqMRxqtP60CgyJPmNvPZBwgt2ILKfB7Y7xT23C5ryDSBHlA0owg_gral-ZJRe-UUAsneYG4E_j3Yt-KFMfgKOISCmjMyK',
+      __v: 0,
+      isSignedUp: true
+    }
+  ]
+
+//end delete
+
+  for (var member of queryGroup) {
+    var attendee = {
+      email: member.emailAddress,
+      responseStatus: 'accepted'
+    };
+    attendees.push(attendee);
+  }
+
+  var requestBody = {
+    "attendees": attendees,
+    "start": timeStart,
+    "end": timeEnd,
+    "reminders": {
+      "useDefault": true,
+    },
+    "summary": title
+  };
+
+  $.ajax({
+    type: "POST",
+    url: `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events`,
+    headers: {Authorization: `Bearer ${accessToken}`},
+    data: JSON.stringify(requestBody),
+    contentType: 'application/json',
+    dataType: 'json',
+    success: function() {
+      console.log('new event added')
+    },
+    error: function(err) {
+      console.log('did not post new event', err)
+    }
+  });
+}
