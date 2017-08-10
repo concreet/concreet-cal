@@ -11,11 +11,11 @@ class App extends React.Component {
       signedIn: false,
       user: {}
     }
+  this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   componentWillMount() {
     //functions in here will be invoked when App initiate
-
     UserModel.getUser((data) => {
       if (data.passport) {
         console.log(data.passport.user, 'HERE?');
@@ -25,30 +25,23 @@ class App extends React.Component {
         })
       }
     })
-    // $.ajax({
-    //   type: "GET",
-    //   url: '/session',
-    //   contentType: 'application/json',
-    //   success: (data) => {
-    //     console.log(data, "IS THIS HERE?")
-    //     if (data.passport) {
-    //       this.setState({
-    //         signedIn: true,
-    //         user: data.passport.user
-    //       })
-    //     }
-    //   }
-    // })
   }
-          // {this.state.signedIn && <Dashboard></Dashboard>}
-          // {!this.state.signedIn && <SplashLogin></SplashLogin>}
+
+  handleSignOut() {
+    UserModel.signOut((data)=>{
+      this.setState({
+        signedIn: false,
+        user: {}
+      })
+    });
+  }
 
   render() {
-    //can do if statement here to decide on rendering the splashlogin or the dashboard
     return (
       <div className="app">
-        {this.state.signedIn && <Dashboard user={this.state.user} />}
-        {!this.state.signedIn && <SplashLogin/>}
+        { this.state.signedIn && <button onClick={this.handleSignOut}>Sign Out</button> }
+        { this.state.signedIn && <Dashboard user={this.state.user} /> }
+        { !this.state.signedIn && <SplashLogin/> }
       </div>
     );
   }
