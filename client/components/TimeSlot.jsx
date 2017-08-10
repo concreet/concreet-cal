@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 class TimeSlot extends React.Component {
 	constructor(props) {
@@ -6,10 +7,23 @@ class TimeSlot extends React.Component {
 	}
 
 	handleClick() {
-		console.log(this.props.slotTime);
-		this.props.closeModal()
+		// get the selected date in ISO format without any time aspect
+		var selectedDate = this.props.selectedDate.split('T')[0]
 
-		//on a click we should create an event
+		// convert the unformatted time into a moment object
+		var momentTime = moment(this.props.slotTime.unformatted.split(':').join(''), "HHmmss", true).format('HH:mm:ss')
+
+		// convert moment object into an ISO string and pluck only the time aspect of it, without the date
+		var isoTime = moment(momentTime, 'HH:mm:ss').toISOString().split('T')[1]
+
+		var selectedDateTime = (selectedDate + 'T' + isoTime);
+
+		this.props.getEventDateTime(selectedDateTime);
+		console.log('SDT', selectedDateTime);
+
+
+
+		this.props.closeModal()
 	}
 
 	render() {

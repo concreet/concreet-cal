@@ -19,8 +19,12 @@ class FreeTimeSlotsModal extends React.Component {
     super();
 
     this.state = {
-      modalIsOpen: false
+      modalIsOpen: true
     };
+
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   openModal() {
@@ -39,7 +43,6 @@ class FreeTimeSlotsModal extends React.Component {
   render() {
     return (
       <div className="timeModal">
-        <button onClick={this.openModal}>Open Modal</button>
 
         <Modal
           isOpen={this.state.modalIsOpen}
@@ -49,11 +52,17 @@ class FreeTimeSlotsModal extends React.Component {
           contentLabel="Time Slots Modal"
         >
 
-          <h2 className="modalTitle">Available Meeting Start Times</h2>
+          <h2 className="modalTitle">Available Meeting Times</h2>
           {
             this.props.availableSlots.map( (slot, i) => {
               return (
-                <TimeSlot key={i} slotTime={slot} closeModal={this.closeModal.bind(this)} />
+                <TimeSlot 
+                  key={i} 
+                  slotTime={slot} 
+                  closeModal={this.closeModal.bind(this)} 
+                  selectedDate={this.props.selectedDate}
+                  getEventDateTime={this.props.getEventDateTime}
+                  />
               )
             })
           }
