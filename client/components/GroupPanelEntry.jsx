@@ -26,6 +26,11 @@ class GroupPanelEntry extends React.Component {
 
   }
 
+  handleRemoveContactFromGroup() {
+    this.props.removeContactFromGroup(this.props.group);
+    console.log('this ran?')
+  }
+
   render() {
     return (
       <div className="grouppanelentry">
@@ -35,6 +40,9 @@ class GroupPanelEntry extends React.Component {
         </button>
         <button onClick={this.handleUpdateGroup.bind(this)}> 
           Add Contacts to {this.props.group.group_name}
+        </button>
+         <button onClick={this.handleRemoveContactFromGroup.bind(this)}> 
+          Remove Contacts from {this.props.group.group_name}
         </button>
         <div onClick={this.handleOnClick.bind(this)}>
           Group: {this.props.group.group_name}

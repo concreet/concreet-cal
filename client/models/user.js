@@ -71,14 +71,28 @@ export var addContactToGroup = (group, contact, callback) => {
       },
       error: (err) => {
         return null;
-        // callback(err);
       }
-      // success: (data) => {
-      //   callback(data);
-      // },
-      // error: (err, statusCode) => {
-      //   console.log(err);
-      // }
+  })
+}
+
+export const removeContactFromGroup = (group, contact, callback) => {
+  $.ajax({
+      type: "POST",
+      url: '/groups/user/remove',
+      dataType: 'application/json',
+      data: JSON.stringify({
+        group: group,
+        targetUser: contact
+      }),
+      contentType: 'application/json',
+      statusCode: {
+        200: function(data) {
+          callback();
+        }
+      },
+      error: (err) => {
+        return null;
+      }
   })
 }
 
@@ -113,6 +127,16 @@ export const getContact = (userID, callback) => {
 
 }
 
+export const signOut = (callback) => {
+  $.ajax({
+    type: "GET",
+    url: '/logout',
+    contentType: 'application/json',
+    success: (data) => {
+      callback('signed out successfully');
+    }
+  })
+}
 // window.getUser = getUser;
 // window.getGroup = getGroup;
 // window.addGroup = addGroup;

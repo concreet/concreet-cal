@@ -71,7 +71,7 @@ class GroupPanel extends React.Component {
           Group Name: <input className="groupname" type="text" />
           <input type="submit" value="Submit Group Name" onClick={()=>{ this.handleAddGroup($('.groupname').val())}}/>
           </form>}
-        { !this.props.isContactList && this.props.groups.map((group) => <GroupPanelEntry group={group} selectContact={this.props.selectContact} selectGroup={this.props.selectGroup} updateGroup={this.props.updateGroup}/>)}
+        { !this.props.isContactList && this.props.groups.map((group) => <GroupPanelEntry group={group} selectContact={this.props.selectContact} selectGroup={this.props.selectGroup} updateGroup={this.props.updateGroup} removeContactFromGroup={this.props.removeContactFromGroup}/>)}
       </div>
 
     );

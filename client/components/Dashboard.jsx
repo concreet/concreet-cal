@@ -25,13 +25,13 @@ class Dashboard extends React.Component {
       ] }
       ]
     }
-    //binding functions here\
     this.handleSelectedGroup = this.handleSelectedGroup.bind(this);
     this.handleSelectedContacts = this.handleSelectedContacts.bind(this);
     this.handleAddGroup = this.handleAddGroup.bind(this);
     this.handleAddContact = this.handleAddContact.bind(this);
     this.handleUpdateGroup = this.handleUpdateGroup.bind(this);
-    this.clearSelectedContacts = this.clearSelectedContacts.bind(this);
+    this.removeContactFromGroup = this.removeContactFromGroup.bind(this);
+    // this.clearSelectedContacts = this.clearSelectedContacts.bind(this);
   }
 
 
@@ -85,12 +85,12 @@ class Dashboard extends React.Component {
       setTimeout(()=> {console.log(this.state.selectedGroup, 'new one IN GROUP');})  
   }
 
-
-  clearSelectedContacts() {
-    this.setState({
-      selectedContacts: []
-    })
-  }
+  // future implementation
+  // clearSelectedContacts() {
+  //   this.setState({
+  //     selectedContacts: []
+  //   })
+  // }
 
   checkExist(contacts, target) {
     let check = false;
@@ -166,7 +166,7 @@ class Dashboard extends React.Component {
     this.state.selectedContacts.forEach((contact)=>{
       if (!this.checkExist(group.contacts, contact)) {
         UserModel.addContactToGroup(group, contact, ()=>{
-          // console.log('==========================');
+          // console.log('added?==============');
           this.resetGroup();
         })
       } else {
@@ -175,11 +175,24 @@ class Dashboard extends React.Component {
     })
   }
 
+  removeContactFromGroup(group) {
+    this.state.selectedContacts.forEach((contact) => {
+      if (this.checkExist(group.contacts, contact)) {
+        UserModel.removeContactFromGroup(group, contact, ()=>{
+          // console.log('did it remove?==========================');
+          this.resetGroup();
+        })
+      } else {
+         return;
+      }
+    })
+  }
+
   render() {
     return (
       <div className="dashboard">
         <h1>--------Dashboard-----------</h1>
-        <SidePanel contacts={this.state.allContacts} groups={this.state.allGroups} selectContact={this.handleSelectedContacts} selectGroup={this.handleSelectedGroup} addGroup={this.handleAddGroup} addContact={this.handleAddContact} updateGroup={this.handleUpdateGroup} clearSelectedContacts={this.clearSelectedContacts} selectedContacts={this.state.selectedContacts}/>
+        <SidePanel contacts={this.state.allContacts} groups={this.state.allGroups} selectContact={this.handleSelectedContacts} selectGroup={this.handleSelectedGroup} addGroup={this.handleAddGroup} addContact={this.handleAddContact} updateGroup={this.handleUpdateGroup} removeContactFromGroup={this.removeContactFromGroup} selectedContacts={this.state.selectedContacts}/>
         <BigCalBasic user={this.props.user} selectedGroups={this.state.selectedGroup} selectedContacts={this.state.selectedContacts}/>
 
       </div>
