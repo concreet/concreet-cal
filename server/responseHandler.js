@@ -95,3 +95,9 @@ exports.reauth = (req, res) => {
 	})
 };
 
+exports.logout = (req, res) => {
+	req.session.destroy();
+	req.logout();
+	res.redirect('/');
+};
+

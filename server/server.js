@@ -45,23 +45,32 @@ app.get('/auth/google/callback',
 );
 
 //Need to put Auth middleware into all these calls
+function loggedIn(req, res, next) {
+    if (req.user) {
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
 
-app.get('/session', (req,res) => {
+app.get('/session', loggedIn, (req,res) => {
 	res.status(200).send(req.session);
 });
 
-app.get('/users/user/:email', handler.addOrFindUser);
+app.get('/users/user/:email', loggedIn, handler.addOrFindUser);
 
-app.post('/groups/create', handler.createGroup);
+app.post('/groups/create', loggedIn, handler.createGroup);
 
 //userid = user._id
-app.get('/groups/user/:userid', handler.getGroups);
+app.get('/groups/user/:userid', loggedIn, handler.getGroups);
 
-app.get('/contacts/user/:userid', handler.getContactGroup);
+app.get('/contacts/user/:userid', loggedIn, handler.getContactGroup);
 
-app.post('/groups/user/add', handler.addToGroup);
+app.post('/groups/user/add', loggedIn, handler.addToGroup);
 
-app.get('/users/reauth/:userid', handler.reauth);
+app.get('/users/reauth/:userid', loggedIn, handler.reauth);
+
+app.get('/logout', handler.logout);
 
 
 
