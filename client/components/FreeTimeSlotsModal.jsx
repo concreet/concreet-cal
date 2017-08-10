@@ -56,7 +56,13 @@ class FreeTimeSlotsModal extends React.Component {
           {
             this.props.availableSlots.map( (slot, i) => {
               return (
-                <TimeSlot key={i} slotTime={slot} closeModal={this.closeModal.bind(this)} />
+                <TimeSlot 
+                  key={i} 
+                  slotTime={slot} 
+                  closeModal={this.closeModal.bind(this)} 
+                  selectedDate={this.props.selectedDate}
+                  getEventDateTime={this.props.getEventDateTime}
+                  />
               )
             })
           }

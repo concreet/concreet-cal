@@ -15,17 +15,11 @@ class AddEvent extends React.Component {
       date: '',
     }
     //binding functions here
-    this.changeDate = this.changeDate.bind(this);
   }
 
-  changeDate(e) {
-    console.log('wtf')
-    // // this.setState({
-    // //   date: e.target.date.value
-    // // })
-
+  handleEventSubmit(e) {
     var meetingLength = e.target.meetingLength.value
-    // console.log(this.state.date)
+    var timeMin = moment(e.target.date.value, "MM/DD/YYYY");
 
     var queryInfo = {
       token: this.props.token,
@@ -36,15 +30,21 @@ class AddEvent extends React.Component {
         {
           id: 'jordanhoangGreenfield@gmail.com'
         }
-      ]
+      ],
+      timeMin: timeMin.toISOString(),
+      timeMax: timeMin.add('1', 'days').toISOString()
     }; 
+
+    console.log('QI', queryInfo.timeMin)
+
     CalendarModel.freeBusy(queryInfo, (calendars) => {
       // receives back calendars object with each key being a unique email address
       // each property has a value that is an object with a busy property
       // value of busy property is an array of objects that include start and end property of busy times
 
       findFreeTimes.findAvailableSlots(meetingLength, calendars, (freeSlots) => {
-        this.props.updateAvailableSlots(freeSlots)
+        // passsing back the available slots as well as the selected date in ISO format
+        this.props.updateAvailableSlots(freeSlots, queryInfo.timeMin)
       });
     })
 
@@ -54,9 +54,10 @@ class AddEvent extends React.Component {
   render() {
     return (
       <div className="addevent">
-        <form onSubmit={this.changeDate.bind(this)}>
-          <label>Meeting Length</label><input name="meetingLength"></input>
-          <label>Date</label><input name="date"></input>
+        <form onSubmit={this.handleEventSubmit.bind(this)}>
+          <label>Meeting Title</label><input name="title"></input>
+          <label>Meeting Length (minutes) </label><input name="meetingLength"></input>
+          <label>Date</label><input name="date" placeholder="MM/DD/YYYY"></input>
           <button>Create event</button>
         </form>
       </div>
