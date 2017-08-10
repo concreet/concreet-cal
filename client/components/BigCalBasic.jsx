@@ -30,6 +30,7 @@ class BigCalBasic extends React.Component{
         })
       })
     });
+    CalendarModel.freeBusy(this.props.selectedContacts, this.props.user.user, 'n/a', 'n/a', (data)=>console.log('calendars', data));
   }
   render(){
     return (
