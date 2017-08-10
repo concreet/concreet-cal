@@ -79,6 +79,16 @@ exports.addToGroup = (req, res) => {
 	})
 };
 
+exports.removeFromGroup = (req, res) => {
+	//inputs
+	//req.body.group
+	//req.body.targetUser
+	Group.update({_id: req.body.group._id}, { $pullAll: { contacts: [req.body.targetUser._id] } } )
+	.then( () => {
+		res.sendStatus(200);
+	});
+};
+
 exports.reauth = (req, res) => {
 	//inputs
 	//req.params.userid
