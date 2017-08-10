@@ -36,8 +36,6 @@ var strategy = new GoogleStrategy({
     		accessToken: accessToken,
     	})
     	.then ( (user) => {
- 				console.log('>>>> here');
-
       	if(user.created) {
       		//user is actually in findOrCreate's weird {doc, created} object
       		//user.doc is the actual user document
