@@ -44,6 +44,8 @@ app.get('/auth/google/callback',
   }
 );
 
+//Need to put Auth middleware into all these calls
+
 app.get('/session', (req,res) => {
 	res.status(200).send(req.session);
 });

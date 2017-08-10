@@ -33,13 +33,21 @@ var strategy = new GoogleStrategy({
     	{ 
     		isSignedUp: true, 
     		googleId: profile.id,
-    		refreshToken: refreshToken,
     		accessToken: accessToken,
     	})
     	.then ( (user) => {
+ 				console.log('>>>> here');
+
       	if(user.created) {
+      		//user is actually in findOrCreate's weird {doc, created} object
+      		//user.doc is the actual user document
       		console.log('user created');
-      		return user.doc;
+    			if(refreshToken) user.doc.refreshToken = refreshToken;
+      		return user.doc.save(function (err, user) {
+						if (err) return console.error(err);
+						console.log('user saved');
+						return user;
+    			});
       	} else {
       		console.log('user found');
       		//check to see if data updated
@@ -47,7 +55,7 @@ var strategy = new GoogleStrategy({
       			user.doc.isSignedUp = true;
       			user.doc.googleId = profile.id;
       			user.doc.accessToken = accessToken;
-      			user.doc.refreshToken = refreshToken;
+      			if(refreshToken) user.doc.refreshToken = refreshToken;
       			return user.doc.save(function (err, user) {
   						if (err) return console.error(err);
   						console.log('user saved');
@@ -59,6 +67,8 @@ var strategy = new GoogleStrategy({
     		}
     	})
       .then( (user) => {
+      	//above, we pulled the user doc from its object. Now we can use it
+      	//in the way we expect.
       	//return actual user record
       	auth.user = user;
       	return user;
