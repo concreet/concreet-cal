@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-var getUser = (callback) => {
+export var getUser = (callback) => {
   // $.get('https://www.googleapis.com/youtube/v3/search', {
   //   q: options.query,
   //   maxResults: options.max,
@@ -18,7 +18,7 @@ var getUser = (callback) => {
   })
 };
 
-var getGroup = (userID, callback) => {
+export var getGroup = (userID, callback) => {
   let groupurl = '/groups/user/' + userID;
   $.ajax({
       type: "GET",
@@ -31,7 +31,7 @@ var getGroup = (userID, callback) => {
 
 }
 
-var addGroup = (groupname, user, callback) => {
+export var addGroup = (groupname, user, callback) => {
   $.ajax({
       type: "POST",
       url: '/groups/create',
@@ -41,16 +41,20 @@ var addGroup = (groupname, user, callback) => {
         groupName: groupname
       }),
       contentType: 'application/json',
-      success: (data) => {
-        callback(data);
+      statusCode: {
+        200: function(data) {
+          callback();
+        }
       },
-      error: (err, statusCode) => {
-        console.log(err);
+      error: (err) => {
+        return null;
+        // callback(err);
       }
   })
 }
 
-var addContactToGroup = (group, contact, callback) => {
+
+export var addContactToGroup = (group, contact, callback) => {
   $.ajax({
       type: "POST",
       url: '/groups/user/add',
@@ -60,21 +64,57 @@ var addContactToGroup = (group, contact, callback) => {
         targetUser: contact
       }),
       contentType: 'application/json',
-      success: (data) => {
-        callback(data);
+      statusCode: {
+        200: function(data) {
+          callback();
+        }
       },
-      error: (err, statusCode) => {
-        console.log(err);
+      error: (err) => {
+        return null;
+        // callback(err);
       }
+      // success: (data) => {
+      //   callback(data);
+      // },
+      // error: (err, statusCode) => {
+      //   console.log(err);
+      // }
   })
 }
 
-var addContact = () => {
+export var addContact = (gmail, callback) => {
+  let url = '/users/user/' + gmail;
+  $.ajax({
+      type: "GET",
+      url: url,
+      // dataType: 'application/json',
+      // data: JSON.stringify({
+      //   user: user,
+      //   groupName: groupname
+      // }),
+      contentType: 'application/json',
+      success: (data) => {
+        callback(data);
+      }
+  })
   
 }
 
-window.getUser = getUser;
-window.getGroup = getGroup;
-window.addGroup = addGroup;
-window.addContactToGroup = addContactToGroup;
-window.addContact = addContact;
+export const getContact = (userID, callback) => {
+  let contacturl = '/contacts/user/' + userID;
+  $.ajax({
+      type: "GET",
+      url: contacturl,
+      contentType: 'application/json',
+      success: (data) => {
+        callback(data);
+      }
+  })
+
+}
+
+// window.getUser = getUser;
+// window.getGroup = getGroup;
+// window.addGroup = addGroup;
+// window.addContactToGroup = addContactToGroup;
+// window.addContact = addContact;
