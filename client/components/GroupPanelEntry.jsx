@@ -22,7 +22,7 @@ class GroupPanelEntry extends React.Component {
   }
 
   handleUpdateGroup() {
-    this.props.updateGroup();
+    this.props.updateGroup(this.props.group);
 
   }
 

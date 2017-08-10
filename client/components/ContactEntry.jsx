@@ -31,8 +31,8 @@ class ContactEntry extends React.Component {
     return (
       <div className="contactentry">
         <div onClick={this.handleOnClick.bind(this)}>
-          { this.state.clicked && <p>&#10004; Name: {this.props.contact.lastName}, {this.props.contact.firstName} </p> }
-          { !this.state.clicked && <p> Name: {this.props.contact.lastName}, {this.props.contact.firstName} </p>}
+          { this.state.clicked && <p>&#10004; Email: {this.props.contact.emailAddress} </p> }
+          { !this.state.clicked && <p> Email: {this.props.contact.emailAddress} </p>}
         </div>
       </div>
 

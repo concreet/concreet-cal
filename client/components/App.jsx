@@ -16,7 +16,7 @@ class App extends React.Component {
   componentWillMount() {
     //functions in here will be invoked when App initiate
 
-    window.getUser((data) => {
+    UserModel.getUser((data) => {
       if (data.passport) {
         console.log(data.passport.user, 'HERE?');
         this.setState({
