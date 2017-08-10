@@ -63,7 +63,8 @@ class BigCalBasic extends React.Component{
         <AddEvent 
           user={this.props.user} 
           updateSlotsAndEventInfo={this.updateSlotsAndEventInfo.bind(this)} 
-          selectedContacts={this.props.selectedContacts} 
+          selectedContacts={this.props.selectedContacts}
+          selectedGroups={this.props.selectedGroups} 
           />
         <br/>
         <BigCalendar
@@ -73,11 +74,14 @@ class BigCalBasic extends React.Component{
           titleAccessor='summary'
           defaultDate={new Date()}
         />
-        {this.state.displayModal && <FreeTimeSlotsModal 
+        {this.state.displayModal && <FreeTimeSlotsModal
+          user={this.props.user}  
           availableSlots={this.state.availableSlots} 
           selectedDate={this.state.selectedDate}
           getEventDateTime={this.getEventDateTime.bind(this)}
           eventTitle={this.state.eventTitle}
+          selectedContacts={this.props.selectedContacts}
+          selectedGroups={this.props.selectedGroups} 
           />
         }
       </div>

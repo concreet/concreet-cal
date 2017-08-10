@@ -195,27 +195,14 @@ export const addEvent = (queryGroup, currentUser, title, timeStart, timeEnd, cal
   console.log('add event accessToken & eems', accessToken, calendarId);
   var attendees = []
 
-
-//delete this THESE ARE TEMPORARY DEFAULTS
   timeStart = {
-    "dateTime": "2017-08-10T13:00:00",
-    "timeZone": "America/Los_Angeles"
+    "dateTime": timeStart,
+    "timeZone": "America/Chicago"
   };
   timeEnd = {
-    "dateTime": "2017-08-10T14:00:00",
-    "timeZone": "America/Los_Angeles"
+    "dateTime": timeEnd,
+    "timeZone": "America/Chicago"
   };
-  queryGroup = [
-    {
-      _id: '598c7e657b913129c469119b',
-      emailAddress: 'concreetjo@gmail.com',
-      googleId: '100975285035041480697',
-      refreshToken: '1/1UQtnX2oh95M5ler6hWvzA4GGk82twQxe1uTBFUwEUI',
-      accessToken: 'ya29.GlujBM1d2tp5PkefyztEY53sEsgOEyAZqMRxqtP60CgyJPmNvPZBwgt2ILKfB7Y7xT23C5ryDSBHlA0owg_gral-ZJRe-UUAsneYG4E_j3Yt-KFMfgKOISCmjMyK',
-      __v: 0,
-      isSignedUp: true
-    }
-  ]
 
 //end delete
 
