@@ -90,10 +90,30 @@ body {
     color: white;
     margin-right: 10px;
     padding: 10px;
+    overflow: scroll;
 }
+
+.grouppanel {
+    margin-bottom: 100px;
+}
+
+/*.groupname {
+    margin-bottom: 1px;
+}*/
 
 .showbutton {
     float: right;
+    background-color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.addbutton {
+    font-size: 15px;
+    float: right;
+    background-color: white;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 .addevent {

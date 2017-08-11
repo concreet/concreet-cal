@@ -33,7 +33,7 @@ class GroupPanel extends React.Component {
 
   handleAddGroup(groupname) {
     this.props.addGroup(groupname);
-    console.log('cant add a group yet', groupname)
+    // console.log('cant add a group yet', groupname)
   }
 
   // handleAddContact(contactmail) {
@@ -54,22 +54,22 @@ class GroupPanel extends React.Component {
   render() {
     return (
       <div className="grouppanel">
-        { this.props.isContactList && <h3> CONTACTS </h3>}
-        { this.props.isContactList && <button onClick={this.willAddContact}> <i className="fa fa-user-plus" aria-hidden="true"></i> </button>}
+        { this.props.isContactList && <h3 style={{display: 'inline'}}> CONTACTS </h3>}
+        { this.props.isContactList && <button className="addbutton" onClick={this.willAddContact}> <i className="fa fa-user-plus" aria-hidden="true"></i> </button>}
         { this.state.addContact && <form> 
-          Contact Gmail: <input className="contactmail" type="text" />
-          <input type="submit" value="Submit Gmail" onClick={()=>{ this.props.addContact($('.contactmail').val()) }} />
+          Contact g-mail: <input className="contactmail" type="text" />
+          <input type="submit" value="Submit" onClick={()=>{ this.props.addContact($('.contactmail').val()) }} />
           </form>}
         { this.props.isContactList && this.props.contacts.map((contact) => <ContactEntry contact={contact} selectContact={this.props.selectContact} selectedContacts={this.props.selectedContacts}/>) }
 
 
 
-        { !this.props.isContactList && <h3> GROUP LIST </h3>}
+        { !this.props.isContactList && <h3 style={{display: 'inline'}}> GROUP LIST </h3>}
         { !this.props.isContactList && 
-          <button onClick={this.willAddGroup}> <i className="fa fa-user-plus" aria-hidden="true"></i> </button> }
+          <button className="addbutton" onClick={this.willAddGroup}> <i className="fa fa-users" aria-hidden="true"></i> </button> }
         { this.state.addGroup && <form> 
           Group Name: <input className="groupname" type="text" />
-          <input type="submit" value="Submit Group Name" onClick={()=>{ this.handleAddGroup($('.groupname').val())}}/>
+          <input type="submit" value="Add Group" onClick={()=>{ this.handleAddGroup($('.groupname').val())}}/>
           </form>}
         { !this.props.isContactList && this.props.groups.map((group) => <GroupPanelEntry group={group} selectContact={this.props.selectContact} selectGroup={this.props.selectGroup} updateGroup={this.props.updateGroup} removeContactFromGroup={this.props.removeContactFromGroup}/>)}
       </div>
