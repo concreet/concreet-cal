@@ -97,6 +97,10 @@ body {
     max-width: 300px;
 }
 
+.contactentry {
+    font-weight: thin;
+}
+
 .miniLogo {
     max-width: 50px;
     max-height: 50px;
@@ -123,6 +127,10 @@ body {
     background-color: white;
     border-radius: 6px;
     cursor: pointer;
+}
+
+.calendar {
+    height: 100%;
 }
 
 .addevent {
