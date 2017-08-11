@@ -6,22 +6,88 @@
 import $ from 'jquery';
 import moment from 'moment';
 
-// retrieves all calendars for a single user
-export const getCalendarList = (token, callback) => {
-  // token is special key provided by google to identify a user and a session
-  var searchParams = {access_token: token};
+//get data from database since it has the most current values for refresh tokens and access tokens
 
-  $.get('https://www.googleapis.com/calendar/v3/users/me/calendarList', searchParams, (data) => {
-    // data is an object with an items property that contains an array of calendar data
-    callback(token, data.items);
-  }).fail((err) => {
-    console.log(err);
+const checkQueryGroup = (queryGroup, callback) => {
+  // console.log('queryGroup', queryGroup);
+  var checkedQueryGroup = []
+  for (var user of queryGroup) {
+    getUserFromDB(user, (reauthUser) => {
+      checkedQueryGroup.push(reauthUser)
+      // console.log('from db', reauthUser);
+      if (checkedQueryGroup.length === queryGroup.length) {
+        // console.log('queryGroup reauthUser', checkedQueryGroup);
+        callback(checkedQueryGroup);
+      }
+    });
+  }
+}
+
+const getUserFromDB = (user, callback) => {
+  // console.log('getUserFromDB', user);
+  $.get(`/users/user/${user.emailAddress}`, (user) => {
+    checkAccessToken(user, true, (reauthUser) => {
+      // console.log('getUserFromDB reauthUser', reauthUser);
+      callback(reauthUser);
+    })
   })
+}
+
+const checkAccessToken = (user, retry, callback) => {
+  // console.log('checkAccessToken', user);
+  $.get(`https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${user.accessToken}`, (data) => {
+    // console.log('google check', data)
+    callback(user);
+  }).fail((err) => {
+    console.log('google check failed');
+    console.error(err);
+    if (retry) {
+      refreshToken(user, (reauthUser) => {
+        // console.log('inside refresh', reauthUser)
+        checkAccessToken(reauthUser, false, (reauthUser)=>{
+          // console.log('checkAccessToken reauthUser', reauthUser);
+          callback(reauthUser);
+        })
+      });
+    } else {
+      // console.log('could not reauth user');
+      callback(user)
+    }
+  })
+}
+
+const refreshToken = (user, callback) => {
+  // console.log('refreshToken', user);
+  $.get(`/users/reauth/${user._id}`, (reauthUser) => {
+    // console.log('refreshToken reauthUser', reauthUser);
+    callback(reauthUser);
+  })
+}
+
+// retrieves all calendars for a single user
+export const getCalendarList = (currentUser, callback) => {
+
+  getUserFromDB(currentUser, (currentUser) => {
+
+    console.log('get calendar list', currentUser);
+    // token is special key provided by google to identify a user and a session
+    var searchParams = {access_token: currentUser.accessToken};
+
+    $.get('https://www.googleapis.com/calendar/v3/users/me/calendarList', searchParams, (data) => {
+      // data is an object with an items property that contains an array of calendar data
+      callback(currentUser, data.items);
+    }).fail((err) => {
+      console.log(err);
+    })
+
+  });
 };
 
-export const getCalendarEvents = function (token, calendarList, callback) {
-  for (var calendar of calendarList) {
+export const getCalendarEvents = function (currentUser, calendarList, callback) {
+  // for (var calendar of calendarList) {
+  var calendar = calendarList[0];
 
+  console.log('cal and cur', calendarList, currentUser);
     // replace any pound sign with its escape character. Pound sign interferes with URL search
     calendar.id = calendar.id.replace('#', '%23')
 
@@ -32,7 +98,7 @@ export const getCalendarEvents = function (token, calendarList, callback) {
     // give it a time range from one week ago to one week from now.
     // order by start time(ascending). Earliest event will be 0th element in items array
     var searchParams = {
-      access_token: token,
+      access_token: currentUser.accessToken,
       singleEvents: true,
       timeMin: startOfMonth,
       timeMax: endOfMonth,
@@ -43,7 +109,7 @@ export const getCalendarEvents = function (token, calendarList, callback) {
       // data is an object with an items property that contains an array of calendar data
       callback(data.items);
     });
-  }
+  // }
 }
 
 export const processEvents = function (eventsList, callback) {
@@ -58,20 +124,23 @@ export const processEvents = function (eventsList, callback) {
 export const freeBusy = (queryGroup, currentUser, timeMin, timeMax, callback) => {
 
   var allContactsCalendars = [];
-
 // add current user to queries
   queryGroup.push(currentUser)
 
-  var counter = 0;
-// query freeBusy for all members of
-  for (var member of queryGroup) {
-    var id = member._id;
-    var email = member.emailAddress;
-    var accessToken = member.accessToken;
-    var refreshToken = member.refreshToken;
+  checkQueryGroup(queryGroup, (checkedQueryGroup) => {
+
+    // console.log('checkedueryGroup after', checkedQueryGroup);
+
+    var counter = 0;
+    // query freeBusy for all members of
+    for (var member of checkedQueryGroup) {
+      var id = member._id;
+      var email = member.emailAddress;
+      var accessToken = member.accessToken;
+      var refreshToken = member.refreshToken;
 
     // dummy data
-    var requestBody = {
+      var requestBody = {
       "items": [
         {
           "id": email
@@ -84,28 +153,29 @@ export const freeBusy = (queryGroup, currentUser, timeMin, timeMax, callback) =>
       "timeMax": timeMax,
     }
 
-    $.ajax({
-      type: "POST",
-      url: `https://www.googleapis.com/calendar/v3/freeBusy`,
-      headers: {Authorization: `Bearer ${accessToken}`},
-      data: JSON.stringify(requestBody),
-      contentType: 'application/json',
-      dataType: 'json',
-      success: function(data) {
-        console.log('each cal', data.calendars)
-        //add to array that contains all members freeBusytimes
-        allContactsCalendars.push(data.calendars);
-        counter++;
-        if (counter === queryGroup.length) {
-          callback(allContactsCalendars);
+      $.ajax({
+        type: "POST",
+        url: `https://www.googleapis.com/calendar/v3/freeBusy`,
+        headers: {Authorization: `Bearer ${accessToken}`},
+        data: JSON.stringify(requestBody),
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(data) {
+          console.log('each cal', data.calendars)
+          //add to array that contains all members freeBusytimes
+          allContactsCalendars.push(data.calendars);
+          counter++;
+          if (counter === queryGroup.length) {
+            callback(allContactsCalendars);
+          }
+        },
+        error: function(err) {
+          // still need to work out refresh accessToken
+          return console.log(err.responseText);
         }
-      },
-      error: function(err) {
-        // still need to work out refresh accessToken
-        return console.log(err.responseText);
-      }
-    });
-  } //for loop end
+      });
+    } //for loop end
+  }) //checkQueryGroup function
 }
 
 export const addEvent = (queryGroup, currentUser, title, timeStart, timeEnd, callback) => {
