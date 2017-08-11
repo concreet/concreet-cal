@@ -2,7 +2,6 @@ import React from 'react';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import * as CalendarModel from '../models/calendar.js';
-import events from './events';
 import FreeTimeSlotsModal from './FreeTimeSlotsModal.jsx';
 import findFreeTimes from '../models/findFreeTimes.js';
 import AddEvent from './AddEvent.jsx';
@@ -17,7 +16,7 @@ class BigCalBasic extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      events: events,
+      events: [],
       availableSlots: [],
       displayModal: false,
       selectedDate: undefined,
@@ -64,7 +63,7 @@ class BigCalBasic extends React.Component{
       <div className="calendar">
         <AddEvent
           user={this.props.user}
-          updateSlotsAndEventInfo={this.updateSlotsAndEventInfo.bind(this)} 
+          updateSlotsAndEventInfo={this.updateSlotsAndEventInfo.bind(this)}
           selectedContacts={this.props.selectedContacts}
           selectedGroups={this.props.selectedGroups}
         />
