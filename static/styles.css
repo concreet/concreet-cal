@@ -107,12 +107,26 @@ body {
 }
 
 .grouppanel {
-    margin-bottom: 100px;
+    margin-bottom: 50px;
 }
 
-/*.groupname {
-    margin-bottom: 1px;
-}*/
+.addremovecontact {
+    background-color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Catamaran', sans-serif;
+    font-size: 12px;
+    height: 24px;
+    width: auto;
+}
+
+.submit {
+    background-color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Catamaran', sans-serif;
+}
+
 
 .showbutton {
     float: right;

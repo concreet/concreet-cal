@@ -58,7 +58,7 @@ class GroupPanel extends React.Component {
         { this.props.isContactList && <button className="addbutton" onClick={this.willAddContact}> <i className="fa fa-user-plus" aria-hidden="true"></i> </button>}
         { this.state.addContact && <form> 
           Contact g-mail: <input className="contactmail" type="text" />
-          <input type="submit" value="Submit" onClick={()=>{ this.props.addContact($('.contactmail').val()) }} />
+          <input className="submit" type="submit" value="Submit" onClick={()=>{ this.props.addContact($('.contactmail').val()) }} />
           </form>}
         { this.props.isContactList && this.props.contacts.map((contact) => <ContactEntry contact={contact} selectContact={this.props.selectContact} selectedContacts={this.props.selectedContacts}/>) }
 
@@ -69,7 +69,7 @@ class GroupPanel extends React.Component {
           <button className="addbutton" onClick={this.willAddGroup}> <i className="fa fa-users" aria-hidden="true"></i> </button> }
         { this.state.addGroup && <form> 
           Group Name: <input className="groupname" type="text" />
-          <input type="submit" value="Add Group" onClick={()=>{ this.handleAddGroup($('.groupname').val())}}/>
+          <input className="submit" type="submit" value="Add Group" onClick={()=>{ this.handleAddGroup($('.groupname').val())}}/>
           </form>}
         { !this.props.isContactList && this.props.groups.map((group) => <GroupPanelEntry group={group} selectContact={this.props.selectContact} selectGroup={this.props.selectGroup} updateGroup={this.props.updateGroup} removeContactFromGroup={this.props.removeContactFromGroup}/>)}
       </div>
