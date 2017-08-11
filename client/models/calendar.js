@@ -102,6 +102,7 @@ export const freeBusy = (queryGroup, currentUser, timeMin, timeMax, callback) =>
       },
       error: function(err) {
         // still need to work out refresh accessToken
+        return console.log(err.responseText);
       }
     });
   } //for loop end
