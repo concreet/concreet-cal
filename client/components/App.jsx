@@ -18,7 +18,7 @@ class App extends React.Component {
     //functions in here will be invoked when App initiate
     UserModel.getUser((data) => {
       if (data.passport) {
-        console.log(data.passport.user, 'HERE?');
+        //console.log(data.passport.user, 'HERE?');
         this.setState({
           signedIn: true,
           user: data.passport.user

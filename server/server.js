@@ -8,8 +8,9 @@ var path = require('path');
 var passport = require('./passport.js')
 var browserify = require('browserify-middleware');
 var cors = require('cors');
-var app = express();
 var session = require('express-session');
+
+var app = express();
 
 app.use(express.static('static'));
 
