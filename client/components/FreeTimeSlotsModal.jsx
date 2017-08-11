@@ -12,7 +12,9 @@ const customStyles = {
     marginRight           : '-50%',
     transform             : 'translate(-50%, -50%)',
     maxHeight             : '325px', // This sets the max height
-    overflow              : 'scroll' // This tells the modal to scroll
+    overflow              : 'scroll', // This tells the modal to scroll
+    border                : '1px solid black',
+    borderRadius         : '0px'
   }
 };
 
