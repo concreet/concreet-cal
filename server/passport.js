@@ -31,6 +31,8 @@ var strategy = new GoogleStrategy({
  		//find on email address. If doesn't exist at all, create
     User.findOrCreate({ emailAddress: profile.emails[0].value }, 
     	{ 
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
     		isSignedUp: true, 
     		googleId: profile.id,
     		accessToken: accessToken,
@@ -50,6 +52,8 @@ var strategy = new GoogleStrategy({
       		console.log('user found');
       		//check to see if data updated
       		if(!user.doc.isSignedUp){
+            user.doc.firstName = profile.name.givenName;
+            user.doc.lastName = profile.name.familyName;
       			user.doc.isSignedUp = true;
       			user.doc.googleId = profile.id;
       			user.doc.accessToken = accessToken;
