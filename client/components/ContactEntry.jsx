@@ -41,16 +41,22 @@ class ContactEntry extends React.Component {
       <div className="contactentry">
         { this.props.contact.isSignedUp && !this.props.groupPanelCheck && 
           <div onClick={this.handleOnClick.bind(this)}>
-            { this.state.clicked && <p> <i className="fa fa-check-square-o" aria-hidden="true"></i> Email: {this.props.contact.emailAddress} </p> }
-            { !this.state.clicked && <p> <i className="fa fa-square-o" aria-hidden="true"></i> Email: {this.props.contact.emailAddress} </p>}
+            { this.state.clicked && <p style={{cursor: 'pointer'}}> <i className="fa fa-check-square-o" aria-hidden="true"></i> Email: {this.props.contact.emailAddress} </p> }
+            { !this.state.clicked && <p style={{cursor: 'pointer'}}> <i className="fa fa-square-o" aria-hidden="true"></i> Email: {this.props.contact.emailAddress} </p>}
           </div> 
         }
 
-      { !this.props.contact.isSignedUp || this.props.groupPanelCheck && 
+      { !this.props.contact.isSignedUp && 
         <div>
           <p> Email: {this.props.contact.emailAddress} </p>
         </div>
-      }       
+      }
+
+      { this.props.groupPanelCheck && 
+        <div>
+          <p> Email: {this.props.contact.emailAddress} </p>
+        </div>
+      }         
       </div>
     );
   }
