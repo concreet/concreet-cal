@@ -2,7 +2,6 @@ import React from 'react';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 import * as CalendarModel from '../models/calendar.js';
-import events from './events';
 import FreeTimeSlotsModal from './FreeTimeSlotsModal.jsx';
 import findFreeTimes from '../models/findFreeTimes.js';
 import AddEvent from './AddEvent.jsx';
@@ -17,7 +16,7 @@ class BigCalBasic extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      events: events,
+      events: [],
       availableSlots: [],
       displayModal: false,
       selectedDate: undefined,
@@ -29,8 +28,8 @@ class BigCalBasic extends React.Component{
 
   componentWillMount() {
     // callback hell to load events into calendar
-    CalendarModel.getCalendarList(this.props.user.token, (token, items) => {
-      CalendarModel.getCalendarEvents(token, items, (eventsList) => {
+    CalendarModel.getCalendarList(this.props.user.user, (currentUser, items) => {
+      CalendarModel.getCalendarEvents(currentUser, items, (eventsList) => {
         CalendarModel.processEvents(eventsList, (processedEvents) => {
           this.setState({
             events: processedEvents,
@@ -62,12 +61,12 @@ class BigCalBasic extends React.Component{
   render(){
     return (
       <div className="calendar">
-        <AddEvent 
-          user={this.props.user} 
-          updateSlotsAndEventInfo={this.updateSlotsAndEventInfo.bind(this)} 
+        <AddEvent
+          user={this.props.user}
+          updateSlotsAndEventInfo={this.updateSlotsAndEventInfo.bind(this)}
           selectedContacts={this.props.selectedContacts}
-          selectedGroups={this.props.selectedGroups} 
-          />
+          selectedGroups={this.props.selectedGroups}
+        />
 
         <br/>
         <BigCalendar
@@ -78,13 +77,13 @@ class BigCalBasic extends React.Component{
           defaultDate={new Date()}
         />
         {this.state.displayModal && <FreeTimeSlotsModal
-          user={this.props.user}  
-          availableSlots={this.state.availableSlots} 
+          user={this.props.user}
+          availableSlots={this.state.availableSlots}
           selectedDate={this.state.selectedDate}
           getEventDateTime={this.getEventDateTime.bind(this)}
           eventTitle={this.state.eventTitle}
           selectedContacts={this.props.selectedContacts}
-          selectedGroups={this.props.selectedGroups} 
+          selectedGroups={this.props.selectedGroups}
           meetingLength={this.state.meetingLength}
           />
         }

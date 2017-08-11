@@ -49,6 +49,8 @@ class AddEvent extends React.Component {
   // }
 
   handleEventSubmit(e) {
+    e.preventDefault();
+    console.log('submit selectedContacts', this.props.selectedContacts);
     var meetingLength = e.target.meetingLength.value
     var meetingTitle = e.target.title.value
     var timeMin = moment(e.target.date.value, "MM/DD/YYYY");
@@ -56,7 +58,7 @@ class AddEvent extends React.Component {
     var queryInfo = {
       timeMin: timeMin.toISOString(),
       timeMax: timeMin.add('1', 'days').toISOString()
-    }; 
+    };
 
     var allContacts = this.props.selectedContacts.slice();
     this.props.selectedGroups.forEach((group)=> {
@@ -69,13 +71,15 @@ class AddEvent extends React.Component {
       })
     })
 
-    // console.log(allContacts, 'finalizedd')
+    console.log('QI', queryInfo.timeMin)
+    console.log(allContacts, 'finalizedd')
 
     //================
     //================ Need to wrap the below call in recursive check for success.
     //                  if response is 401, make call to reauth and then try again
     //                  needs counter to make sure no infinite loop
     //                  https://github.com/fiznool/passport-oauth2-refresh/issues/1
+
 
     CalendarModel.freeBusy(allContacts, this.props.user.user, queryInfo.timeMin, queryInfo.timeMax, (calendars) => {
       // receives back calendars array with each element being an object with a email address as its only property
@@ -87,9 +91,8 @@ class AddEvent extends React.Component {
       });
     })
 
-    e.preventDefault();
   }
-  
+
   render() {
     return (
       <div className="addevent">

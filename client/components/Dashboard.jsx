@@ -14,7 +14,7 @@ class Dashboard extends React.Component {
       // selectedContactsFromGroups: [],
       allGroups: [
       { owner_id: 1, group_name: 'test', isContactList: false, contacts: [{firstName: 'Hi', lastName: 'There', googleId: '2sfiewasdfors', emailAddress: 'hithere@gmail.com', isSignedUp: true}] },
-      { owner_id: 1, group_name: 'test2', isContactList: false, contacts: [{firstName: 'Hii', lastName: 'Theree', googleId: '59sfiewodfsrs', emailAddress: 'hithere2@gmail.com', isSignedUp: true}] }, 
+      { owner_id: 1, group_name: 'test2', isContactList: false, contacts: [{firstName: 'Hii', lastName: 'Theree', googleId: '59sfiewodfsrs', emailAddress: 'hithere2@gmail.com', isSignedUp: true}] },
       { owner_id: 1, group_name: 'test3', isContactList: false, contacts: [{firstName: 'Hiii', lastName: 'Thereeee', googleId: '59sfiewodfsrsdsf', emailAddress: 'hithere3@gmail.com', isSignedUp: true}] }
       ],
       allContacts: [
@@ -67,7 +67,7 @@ class Dashboard extends React.Component {
   handleSelectedGroup(group) {
     //console.log(group, 'here')
     //console.log(this.state.selectedGroup, 'WHATS THIS');
-    
+
     if (!this.checkExist(this.state.selectedGroup, group)) {
       var addGroup = this.state.selectedGroup.slice();
       addGroup.push(group);
@@ -82,7 +82,7 @@ class Dashboard extends React.Component {
         selectedGroup: removeGroup
       })
     }
-      setTimeout(()=> {console.log(this.state.selectedGroup, 'new one IN GROUP');})  
+      setTimeout(()=> {console.log(this.state.selectedGroup, 'new one IN GROUP');})
   }
 
   // future implementation
@@ -119,7 +119,7 @@ class Dashboard extends React.Component {
       this.setState({
         selectedContacts: removeContact
       })
-    } 
+    }
     //this is for selecting single contacts from other groups implementation - not accomplished yet
 
     // else if (!this.checkExist(this.state.selectedContactsFromGroups, contact) && !isContactList) {
