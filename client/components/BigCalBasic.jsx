@@ -61,17 +61,10 @@ class BigCalBasic extends React.Component{
 
   render(){
     return (
-<<<<<<< HEAD
       <div className="calendar">
-        <AddEvent 
-          user={this.props.user} 
-          updateSlotsAndEventInfo={this.updateSlotsAndEventInfo.bind(this)} 
-=======
-      <div>
         <AddEvent
           user={this.props.user}
-          updateSlotsAndEventInfo={this.updateSlotsAndEventInfo.bind(this)}
->>>>>>> Added reauth on calendar.js
+          updateSlotsAndEventInfo={this.updateSlotsAndEventInfo.bind(this)} 
           selectedContacts={this.props.selectedContacts}
           selectedGroups={this.props.selectedGroups}
         />
