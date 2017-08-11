@@ -152,13 +152,32 @@ class Dashboard extends React.Component {
 
   handleAddContact(gmail) {
     // console.log('check if add contact proc', gmail);
-    UserModel.addContact(gmail, (contact) => {
-      // console.log(contact, 'this is the stuff from addorfindXXXX', this.state.contact);
-        UserModel.addContactToGroup(this.state.contact, contact, ()=>{
-          // console.log('reached here, should added to the contact list XXX');
-          this.resetContact();
-        })
+    let checkdup = false;
+    this.state.allContacts.forEach((contact) => {
+      if (gmail === contact.emailAddress) {
+        checkdup = true;
+      }
     })
+
+    let checkgmail = false;
+    // console.log('WHATS THIS', gmail.slice(-10).toUpperCase())
+    if (gmail.slice(-10).toUpperCase() !== '@GMAIL.COM') {
+      checkgmail = true;
+    }
+
+    if (!checkdup && !checkgmail) {     
+      UserModel.addContact(gmail, (contact) => {
+        // console.log(contact, 'this is the stuff from addorfindXXXX', this.state.contact);
+          UserModel.addContactToGroup(this.state.contact, contact, ()=>{
+            // console.log('reached here, should added to the contact list XXX');
+            this.resetContact();
+          })
+      })
+    } else if (checkdup) {
+      alert('Error: Contact already exist.')
+    } else if (checkgmail) {
+      alert('Error: Please enter a google email.')
+    }
   }
 
   handleUpdateGroup(group) {
