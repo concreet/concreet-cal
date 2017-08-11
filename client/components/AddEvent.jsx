@@ -69,7 +69,6 @@ class AddEvent extends React.Component {
       })
     })
 
-    console.log('QI', queryInfo.timeMin)
     // console.log(allContacts, 'finalizedd')
 
     //================

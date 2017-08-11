@@ -2,6 +2,14 @@ body {
     margin: 0px;
 }
 
+.app {
+    height: 100vh;
+}
+
+.dashboard {
+    height: 100%;
+}
+
 .splash {
     background-color: rgba(44, 62, 80,1.0);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -41,6 +49,30 @@ body {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+
+.title {
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    font-size: 60px;
+    margin: 0px;
+    letter-spacing: 5px;
+    background-color: rgba(228, 241, 254, 1.0);
+}
+
+.sidepanel {
+    float: left;
+    display: inline-block;
+    background-color: rgba(44, 62, 80,1.0);
+    height: 100%;
+    font-family: 'Catamaran', sans-serif;
+    color: white;
+    margin-right: 10px;
+    padding: 10px;
+}
+
+.addevent {
+    font-family: 'Catamaran', sans-serif;
 }
 
 .ReactModal__Overlay {

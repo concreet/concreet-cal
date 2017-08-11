@@ -191,7 +191,7 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div className="dashboard">
-        <h1>--------Dashboard-----------</h1>
+        <h1 className="title">Concreet</h1>
         <SidePanel contacts={this.state.allContacts} groups={this.state.allGroups} selectContact={this.handleSelectedContacts} selectGroup={this.handleSelectedGroup} addGroup={this.handleAddGroup} addContact={this.handleAddContact} updateGroup={this.handleUpdateGroup} removeContactFromGroup={this.removeContactFromGroup} selectedContacts={this.state.selectedContacts}/>
         <BigCalBasic user={this.props.user} selectedGroups={this.state.selectedGroup} selectedContacts={this.state.selectedContacts}/>
 
