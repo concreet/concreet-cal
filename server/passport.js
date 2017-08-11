@@ -41,7 +41,7 @@ var strategy = new GoogleStrategy({
       		//user.doc is the actual user document
       		console.log('user created');
     			if(refreshToken) user.doc.refreshToken = refreshToken;
-      		return user.doc.save(function (err, user) {
+      		return user.doc.save( function (err, user) {
 						if (err) return console.error(err);
 						console.log('user saved');
 						return user;
@@ -62,12 +62,11 @@ var strategy = new GoogleStrategy({
       		} else {
             if(refreshToken) user.doc.refreshToken = refreshToken;
             user.doc.accessToken = accessToken;
-            return user.doc.save(function (err, user) {
+            return user.doc.save( function (err, user) {
               if (err) return console.error(err);
               console.log('user saved');
               return user;
             });
-      			return user.doc;
       		}
     		}
     	})
