@@ -18,7 +18,6 @@ button.rbc-input::-moz-focus-inner {
 }
 .rbc-calendar {
   box-sizing: border-box;
-  height: 100%;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
@@ -30,6 +29,8 @@ button.rbc-input::-moz-focus-inner {
   margin: 5px;
   padding: 5px;
   border: 1px solid black;
+  height: 70%;
+  overflow: scroll;
 
 }
 .rbc-calendar *,

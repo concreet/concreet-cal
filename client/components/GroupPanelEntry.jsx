@@ -41,14 +41,14 @@ class GroupPanelEntry extends React.Component {
     return (
       <div className="grouppanelentry">
         {this.state.showSelect && <div className="groupname"> 
-          <p style={{display: 'inline', cursor: 'pointer'}} onClick={this.handleSelectGroup.bind(this)}> <i className="fa fa-check-square-o" aria-hidden="true"></i> Group: {this.props.group.group_name} </p> 
+          <p style={{display: 'inline', cursor: 'pointer'}} onClick={this.handleSelectGroup.bind(this)}> <i className="fa fa-check-square-o" aria-hidden="true"></i> {this.props.group.group_name} </p> 
           { this.state.clicked && <button className="showbutton" onClick={this.handleOnClick.bind(this)}> <i className="fa fa-window-minimize" aria-hidden="true"></i> </button> }
           { !this.state.clicked && <button className="showbutton" onClick={this.handleOnClick.bind(this)}> <i className="fa fa-window-maximize" aria-hidden="true"></i> </button> }  
 
         </div> }  
 
         {!this.state.showSelect && <div className="groupname"> 
-          <p style={{display: 'inline', cursor: 'pointer'}} onClick={this.handleSelectGroup.bind(this)}> <i className="fa fa-square-o" aria-hidden="true"></i> Group: {this.props.group.group_name} </p> 
+          <p style={{display: 'inline', cursor: 'pointer'}} onClick={this.handleSelectGroup.bind(this)}> <i className="fa fa-square-o" aria-hidden="true"></i> {this.props.group.group_name} </p> 
           { this.state.clicked && <button className="showbutton" onClick={this.handleOnClick.bind(this)}> <i className="fa fa-window-minimize" aria-hidden="true"></i> </button> }
           { !this.state.clicked && <button className="showbutton" onClick={this.handleOnClick.bind(this)}> <i className="fa fa-window-maximize" aria-hidden="true"></i> </button> } 
         </div> }

@@ -1,11 +1,11 @@
 body {
     margin: 0px;
     height: 100%;
-    overflow: hidden;
 }
 
 .app {
     height: 100vh;
+    overflow: hidden;
 }
 
 .dashboard {
@@ -15,7 +15,7 @@ body {
 
 .splash {
     background-color: rgba(44, 62, 80,1.0);
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Raleway', sans-serif;
     text-align: center;
     color: white;
     height: 100vh;
@@ -28,10 +28,12 @@ body {
 }
 
 .appName {
-    margin-bottom: 0px;
+    margin: 0px;
+    font-size: 50px;
 }
 .tagline {
     margin-top: 0px;
+    font-size: 16px;
 }
 
 .meetingImage {
@@ -78,6 +80,7 @@ body {
     font-size: 60px;
     margin: 0px 0px 15px 0px;
     letter-spacing: 5px;
+    color: rgba(44, 62, 80,1.0);
 }
 
 .sidepanel {
@@ -91,6 +94,16 @@ body {
     margin-right: 10px;
     padding: 10px;
     overflow: scroll;
+    max-width: 300px;
+}
+
+.contactentry {
+    font-weight: thin;
+}
+
+.miniLogo {
+    max-width: 50px;
+    max-height: 50px;
 }
 
 .grouppanel {
@@ -116,6 +129,10 @@ body {
     cursor: pointer;
 }
 
+.calendar {
+    height: 100%;
+}
+
 .addevent {
     font-family: 'Catamaran', sans-serif;
 }
@@ -129,7 +146,7 @@ body {
     text-align: left;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
     text-indent: 0px;
 }
 
@@ -147,7 +164,7 @@ input:-webkit-autofill {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer; 
 }
 
