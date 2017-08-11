@@ -94,10 +94,10 @@ class AddEvent extends React.Component {
     return (
       <div className="addevent">
         <form onSubmit={this.handleEventSubmit.bind(this)}>
-          <label>Meeting Title</label><input name="title"></input>
-          <label>Meeting Length (minutes) </label><input name="meetingLength"></input>
-          <label>Date</label><input name="date" placeholder="MM/DD/YYYY"></input>
-          <button>Create event</button>
+          <input type="text" name="title" placeholder="Meeting Title"></input>
+          <input type="text" name="meetingLength" placeholder="Meeting Length"></input>
+          <input type="text" name="date" placeholder="MM/DD/YYYY"></input>
+          <button className="createEventButton">Create event</button>
         </form>
       </div>
 

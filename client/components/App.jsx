@@ -39,7 +39,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
-        { this.state.signedIn && <button className="signout" onClick={this.handleSignOut}>Sign Out</button> }
+        { this.state.signedIn && <a className="signoutLink" onClick={this.handleSignOut}>Sign Out</a> }
         { this.state.signedIn && <Dashboard user={this.state.user} /> }
         { !this.state.signedIn && <SplashLogin/> }
       </div>
