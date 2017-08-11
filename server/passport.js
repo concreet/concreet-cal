@@ -60,6 +60,13 @@ var strategy = new GoogleStrategy({
   						return user;
       			});
       		} else {
+            if(refreshToken) user.doc.refreshToken = refreshToken;
+            user.doc.accessToken = accessToken;
+            return user.doc.save(function (err, user) {
+              if (err) return console.error(err);
+              console.log('user saved');
+              return user;
+            });
       			return user.doc;
       		}
     		}
