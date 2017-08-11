@@ -54,8 +54,8 @@ class GroupPanel extends React.Component {
   render() {
     return (
       <div className="grouppanel">
-        { this.props.isContactList && <h3> Contact List </h3>}
-        { this.props.isContactList && <button onClick={this.willAddContact}> Add Contacts </button>}
+        { this.props.isContactList && <h3> CONTACTS </h3>}
+        { this.props.isContactList && <button onClick={this.willAddContact}> <i className="fa fa-user-plus" aria-hidden="true"></i> </button>}
         { this.state.addContact && <form> 
           Contact Gmail: <input className="contactmail" type="text" />
           <input type="submit" value="Submit Gmail" onClick={()=>{ this.props.addContact($('.contactmail').val()) }} />
@@ -64,9 +64,9 @@ class GroupPanel extends React.Component {
 
 
 
-        { !this.props.isContactList && <h3> All Group List </h3>}
+        { !this.props.isContactList && <h3> GROUP LIST </h3>}
         { !this.props.isContactList && 
-          <button onClick={this.willAddGroup}> Add Groups </button> }
+          <button onClick={this.willAddGroup}> <i className="fa fa-user-plus" aria-hidden="true"></i> </button> }
         { this.state.addGroup && <form> 
           Group Name: <input className="groupname" type="text" />
           <input type="submit" value="Submit Group Name" onClick={()=>{ this.handleAddGroup($('.groupname').val())}}/>

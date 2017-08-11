@@ -39,16 +39,16 @@ class ContactEntry extends React.Component {
 
     return (
       <div className="contactentry">
-        { this.props.contact.isSignedUp && 
+        { this.props.contact.isSignedUp && !this.props.groupPanelCheck && 
           <div onClick={this.handleOnClick.bind(this)}>
-            { this.state.clicked && <p>&#10004; Email: {this.props.contact.emailAddress} </p> }
-            { !this.state.clicked && <p> Email: {this.props.contact.emailAddress} </p>}
+            { this.state.clicked && <p> <i className="fa fa-check-square-o" aria-hidden="true"></i> Email: {this.props.contact.emailAddress} </p> }
+            { !this.state.clicked && <p> <i className="fa fa-square-o" aria-hidden="true"></i> Email: {this.props.contact.emailAddress} </p>}
           </div> 
         }
 
-      { !this.props.contact.isSignedUp && 
+      { !this.props.contact.isSignedUp || this.props.groupPanelCheck && 
         <div>
-          <strike> Email: {this.props.contact.emailAddress} </strike>
+          <p> Email: {this.props.contact.emailAddress} </p>
         </div>
       }       
       </div>

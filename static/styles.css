@@ -92,6 +92,10 @@ body {
     padding: 10px;
 }
 
+.showbutton {
+    float: right;
+}
+
 .addevent {
     font-family: 'Catamaran', sans-serif;
 }
