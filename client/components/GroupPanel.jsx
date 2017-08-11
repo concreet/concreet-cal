@@ -12,7 +12,7 @@ class GroupPanel extends React.Component {
       addContactToGroup: false
     }
     //binding functions here
-    this.handleAddContact = this.handleAddContact.bind(this);
+    // this.handleAddContact = this.handleAddContact.bind(this);
     this.handleAddGroup = this.handleAddGroup.bind(this);
     this.willAddContact = this.willAddContact.bind(this);
     this.willAddGroup = this.willAddGroup.bind(this);
@@ -36,10 +36,10 @@ class GroupPanel extends React.Component {
     console.log('cant add a group yet', groupname)
   }
 
-  handleAddContact(contactmail) {
-    this.props.addContact(contactmail);
-    console.log('cant add a contact yet', contactmail)
-  }
+  // handleAddContact(contactmail) {
+  //   this.props.addContact(contactmail);
+  //   console.log('cant add a contact yet', contactmail)
+  // }
 
   // handleUpdateGroup() {
   //   this.props.clearSelectedContacts();
@@ -58,7 +58,7 @@ class GroupPanel extends React.Component {
         { this.props.isContactList && <button onClick={this.willAddContact}> Add Contacts </button>}
         { this.state.addContact && <form> 
           Contact Gmail: <input className="contactmail" type="text" />
-          <input type="submit" value="Submit Gmail" onClick={()=>{ this.handleAddContact($('.contactmail').val()) }} />
+          <input type="submit" value="Submit Gmail" onClick={()=>{ this.props.addContact($('.contactmail').val()) }} />
           </form>}
         { this.props.isContactList && this.props.contacts.map((contact) => <ContactEntry contact={contact} selectContact={this.props.selectContact} selectedContacts={this.props.selectedContacts}/>) }
 
