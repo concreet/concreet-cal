@@ -24,21 +24,37 @@ class BigCalBasic extends React.Component{
       eventTitle: '',
       meetingLength: 0
     }
+
+    this.renderEventsToCalendar();
   }
 
-  componentWillMount() {
-    // callback hell to load events into calendar
-    CalendarModel.getCalendarList(this.props.user.user, (currentUser, items) => {
-      CalendarModel.getCalendarEvents(currentUser, items, (eventsList) => {
+
+
+
+  // componentWillMount() {
+  //   // CalendarModel.getCalendarList(this.props.user.user, (currentUser, calendarList) => {
+  //     var calendarList = [];
+  //     CalendarModel.getCalendarEvents(this.props.user.user, calendarList, (eventsList) => {
+  //       CalendarModel.processEvents(eventsList, (processedEvents) => {
+  //         this.setState({
+  //           events: processedEvents,
+  //         })
+  //       })
+  //     })
+  //   // });
+  // }
+
+  renderEventsToCalendar() {
+    // CalendarModel.getCalendarList(this.props.user.user, (currentUser, calendarList) => {
+    var calendarList = [];
+      CalendarModel.getCalendarEvents(this.props.user.user, calendarList, (eventsList) => {
         CalendarModel.processEvents(eventsList, (processedEvents) => {
           this.setState({
             events: processedEvents,
           })
-          // console.log('processedEvents', processedEvents);
         })
       })
-    });
-
+    // });
   }
 
   updateSlotsAndEventInfo(freeSlots, eventDate, eventTitle, eventLength) {
@@ -85,6 +101,7 @@ class BigCalBasic extends React.Component{
           selectedContacts={this.props.selectedContacts}
           selectedGroups={this.props.selectedGroups}
           meetingLength={this.state.meetingLength}
+          renderEventsToCalendar = {this.renderEventsToCalendar.bind(this)}
           />
         }
       </div>
