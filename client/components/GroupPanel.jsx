@@ -13,7 +13,7 @@ class GroupPanel extends React.Component {
       addContactToGroup: false,
     }
     //binding functions here
-    // this.handleAddContact = this.handleAddContact.bind(this);
+    this.handleAddContact = this.handleAddContact.bind(this);
     this.handleAddGroup = this.handleAddGroup.bind(this);
     this.willAddContact = this.willAddContact.bind(this);
     this.willAddGroup = this.willAddGroup.bind(this);
@@ -22,6 +22,7 @@ class GroupPanel extends React.Component {
   }
 
   willAddContact() {
+    // console.log(this.state.addContact)
     this.setState({
       addContact: !this.state.addContact      
     })
@@ -33,11 +34,11 @@ class GroupPanel extends React.Component {
     })
   }
 
-  handleAddGroup(groupname) {
-    this._groupName.value = '';
-    this.props.addGroup(groupname);
-    // console.log('cant add a group yet', groupname)
-  }
+  // handleAddGroup(groupname) {
+  //   this._groupName.value = '';
+  //   this.props.addGroup(groupname);
+  //   // console.log('cant add a group yet', groupname)
+  // }
 
   handleDeleteGroup(group) {
     deleteGroup(group, this.props.resetSide);
@@ -51,21 +52,39 @@ class GroupPanel extends React.Component {
   // handleUpdateGroup() {
   //   this.props.clearSelectedContacts();
 
+  handleAddGroup(e) {
+    e.preventDefault();
+    if (!e.target.groupname.value) {
+      alert('Error: Please enter a valid group name.');
+    } else if (e.target.groupname.value.length > 20) {
+      alert('Error: Group name can not be over 20 characters.')
+    } else {
+      this.props.addGroup(e.target.groupname.value);
+    }
+    e.target.groupname.value = '';
+    // console.log('cant add a group yet', groupname)
+  }
 
-  //   this.props.updateGroup()
-  // }
+  handleAddContact(e) {
+    e.preventDefault();
+    //console.log(e.target.contactmail.value, 'THIS?')
+    this.props.addContactFn(e.target.contactmail.value);
+    e.target.contactmail.value = '';
+    //console.log('cant add a contact yet', $('.contactmail').val())
+  }
+  //reason why e is better than using jquery - there may be some default action taken by react(or who knows what)
+  //that will re-render on click and nothing was added to the database
 
-          // Contact First Name: <input className="contactfirst" type="text" />
-          // Contact Last Name: <input className="contactlast" type="text" />
+
 
   render() {
     return (
       <div className="grouppanel">
         { this.props.isContactList && <h3 style={{display: 'inline'}}> CONTACTS </h3>}
         { this.props.isContactList && <button className="addbutton" onClick={this.willAddContact}> <i className="fa fa-user-plus" aria-hidden="true"></i> </button>}
-        { this.state.addContact && <form> 
-          Contact g-mail: <input className="contactmail" type="text" />
-          <input className="submit" type="submit" value="Submit" onClick={()=>{ this.props.addContact($('.contactmail').val()) }} />
+        { this.state.addContact && <form onSubmit={this.handleAddContact}> 
+          Contact g-mail: <input  className="contactmail" name="contactmail" type="text" />
+          <input className="submit" type="submit" value="Submit"/>
           </form>}
         { this.props.isContactList && this.props.contacts.map((contact) => <ContactEntry contact={contact} selectContact={this.props.selectContact} selectedContacts={this.props.selectedContacts}/>) }
 
@@ -74,9 +93,9 @@ class GroupPanel extends React.Component {
         { !this.props.isContactList && <h3 style={{display: 'inline'}}> GROUP LIST </h3>}
         { !this.props.isContactList && 
           <button className="addbutton" onClick={this.willAddGroup}> <i className="fa fa-users" aria-hidden="true"></i> </button> }
-        { this.state.addGroup && <form> 
-          Group Name: <input className="groupname" ref={ (c) => {this._groupName = c;} } type="text" />
-          <input className="submit" type="submit" value="Add Group" onClick={()=>{ this.handleAddGroup($('.groupname').val())}}/>
+        { this.state.addGroup && <form onSubmit={this.handleAddGroup}> 
+          Group Name: <input className="groupname" name="groupname" type="text" />
+          <input className="submit" type="submit" value="Add Group" />
           </form>}
         { !this.props.isContactList && this.props.groups.map((group) => <GroupPanelEntry group={group} selectContact={this.props.selectContact} selectGroup={this.props.selectGroup} updateGroup={this.props.updateGroup} removeContactFromGroup={this.props.removeContactFromGroup} deleteGroup={this.handleDeleteGroup}/>)}
       </div>

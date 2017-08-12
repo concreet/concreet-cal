@@ -29,6 +29,7 @@ class SidePanel extends React.Component {
         </a>
         <GroupPanel isContactList="true" contacts={this.props.contacts} selectContact={this.props.selectContact} addContact={this.props.addContact} selectedContacts={this.props.selectedContacts}/>
         <GroupPanel groups={this.props.groups} selectContact={this.props.selectContact} selectGroup={this.props.selectGroup} addGroup={this.props.addGroup} updateGroup={this.props.updateGroup} removeContactFromGroup={this.props.removeContactFromGroup} resetSide={this.props.resetSide}/>
+
       </div>
 
     );

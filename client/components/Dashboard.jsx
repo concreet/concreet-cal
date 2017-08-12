@@ -46,7 +46,7 @@ class Dashboard extends React.Component {
 
   resetContact() {
     UserModel.getContact(this.props.user.user._id, (contact) => {
-      console.log(contact, 'should be a contact list from mongoose');
+      // console.log(contact, 'should be a contact list from mongoose');
       this.setState({
         allContacts: contact.contacts,
         contact: contact
@@ -57,6 +57,7 @@ class Dashboard extends React.Component {
 
   resetGroup() {
     UserModel.getGroup(this.props.user.user._id, (group)=>{
+
       this.setState({
         allGroups: group
       })
@@ -81,7 +82,7 @@ class Dashboard extends React.Component {
         selectedGroup: removeGroup
       })
     }
-      setTimeout(()=> {console.log(this.state.selectedGroup, 'new one IN GROUP');})
+      // setTimeout(()=> {console.log(this.state.selectedGroup, 'new one IN GROUP');})
   }
 
   // future implementation
@@ -102,7 +103,7 @@ class Dashboard extends React.Component {
   }
 
   handleSelectedContacts(contact, isContactList) {
-    console.log(this.state.selectedContacts, 'the array before ');
+    // console.log(this.state.selectedContacts, 'the array before ');
     // console.log(this.state.selectedContactsFromGroups, 'the array before GORUPOUFOPDSF');
 
     if (!this.checkExist(this.state.selectedContacts, contact) && isContactList) {
@@ -137,13 +138,14 @@ class Dashboard extends React.Component {
     // }
 
 
-    setTimeout(()=> {console.log(this.state.selectedContacts, 'new one');})
+    // setTimeout(()=> {console.log(this.state.selectedContacts, 'new one');})
     // setTimeout(()=> {console.log(this.state.selectedContactsFromGroups, 'new oneGORUPRUPRUPR');})
 
   }
 
   handleAddGroup(groupname) {
-    UserModel.addGroup(groupname, this.props.user.user, (sucess)=> {
+
+    UserModel.addGroup(groupname, this.props.user.user, (sucess)=> { 
       this.resetGroup();
     })
   }
@@ -164,13 +166,19 @@ class Dashboard extends React.Component {
     }
 
     if (!checkdup && !checkgmail) {     
+
+
       UserModel.addContact(gmail, (contact) => {
-        // console.log(contact, 'this is the stuff from addorfindXXXX', this.state.contact);
-          UserModel.addContactToGroup(this.state.contact, contact, ()=>{
-            // console.log('reached here, should added to the contact list XXX');
-            this.resetContact();
-          })
+        // console.log(contact, 'thios is the stuff from addorfindXXXX', this.state.contact);
+        UserModel.addContactToGroup(this.state.contact, contact, ()=>{
+        // console.log('reached here, should added to the contact list XXX');
+          this.resetContact();
+        })
       })
+
+      //User.Model.addContact(gmail)
+    
+
     } else if (checkdup) {
       alert('Error: Contact already exist.')
     } else if (checkgmail) {
