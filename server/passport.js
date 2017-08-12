@@ -18,8 +18,8 @@ passport.deserializeUser( (user, done) => {
 var strategy = new GoogleStrategy({
 		clientID: googleConfig.GOOGLE_CLIENT_ID,
 		clientSecret: googleConfig.GOOGLE_CLIENT_SECRET,
-		// callbackURL: 'http://localhost:8000/auth/google/callback',
-    callbackURL: 'http://concreet.date/auth/google/callback',
+		callbackURL: 'http://localhost:8000/auth/google/callback',
+    // callbackURL: 'http://concreet.date/auth/google/callback',
 	},
 
 	function(accessToken, refreshToken, profile, done) {

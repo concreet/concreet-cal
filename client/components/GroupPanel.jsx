@@ -2,6 +2,7 @@ import React from 'react';
 import GroupPanelEntry from './GroupPanelEntry.jsx';
 import ContactEntry from './ContactEntry.jsx';
 import $ from 'jquery';
+import {deleteGroup} from '../models/user.js';
 
 class GroupPanel extends React.Component {
   constructor(props) {
@@ -9,13 +10,14 @@ class GroupPanel extends React.Component {
     this.state = {
       addContact: false,
       addGroup: false,
-      addContactToGroup: false
+      addContactToGroup: false,
     }
     //binding functions here
     // this.handleAddContact = this.handleAddContact.bind(this);
     this.handleAddGroup = this.handleAddGroup.bind(this);
     this.willAddContact = this.willAddContact.bind(this);
     this.willAddGroup = this.willAddGroup.bind(this);
+    this.handleDeleteGroup = this.handleDeleteGroup.bind(this);
     // this.handleUpdateGroup = this.handleUpdateGroup.bind(this);
   }
 
@@ -32,8 +34,13 @@ class GroupPanel extends React.Component {
   }
 
   handleAddGroup(groupname) {
+    this._groupName.value = '';
     this.props.addGroup(groupname);
     // console.log('cant add a group yet', groupname)
+  }
+
+  handleDeleteGroup(group) {
+    deleteGroup(group, this.props.resetSide);
   }
 
   // handleAddContact(contactmail) {
@@ -68,10 +75,10 @@ class GroupPanel extends React.Component {
         { !this.props.isContactList && 
           <button className="addbutton" onClick={this.willAddGroup}> <i className="fa fa-users" aria-hidden="true"></i> </button> }
         { this.state.addGroup && <form> 
-          Group Name: <input className="groupname" type="text" />
+          Group Name: <input className="groupname" ref={ (c) => {this._groupName = c;} } type="text" />
           <input className="submit" type="submit" value="Add Group" onClick={()=>{ this.handleAddGroup($('.groupname').val())}}/>
           </form>}
-        { !this.props.isContactList && this.props.groups.map((group) => <GroupPanelEntry group={group} selectContact={this.props.selectContact} selectGroup={this.props.selectGroup} updateGroup={this.props.updateGroup} removeContactFromGroup={this.props.removeContactFromGroup}/>)}
+        { !this.props.isContactList && this.props.groups.map((group) => <GroupPanelEntry group={group} selectContact={this.props.selectContact} selectGroup={this.props.selectGroup} updateGroup={this.props.updateGroup} removeContactFromGroup={this.props.removeContactFromGroup} deleteGroup={this.handleDeleteGroup}/>)}
       </div>
 
     );

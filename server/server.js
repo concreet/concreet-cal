@@ -39,8 +39,6 @@ app.get('/auth/google',
 app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/' }),
   function(req, res) {
-  	//user data
-  	//req._passport.session.user;
   	res.redirect('/');
   }
 );
@@ -55,6 +53,8 @@ function loggedIn(req, res, next) {
     }
 }
 
+
+//ROUTES
 app.get('/session', loggedIn, (req,res) => {
 	res.status(200).send(req.session);
 });
@@ -71,6 +71,8 @@ app.get('/contacts/user/:userid', loggedIn, handler.getContactGroup);
 app.post('/groups/user/add', loggedIn, handler.addToGroup);
 
 app.post('/groups/user/remove', loggedIn, handler.removeFromGroup);
+
+app.post('/groups/delete', loggedIn, handler.deleteGroup);
 
 app.get('/users/reauth/:userid', loggedIn, handler.reauth);
 

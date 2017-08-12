@@ -53,6 +53,27 @@ export var addGroup = (groupname, user, callback) => {
   })
 }
 
+export var deleteGroup = (group, callback) => {
+  $.ajax({
+      type: "POST",
+      url: '/groups/delete',
+      dataType: 'application/json',
+      data: JSON.stringify({
+        group: group,
+      }),
+      contentType: 'application/json',
+      statusCode: {
+        200: function(data) {
+          callback();
+        }
+      },
+      error: (err) => {
+        return null;
+        // callback(err);
+      }
+  })
+}
+
 
 export var addContactToGroup = (group, contact, callback) => {
   $.ajax({
