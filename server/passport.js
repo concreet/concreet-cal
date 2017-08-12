@@ -15,10 +15,19 @@ passport.deserializeUser( (user, done) => {
   done(null, user);
 });
 
+var callbackURL;
+if(process.env.PORT) {
+  callbackURL = 'http://concreet.date/auth/google/callback';
+} else {
+  callbackURL = 'http://localhost:8000/auth/google/callback';
+}
+
+
+
 var strategy = new GoogleStrategy({
 		clientID: googleConfig.GOOGLE_CLIENT_ID,
 		clientSecret: googleConfig.GOOGLE_CLIENT_SECRET,
-		callbackURL: 'http://localhost:8000/auth/google/callback',
+		callbackURL: callbackURL,
     // callbackURL: 'http://concreet.date/auth/google/callback',
 	},
 
