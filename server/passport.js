@@ -30,11 +30,11 @@ var strategy = new GoogleStrategy({
  			profile: profile,
  		};
  		//find on email address. If doesn't exist at all, create
-    User.findOrCreate({ emailAddress: profile.emails[0].value }, 
-    	{ 
+    User.findOrCreate({ emailAddress: profile.emails[0].value },
+    	{
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
-    		isSignedUp: true, 
+    		isSignedUp: true,
     		googleId: profile.id,
     		accessToken: accessToken,
     	})
@@ -109,4 +109,3 @@ passport.use(strategy);
 refresh.use(strategy);
 
 module.exports = passport;
-

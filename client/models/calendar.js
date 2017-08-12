@@ -39,7 +39,7 @@ const checkAccessToken = (user, retry, callback) => {
     // console.log('google check', data)
     callback(user);
   }).fail((err) => {
-    console.log('google check failed');
+    // console.log('google check failed');
     console.error(err);
     if (retry) {
       refreshToken(user, (reauthUser) => {
@@ -64,6 +64,25 @@ const refreshToken = (user, callback) => {
   })
 }
 
+const makeAjaxCall = (type, url, accessToken, requestBody, callback) => {
+  $.ajax({
+    type: type,
+    url: url,
+    headers: {Authorization: `Bearer ${accessToken}`},
+    data: JSON.stringify(requestBody),
+    contentType: 'application/json',
+    dataType: 'json',
+    success: function(data) {
+      console.log('successful call to ' + url)
+      callback(data);
+    },
+    error: function(err) {
+      console.log('error call to ' + url)
+      callback(err);
+    }
+  });
+}
+
 // retrieves all calendars for a single user
 export const getCalendarList = (currentUser, callback) => {
 
@@ -85,11 +104,12 @@ export const getCalendarList = (currentUser, callback) => {
 
 export const getCalendarEvents = function (currentUser, calendarList, callback) {
   // for (var calendar of calendarList) {
-  var calendar = calendarList[0];
+  var calendar = {
+    id: currentUser.emailAddress
+  }
 
-  console.log('cal and cur', calendarList, currentUser);
     // replace any pound sign with its escape character. Pound sign interferes with URL search
-    calendar.id = calendar.id.replace('#', '%23')
+    // calendar.id = calendar.id.replace('#', '%23')
 
     var startOfMonth = moment().startOf('month').format("YYYY-MM-DDTHH:mm:ssZ");
     var endOfMonth = moment().endOf('month').format("YYYY-MM-DDTHH:mm:ssZ");
@@ -142,38 +162,20 @@ export const freeBusy = (queryGroup, currentUser, timeMin, timeMax, callback) =>
     // dummy data
       var requestBody = {
       "items": [
-        {
-          "id": email
-        },
-        // {
-        //   "id": "hackreactor.com_9kddcjfdij7ak91o0t2bdlpnoo@group.calendar.google.com"
-        // }
+        { "id": email },
+        // { id": "hackreactor.com_9kddcjfdij7ak91o0t2bdlpnoo@group.calendar.google.com" }
       ],
-      "timeMin": timeMin,
-      "timeMax": timeMax,
-    }
+        "timeMin": timeMin,
+        "timeMax": timeMax,
+      }
 
-      $.ajax({
-        type: "POST",
-        url: `https://www.googleapis.com/calendar/v3/freeBusy`,
-        headers: {Authorization: `Bearer ${accessToken}`},
-        data: JSON.stringify(requestBody),
-        contentType: 'application/json',
-        dataType: 'json',
-        success: function(data) {
-          console.log('each cal', data.calendars)
-          //add to array that contains all members freeBusytimes
-          allContactsCalendars.push(data.calendars);
-          counter++;
-          if (counter === queryGroup.length) {
-            callback(allContactsCalendars);
-          }
-        },
-        error: function(err) {
-          // still need to work out refresh accessToken
-          return console.log(err.responseText);
+      makeAjaxCall('POST', `https://www.googleapis.com/calendar/v3/freeBusy`, accessToken, requestBody, (data) => {
+        allContactsCalendars.push(data.calendars);
+        counter++;
+        if (counter === queryGroup.length) {
+          callback(allContactsCalendars);
         }
-      });
+      })
     } //for loop end
   }) //checkQueryGroup function
 }
@@ -183,15 +185,6 @@ export const addEvent = (queryGroup, currentUser, title, timeStart, timeEnd, cal
   var calendarId = currentUser.emailAddress;
   var attendees = []
 
-  timeStart = {
-    "dateTime": timeStart,
-    "timeZone": "America/Chicago"
-  };
-  timeEnd = {
-    "dateTime": timeEnd,
-    "timeZone": "America/Chicago"
-  };
-
   for (var member of queryGroup) {
     var attendee = {
       email: member.emailAddress,
@@ -200,28 +193,27 @@ export const addEvent = (queryGroup, currentUser, title, timeStart, timeEnd, cal
     attendees.push(attendee);
   }
 
+  var start = {
+    "dateTime": timeStart,
+    "timeZone": "America/Chicago"
+  };
+  var end = {
+    "dateTime": timeEnd,
+    "timeZone": "America/Chicago"
+  };
+
   var requestBody = {
     "attendees": attendees,
-    "start": timeStart,
-    "end": timeEnd,
+    "start": start,
+    "end": end,
     "reminders": {
       "useDefault": true,
     },
     "summary": title
   };
 
-  $.ajax({
-    type: "POST",
-    url: `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events`,
-    headers: {Authorization: `Bearer ${accessToken}`},
-    data: JSON.stringify(requestBody),
-    contentType: 'application/json',
-    dataType: 'json',
-    success: function() {
-      console.log('new event added')
-    },
-    error: function(err) {
-      console.log('did not post new event', err)
-    }
-  });
+  makeAjaxCall('POST', `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events`, accessToken, requestBody, (data) => {
+    callback(data)
+  })
+
 }

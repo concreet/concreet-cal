@@ -44,7 +44,9 @@ class TimeSlot extends React.Component {
 
 		this.props.getEventDateTime(selectedDateTime);
 
-		CalendarModel.addEvent(allContacts, this.props.user.user, this.props.eventTitle, selectedDateTime, endTime, (data) => {})
+		CalendarModel.addEvent(allContacts, this.props.user.user, this.props.eventTitle, selectedDateTime, endTime, (data) => {
+			this.props.renderEventsToCalendar();
+		})
 
 		this.props.closeModal()
 	}
