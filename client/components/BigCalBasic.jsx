@@ -87,6 +87,7 @@ class BigCalBasic extends React.Component{
         <br/>
         <BigCalendar
           {...this.props}
+          popup
           events={this.state.events}
           views={allViews}
           titleAccessor='summary'
