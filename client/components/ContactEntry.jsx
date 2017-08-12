@@ -24,15 +24,6 @@ class ContactEntry extends React.Component {
       //   clicked: !this.state.clicked
       // })
     }
-    // if (this.props.selectedContacts.indexOf(this.props.contact) !== -1) {
-    //   this.setState({
-    //     clicked: true
-    //   })
-    // } else {
-    //   this.setState({
-    //     clicked:false
-    //   })
-    // }
   }
     
   render() {

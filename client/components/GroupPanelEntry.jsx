@@ -26,6 +26,9 @@ class GroupPanelEntry extends React.Component {
 
   handleUpdateGroup() {
     this.props.updateGroup(this.props.group);
+    this.setState({
+      clicked: true
+    })
 
   }
 
@@ -35,6 +38,9 @@ class GroupPanelEntry extends React.Component {
 
   handleDeleteGroup() {
     this.props.deleteGroup(this.props.group);
+    this.setState({
+      clicked: true
+    })
   }
 
   render() {
@@ -43,12 +49,12 @@ class GroupPanelEntry extends React.Component {
       <div className="grouppanelentry">
 
         { this.state.showSelect && <div className="groupname"> 
-          <p style={{display: 'inline', cursor: 'pointer'}} onClick={this.handleSelectGroup.bind(this)}> <i className="fa fa-check-square-o" aria-hidden="true"></i> Group: {this.props.group.group_name} </p> 
+          <p style={{display: 'inline', cursor: 'pointer'}} onClick={this.handleSelectGroup.bind(this)}> <i className="fa fa-check-square-o" aria-hidden="true"></i> {this.props.group.group_name} </p> 
           <button className="addremovecontact" onClick={this.handleUpdateGroup.bind(this)}> 
-            Add <i className="fa fa-user-o" aria-hidden="true"></i>
+            <i className="fa fa-user-o" aria-hidden="true"></i> <i className="fa fa-plus-square-o" aria-hidden="true"></i>
           </button>
            <button className="addremovecontact" onClick={this.handleRemoveContactFromGroup.bind(this)}> 
-            Remove <i className="fa fa-user-o" aria-hidden="true"></i>
+            <i className="fa fa-user-o" aria-hidden="true"></i> <i className="fa fa-minus-square-o" aria-hidden="true"></i>
           </button>
           <button className="deleteGroup" onClick={this.handleDeleteGroup.bind(this)}>
             - Group
@@ -61,12 +67,12 @@ class GroupPanelEntry extends React.Component {
 
         {!this.state.showSelect && <div className="groupname"> 
 
-          <p style={{display: 'inline', cursor: 'pointer'}} onClick={this.handleSelectGroup.bind(this)}> <i className="fa fa-square-o" aria-hidden="true"></i> Group: {this.props.group.group_name} </p> 
+          <p style={{display: 'inline', cursor: 'pointer'}} onClick={this.handleSelectGroup.bind(this)}> <i className="fa fa-square-o" aria-hidden="true"></i> {this.props.group.group_name} </p> 
           <button className="addremovecontact" onClick={this.handleUpdateGroup.bind(this)}> 
-            Add <i className="fa fa-user-o" aria-hidden="true"></i>
+            <i className="fa fa-user-o" aria-hidden="true"></i> <i className="fa fa-plus-square-o" aria-hidden="true"></i>
           </button>
            <button className="addremovecontact" onClick={this.handleRemoveContactFromGroup.bind(this)}> 
-            Remove <i className="fa fa-user-o" aria-hidden="true"></i>
+            <i className="fa fa-user-o" aria-hidden="true"></i> <i className="fa fa-minus-square-o" aria-hidden="true"></i>
           </button>
           <button className="deleteGroup" onClick={this.handleDeleteGroup.bind(this)}>
             - Group
