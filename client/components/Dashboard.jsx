@@ -57,7 +57,6 @@ class Dashboard extends React.Component {
 
   resetGroup() {
     UserModel.getGroup(this.props.user.user._id, (group)=>{
-      console.log(group, 'should be group list');
       this.setState({
         allGroups: group
       })
@@ -145,7 +144,6 @@ class Dashboard extends React.Component {
 
   handleAddGroup(groupname) {
     UserModel.addGroup(groupname, this.props.user.user, (sucess)=> {
-      // console.log(sucess, '+++++++++')
       this.resetGroup();
     })
   }
@@ -181,11 +179,9 @@ class Dashboard extends React.Component {
   }
 
   handleUpdateGroup(group) {
-    // console.log(this.state.selectedContacts, 'whats this')
     this.state.selectedContacts.forEach((contact)=>{
       if (!this.checkExist(group.contacts, contact)) {
         UserModel.addContactToGroup(group, contact, ()=>{
-          // console.log('added?==============');
           this.resetGroup();
         })
       } else {
@@ -211,7 +207,7 @@ class Dashboard extends React.Component {
     return (
       <div className="dashboard">
         <h1 className="title">Concreet</h1>
-        <SidePanel contacts={this.state.allContacts} groups={this.state.allGroups} selectContact={this.handleSelectedContacts} selectGroup={this.handleSelectedGroup} addGroup={this.handleAddGroup} addContact={this.handleAddContact} updateGroup={this.handleUpdateGroup} removeContactFromGroup={this.removeContactFromGroup} selectedContacts={this.state.selectedContacts}/>
+        <SidePanel contacts={this.state.allContacts} groups={this.state.allGroups} selectContact={this.handleSelectedContacts} selectGroup={this.handleSelectedGroup} addGroup={this.handleAddGroup} addContact={this.handleAddContact} updateGroup={this.handleUpdateGroup} removeContactFromGroup={this.removeContactFromGroup} selectedContacts={this.state.selectedContacts} resetSide={this.resetGroup.bind(this)}/>
         <BigCalBasic user={this.props.user} selectedGroups={this.state.selectedGroup} selectedContacts={this.state.selectedContacts}/>
 
       </div>

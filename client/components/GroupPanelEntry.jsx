@@ -12,7 +12,6 @@ class GroupPanelEntry extends React.Component {
   }
 
   handleOnClick() {
-    console.log('triggered?')
     this.setState({
       clicked: !this.state.clicked
     })
@@ -20,7 +19,6 @@ class GroupPanelEntry extends React.Component {
 
   handleSelectGroup() {
     this.props.selectGroup(this.props.group);
-    console.log('here?')
     this.setState({
       showSelect: !this.state.showSelect
     });
@@ -33,7 +31,10 @@ class GroupPanelEntry extends React.Component {
 
   handleRemoveContactFromGroup() {
     this.props.removeContactFromGroup(this.props.group);
-    //console.log('this ran?')
+  }
+
+  handleDeleteGroup() {
+    this.props.deleteGroup(this.props.group);
   }
 
   render() {
@@ -49,6 +50,9 @@ class GroupPanelEntry extends React.Component {
            <button className="addremovecontact" onClick={this.handleRemoveContactFromGroup.bind(this)}> 
             Remove <i className="fa fa-user-o" aria-hidden="true"></i>
           </button>
+          <button className="deleteGroup" onClick={this.handleDeleteGroup.bind(this)}>
+            - Group
+          </button>
 
           { this.state.clicked && <button className="showbutton" onClick={this.handleOnClick.bind(this)}> <i className="fa fa-window-minimize" aria-hidden="true"></i> </button> }
           { !this.state.clicked && <button className="showbutton" onClick={this.handleOnClick.bind(this)}> <i className="fa fa-window-maximize" aria-hidden="true"></i> </button> }  
@@ -63,6 +67,9 @@ class GroupPanelEntry extends React.Component {
           </button>
            <button className="addremovecontact" onClick={this.handleRemoveContactFromGroup.bind(this)}> 
             Remove <i className="fa fa-user-o" aria-hidden="true"></i>
+          </button>
+          <button className="deleteGroup" onClick={this.handleDeleteGroup.bind(this)}>
+            - Group
           </button>
           { this.state.clicked && <button className="showbutton" onClick={this.handleOnClick.bind(this)}> <i className="fa fa-window-minimize" aria-hidden="true"></i> </button> }
           { !this.state.clicked && <button className="showbutton" onClick={this.handleOnClick.bind(this)}> <i className="fa fa-window-maximize" aria-hidden="true"></i> </button> } 

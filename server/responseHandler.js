@@ -65,6 +65,15 @@ exports.getContactGroup = (req, res) => {
 	});
 };
 
+exports.deleteGroup = (req, res) => {
+	//inputs
+	//req.body.group
+	Group.remove({_id: req.body.group._id})
+	.then( () => {
+		res.sendStatus(200);
+	});
+};
+
 exports.addToGroup = (req, res) => {
 	//inputs
 	//req.body.group
