@@ -8,12 +8,6 @@ class SplashLogin extends React.Component {
 		super(props)
 	}
 
-	handleLogin() {
-		// send to backend so we can authorize user
-		// should receive back token?
-		// pass back token so we can send to app to send to dashboard
-	}
-
 	render() {
 		return (
 			<div className="splash">

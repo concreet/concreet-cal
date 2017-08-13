@@ -18,6 +18,7 @@ class AddEvent extends React.Component {
     //this.mergeContactsAndGroups = this.mergeContactsAndGroups.bind(this);
   }
 
+  // check if contact already exists to prevent duplicates
   checkExist(contacts, target) {
     let check = false;
     for (let contact of contacts) {
@@ -28,38 +29,20 @@ class AddEvent extends React.Component {
     return check;
   }
 
-  // mergeContactsAndGroups(callback) {
-  //   let allContacts = this.props.selectedContacts.slice();
-  //   // console.log(allContacts, 'What do u look like?');
-  //   // console.log(this.props.selectedGroups, 'GROUPS?')
-  //   this.props.selectedGroups.forEach((group)=> {
-  //     group.contacts.forEach((contact) => {
-  //       if (!this.checkExist(allContacts, contact)) {
-  //         allContacts.push(contact);
-  //       }
-  //     })
-  //   })
-
-  //   this.setState({
-  //     contactsArray: allContacts
-  //   })
-  //   console.log(allContacts, 'An array of all contacts')
-  //   console.log(this.state.contactsArray, 'What do u look like?');
-
-  // }
-
   handleEventSubmit(e) {
     e.preventDefault();
-    console.log('submit selectedContacts', this.props.selectedContacts);
-    var meetingLength = e.target.meetingLength.value
+
+    // user inputs 
+    var meetingLength = e.target.meetingLength.value // in minutes
     var meetingTitle = e.target.title.value
     var timeMin = moment(e.target.date.value, "MM/DD/YYYY");
 
     var queryInfo = {
       timeMin: timeMin.toISOString(),
-      timeMax: timeMin.add('1', 'days').toISOString()
+      timeMax: timeMin.add('1', 'days').toISOString() // add a day so we can query from midnight of current day to midnight of following day
     };
 
+    // put selected contacts and selected contacts from groups into same array
     var allContacts = this.props.selectedContacts.slice();
     this.props.selectedGroups.forEach((group)=> {
       // console.log('group: ', group)
@@ -71,8 +54,6 @@ class AddEvent extends React.Component {
       })
     })
 
-    console.log('QI', queryInfo.timeMin)
-    console.log(allContacts, 'finalizedd')
 
     //================
     //================ Need to wrap the below call in recursive check for success.
@@ -80,13 +61,13 @@ class AddEvent extends React.Component {
     //                  needs counter to make sure no infinite loop
     //                  https://github.com/fiznool/passport-oauth2-refresh/issues/1
 
-
+    // call freebusy method to get back busy times
     CalendarModel.freeBusy(allContacts, this.props.user.user, queryInfo.timeMin, queryInfo.timeMax, (calendars) => {
       // receives back calendars array with each element being an object with a email address as its only property
       // each property has a value that is an object with a busy property
       // value of busy property is an array of objects that include start and end property of busy times
       findFreeTimes.findAvailableSlots(meetingLength, calendars, (freeSlots) => {
-        // passsing back the available slots as well as the selected date in ISO format
+        // passsing back the available slots as well as the selected date in ISO format (queryInfo.timeMin)
         this.props.updateSlotsAndEventInfo(freeSlots, queryInfo.timeMin, meetingTitle, meetingLength)
       });
     })

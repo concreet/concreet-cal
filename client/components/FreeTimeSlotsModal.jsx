@@ -1,8 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal'
-import Rodal from 'rodal';
 import TimeSlot from './TimeSlot.jsx'
 
+// Modal styling
 const customStyles = {
   content : {
     top                   : '50%',
