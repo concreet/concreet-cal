@@ -14,6 +14,7 @@ const customStyles = {
     maxHeight             : '325px', // This sets the max height
     overflow              : 'scroll', // This tells the modal to scroll
     border                : '1px solid black',
+    borderBottom          : '2px solid black', // for some reason the bottom border was being cut off, so made it a little thicker
     borderRadius         : '0px'
   }
 };

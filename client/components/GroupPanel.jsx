@@ -67,8 +67,7 @@ class GroupPanel extends React.Component {
 
   handleAddContact(e) {
     e.preventDefault();
-    //console.log(e.target.contactmail.value, 'THIS?')
-    this.props.addContactFn(e.target.contactmail.value);
+    this.props.addContact(e.target.contactmail.value);
     e.target.contactmail.value = '';
     //console.log('cant add a contact yet', $('.contactmail').val())
   }
@@ -83,20 +82,21 @@ class GroupPanel extends React.Component {
         { this.props.isContactList && <h3 style={{display: 'inline'}}> CONTACTS </h3>}
         { this.props.isContactList && <button className="addbutton" onClick={this.willAddContact}> <i className="fa fa-user-plus" aria-hidden="true"></i> </button>}
         { this.state.addContact && <form onSubmit={this.handleAddContact}> 
-          Contact g-mail: <input  className="contactmail" name="contactmail" type="text" />
-          <input className="submit" type="submit" value="Submit"/>
+          <input  className="contactmail" name="contactmail" type="text" placeholder="Contact's Gmail" />
+          <input className="submit" type="submit" value="Add"/>
           </form>}
         { this.props.isContactList && this.props.contacts.map((contact) => <ContactEntry contact={contact} selectContact={this.props.selectContact} selectedContacts={this.props.selectedContacts}/>) }
 
 
 
-        { !this.props.isContactList && <h3 style={{display: 'inline'}}> GROUP LIST </h3>}
+        { !this.props.isContactList && <h3 style={{display: 'inline'}}> GROUPS </h3>}
         { !this.props.isContactList && 
           <button className="addbutton" onClick={this.willAddGroup}> <i className="fa fa-users" aria-hidden="true"></i> </button> }
         { this.state.addGroup && <form onSubmit={this.handleAddGroup}> 
-          Group Name: <input className="groupname" name="groupname" type="text" />
-          <input className="submit" type="submit" value="Add Group" />
+          <input className="groupnameForm" name="groupname" type="text" placeholder="Group Name" />
+          <input className="submit" type="submit" value="Add" />
           </form>}
+        <br />
         { !this.props.isContactList && this.props.groups.map((group) => <GroupPanelEntry group={group} selectContact={this.props.selectContact} selectGroup={this.props.selectGroup} updateGroup={this.props.updateGroup} removeContactFromGroup={this.props.removeContactFromGroup} deleteGroup={this.handleDeleteGroup}/>)}
       </div>
 

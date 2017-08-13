@@ -94,11 +94,10 @@ body {
     margin-right: 10px;
     padding: 10px;
     overflow: scroll;
-    max-width: 300px;
+    width: 300px;
 }
 
 .contactentry {
-    font-weight: thin;
 }
 
 .miniLogo {
@@ -111,36 +110,71 @@ body {
 }
 
 .addremovecontact {
-    background-color: white;
-    border-radius: 6px;
+    float: left;
+    background-color: rgba(44, 62, 80,1.0);
     cursor: pointer;
+    border: none;
+    text-decoration: none;
+    color: white;
+}
+
+.contactmail, .groupnameForm {
+    background-color: white;
     font-family: 'Catamaran', sans-serif;
+    background-color: white;
+    border: none;
+    color: rgba(44, 62, 80,1.0);
+    padding: 6px 15px;
+    margin: 0px 2px 0px 0px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
     font-size: 12px;
-    height: 24px;
-    width: auto;
 }
 
 .submit {
     background-color: white;
-    border-radius: 6px;
     cursor: pointer;
     font-family: 'Catamaran', sans-serif;
+    background-color: rgba(189, 195, 199,1.0);
+    border: none;
+    color: rgba(44, 62, 80,1.0);
+    padding: 6px 15px;
+    margin: 0px 0px 0px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
 }
 
+.contactInGroup{
+    padding-left: 20px;
+    margin: 0px;
+    color: rgba(189, 195, 199,1.0);;
+}
 
 .showbutton {
     float: right;
-    background-color: white;
-    border-radius: 6px;
+    background-color: rgba(44, 62, 80,1.0);
     cursor: pointer;
+    border: none;
+    text-decoration: none;
+    color: white;
 }
 
 .addbutton {
-    font-size: 15px;
+    font-size: 20px;
     float: right;
-    background-color: white;
-    border-radius: 6px;
+    background-color: rgba(44, 62, 80,1.0);
     cursor: pointer;
+    border: none;
+    text-decoration: none;
+    color: white;
+}
+
+.groupSettings{
+    display: inline-block;
+    float: right;
 }
 
 .calendar {
