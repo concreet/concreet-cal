@@ -45,7 +45,7 @@ class ContactEntry extends React.Component {
 
       { this.props.groupPanelCheck && 
         <div>
-          <p> {this.props.contact.emailAddress} </p>
+          <p className="contactInGroup"> {this.props.contact.emailAddress} </p>
         </div>
       }         
       </div>

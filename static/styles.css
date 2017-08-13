@@ -98,7 +98,6 @@ body {
 }
 
 .contactentry {
-    font-weight: thin;
 }
 
 .miniLogo {
@@ -111,13 +110,12 @@ body {
 }
 
 .addremovecontact {
-    background-color: white;
-    border-radius: 6px;
+    float: left;
+    background-color: rgba(44, 62, 80,1.0);
     cursor: pointer;
-    font-family: 'Catamaran', sans-serif;
-    font-size: 12px;
-    height: 24px;
-    width: auto;
+    border: none;
+    text-decoration: none;
+    color: white;
 }
 
 .contactmail, .groupnameForm {
@@ -149,12 +147,19 @@ body {
     font-size: 12px;
 }
 
+.contactInGroup{
+    padding-left: 20px;
+    margin: 0px;
+    color: rgba(189, 195, 199,1.0);;
+}
 
 .showbutton {
     float: right;
-    background-color: white;
-    border-radius: 6px;
+    background-color: rgba(44, 62, 80,1.0);
     cursor: pointer;
+    border: none;
+    text-decoration: none;
+    color: white;
 }
 
 .addbutton {
@@ -165,7 +170,11 @@ body {
     border: none;
     text-decoration: none;
     color: white;
+}
 
+.groupSettings{
+    display: inline-block;
+    float: right;
 }
 
 .calendar {

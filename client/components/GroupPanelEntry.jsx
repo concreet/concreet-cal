@@ -6,7 +6,8 @@ class GroupPanelEntry extends React.Component {
     super(props);
     this.state = {
       clicked: false,
-      showSelect: false
+      showSelect: false,
+      showActions: false
     }
     //binding functions here
   }
@@ -43,6 +44,12 @@ class GroupPanelEntry extends React.Component {
     })
   }
 
+  handleShowGroupActions() {
+    this.setState({
+      showActions: !this.state.showActions
+    })
+  }
+
   render() {
 
     return (
@@ -50,35 +57,39 @@ class GroupPanelEntry extends React.Component {
 
         { this.state.showSelect && <div className="groupname"> 
           <p style={{display: 'inline', cursor: 'pointer'}} onClick={this.handleSelectGroup.bind(this)}> <i className="fa fa-check-square-o" aria-hidden="true"></i> {this.props.group.group_name} </p> 
-          <button className="addremovecontact" onClick={this.handleUpdateGroup.bind(this)}> 
-            <i className="fa fa-user-o" aria-hidden="true"></i> <i className="fa fa-plus-square-o" aria-hidden="true"></i>
-          </button>
-           <button className="addremovecontact" onClick={this.handleRemoveContactFromGroup.bind(this)}> 
-            <i className="fa fa-user-o" aria-hidden="true"></i> <i className="fa fa-minus-square-o" aria-hidden="true"></i>
-          </button>
-          <button className="deleteGroup" onClick={this.handleDeleteGroup.bind(this)}>
-            - Group
-          </button>
-
           { this.state.clicked && <button className="showbutton" onClick={this.handleOnClick.bind(this)}> <i className="fa fa-window-minimize" aria-hidden="true"></i> </button> }
           { !this.state.clicked && <button className="showbutton" onClick={this.handleOnClick.bind(this)}> <i className="fa fa-window-maximize" aria-hidden="true"></i> </button> }  
+          <div className="groupSettings">
+            <button className="addremovecontact" onClick={this.handleUpdateGroup.bind(this)}> 
+              <i className="fa fa-user-o" aria-hidden="true"></i> <i className="fa fa-plus-square-o" aria-hidden="true"></i>
+            </button>
+             <button className="addremovecontact" onClick={this.handleRemoveContactFromGroup.bind(this)}> 
+              <i className="fa fa-user-o" aria-hidden="true"></i> <i className="fa fa-minus-square-o" aria-hidden="true"></i>
+            </button>
+            <button className="addremovecontact" onClick={this.handleDeleteGroup.bind(this)}>
+              <i className="fa fa-users" aria-hidden="true"></i> <i className="fa fa-minus-square-o" aria-hidden="true"></i>
+            </button>
+          </div>
+
 
         </div> }  
 
         {!this.state.showSelect && <div className="groupname"> 
 
           <p style={{display: 'inline', cursor: 'pointer'}} onClick={this.handleSelectGroup.bind(this)}> <i className="fa fa-square-o" aria-hidden="true"></i> {this.props.group.group_name} </p> 
-          <button className="addremovecontact" onClick={this.handleUpdateGroup.bind(this)}> 
-            <i className="fa fa-user-o" aria-hidden="true"></i> <i className="fa fa-plus-square-o" aria-hidden="true"></i>
-          </button>
-           <button className="addremovecontact" onClick={this.handleRemoveContactFromGroup.bind(this)}> 
-            <i className="fa fa-user-o" aria-hidden="true"></i> <i className="fa fa-minus-square-o" aria-hidden="true"></i>
-          </button>
-          <button className="deleteGroup" onClick={this.handleDeleteGroup.bind(this)}>
-            - Group
-          </button>
           { this.state.clicked && <button className="showbutton" onClick={this.handleOnClick.bind(this)}> <i className="fa fa-window-minimize" aria-hidden="true"></i> </button> }
           { !this.state.clicked && <button className="showbutton" onClick={this.handleOnClick.bind(this)}> <i className="fa fa-window-maximize" aria-hidden="true"></i> </button> } 
+          <div className="groupSettings">
+            <button className="addremovecontact" onClick={this.handleUpdateGroup.bind(this)}> 
+              <i className="fa fa-user-o" aria-hidden="true"></i> <i className="fa fa-plus-square-o" aria-hidden="true"></i>
+            </button>
+             <button className="addremovecontact" onClick={this.handleRemoveContactFromGroup.bind(this)}> 
+              <i className="fa fa-user-o" aria-hidden="true"></i> <i className="fa fa-minus-square-o" aria-hidden="true"></i>
+            </button>
+            <button className="addremovecontact" onClick={this.handleDeleteGroup.bind(this)}>
+              <i className="fa fa-users" aria-hidden="true"></i> <i className="fa fa-minus-square-o" aria-hidden="true"></i>
+            </button>
+          </div>
         </div> }
 
         { this.state.clicked && this.props.group.contacts.map((contact) => <ContactEntry groupPanelCheck="correct" contact={contact} selectContact={this.props.selectContact}/>) }  
