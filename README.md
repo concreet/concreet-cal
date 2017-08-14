@@ -69,6 +69,9 @@ Dropdown menu for Group options (add/remove contact, delete group, rename group)
     -Calendar
       * Calendar.js == makes api calls to google for calendar data. Validates data with the app server.
       * BigCalBasic == calls the NPM component custom-react-big-calendar. Sets options and passes updated/fetched events down to it. Also renders the AddEvent and FreeTimeSlotsModal.
+    -findFreeTimes.js == find available meeting times given a meeting length and freeBusy data.
+      * Free/busy data is a calendars array with each element being an object with a unique email address as a key. The value of that email key is an object with a busy key.
+      * The value of busy key is an array of objects that include start and end property of busy times
 
   -models
     -user.js
