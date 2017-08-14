@@ -20,6 +20,7 @@ class Dashboard extends React.Component {
     this.handleAddContact = this.handleAddContact.bind(this);
     this.handleUpdateGroup = this.handleUpdateGroup.bind(this);
     this.removeContactFromGroup = this.removeContactFromGroup.bind(this);
+    this.clearSelectedContacts = this.clearSelectedContacts.bind(this);
   }
 
   componentDidMount() {
@@ -129,11 +130,11 @@ class Dashboard extends React.Component {
   }
 
   // future implementation: clearing out selected contacts everytime an action has taken place.
-  // clearSelectedContacts() {
-  //   this.setState({
-  //     selectedContacts: []
-  //   })
-  // }
+  clearSelectedContacts() {
+    this.setState({
+      selectedContacts: []
+    })
+  }
 
   handleAddGroup(groupname) {
 
@@ -186,6 +187,7 @@ class Dashboard extends React.Component {
       if (this.checkExist(group.contacts, contact)) {
         UserModel.removeContactFromGroup(group, contact, ()=>{
           this.resetGroup();
+          this.resetContact();
         })
       }
     })
@@ -195,7 +197,7 @@ class Dashboard extends React.Component {
     return (
       <div className="dashboard">
         <h1 className="title">Concreet</h1>
-        <SidePanel contacts={this.state.allContacts} groups={this.state.allGroups} selectContact={this.handleSelectedContacts} selectGroup={this.handleSelectedGroup} addGroup={this.handleAddGroup} addContact={this.handleAddContact} updateGroup={this.handleUpdateGroup} removeContactFromGroup={this.removeContactFromGroup} selectedContacts={this.state.selectedContacts} resetSide={this.resetGroup.bind(this)}/>
+        <SidePanel contacts={this.state.allContacts} groups={this.state.allGroups} selectContact={this.handleSelectedContacts} selectGroup={this.handleSelectedGroup} addGroup={this.handleAddGroup} addContact={this.handleAddContact} updateGroup={this.handleUpdateGroup} removeContactFromGroup={this.removeContactFromGroup} selectedContacts={this.state.selectedContacts} resetSide={this.resetGroup.bind(this)} contactGroup={this.state.contact} clearSelectedContacts={this.clearSelectedContacts}/>
         <BigCalBasic user={this.props.user} selectedGroups={this.state.selectedGroup} selectedContacts={this.state.selectedContacts}/>
 
       </div>
