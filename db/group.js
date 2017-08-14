@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var findOrCreate = require('mongoose-findorcreate');
 
-
 var groupSchema = mongoose.Schema({
 	owner_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 	group_name: String,
@@ -9,9 +8,8 @@ var groupSchema = mongoose.Schema({
 	contacts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
 
+//add findOrCreate static method to all Group models
 groupSchema.plugin(findOrCreate);
-
-
 
 var Group = mongoose.model('Group', groupSchema);
 
