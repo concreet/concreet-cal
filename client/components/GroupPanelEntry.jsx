@@ -6,10 +6,8 @@ class GroupPanelEntry extends React.Component {
     super(props);
     this.state = {
       clicked: false,
-      showSelect: false,
-      showActions: false
+      showSelect: false
     }
-    //binding functions here
   }
 
   handleOnClick() {
@@ -38,17 +36,13 @@ class GroupPanelEntry extends React.Component {
   }
 
   handleDeleteGroup() {
-    this.props.deleteGroup(this.props.group);
-    this.setState({
-      clicked: true
-    })
+    if (confirm("Warning: Are you sure you want to delete group '" + this.props.group.group_name + "' from your group list? This process can not be reversed." )) {
+      this.props.deleteGroup(this.props.group);
+    } else {
+      return;
+    }
   }
 
-  handleShowGroupActions() {
-    this.setState({
-      showActions: !this.state.showActions
-    })
-  }
 
   render() {
 
@@ -92,7 +86,7 @@ class GroupPanelEntry extends React.Component {
           </div>
         </div> }
 
-        { this.state.clicked && this.props.group.contacts.map((contact) => <ContactEntry groupPanelCheck="correct" contact={contact} selectContact={this.props.selectContact}/>) }  
+        { this.state.clicked && this.props.group.contacts.map((contact, i) => <ContactEntry key={i} groupPanelCheck="correct" contact={contact} selectContact={this.props.selectContact}/>) }  
       </div>
 
     );

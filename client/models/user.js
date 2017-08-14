@@ -1,12 +1,6 @@
 import $ from 'jquery';
 
 export var getUser = (callback) => {
-  // $.get('https://www.googleapis.com/youtube/v3/search', {
-  //   q: options.query,
-  //   maxResults: options.max,
-  //   key: options.key},
-  //       callback
-  // );
 
   $.ajax({
       type: "GET",
@@ -48,7 +42,6 @@ export var addGroup = (groupname, user, callback) => {
       },
       error: (err) => {
         return null;
-        // callback(err);
       }
   })
 }
@@ -69,7 +62,6 @@ export var deleteGroup = (group, callback) => {
       },
       error: (err) => {
         return null;
-        // callback(err);
       }
   })
 }
@@ -122,11 +114,6 @@ export var addContact = (gmail, callback) => {
   $.ajax({
       type: "GET",
       url: url,
-      // dataType: 'application/json',
-      // data: JSON.stringify({
-      //   user: user,
-      //   groupName: groupname
-      // }),
       contentType: 'application/json',
       success: (data) => {
         callback(data);
@@ -158,8 +145,4 @@ export const signOut = (callback) => {
     }
   })
 }
-// window.getUser = getUser;
-// window.getGroup = getGroup;
-// window.addGroup = addGroup;
-// window.addContactToGroup = addContactToGroup;
-// window.addContact = addContact;
+

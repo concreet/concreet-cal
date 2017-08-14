@@ -11,19 +11,8 @@ class Dashboard extends React.Component {
       selectedGroup: [],
       contact: {},
       selectedContacts: [],
-      // selectedContactsFromGroups: [],
-      allGroups: [
-      { owner_id: 1, group_name: 'test', isContactList: false, contacts: [{firstName: 'Hi', lastName: 'There', googleId: '2sfiewasdfors', emailAddress: 'hithere@gmail.com', isSignedUp: true}] },
-      { owner_id: 1, group_name: 'test2', isContactList: false, contacts: [{firstName: 'Hii', lastName: 'Theree', googleId: '59sfiewodfsrs', emailAddress: 'hithere2@gmail.com', isSignedUp: true}] },
-      { owner_id: 1, group_name: 'test3', isContactList: false, contacts: [{firstName: 'Hiii', lastName: 'Thereeee', googleId: '59sfiewodfsrsdsf', emailAddress: 'hithere3@gmail.com', isSignedUp: true}] }
-      ],
-      allContacts: [
-      { owner_id: 1, group_name: 'test1111', isContactList: true, contacts: [
-        {firstName: 'Hi', lastName: 'There', googleId: '2sfiewasdfors', emailAddress: 'hithere@gmail.com', isSignedUp: true},
-        {firstName: 'Hii', lastName: 'Thereeee', googleId: '59sfiewodfsrs', emailAddress: 'hithere3@gmail.com', isSignedUp: true},
-        {firstName: 'Hiii', lastName: 'Thereeee', googleId: '59sfiewodfsrsdsf', emailAddress: 'hithere3@gmail.com', isSignedUp: true}
-      ] }
-      ]
+      allGroups: [],
+      allContacts: []
     }
     this.handleSelectedGroup = this.handleSelectedGroup.bind(this);
     this.handleSelectedContacts = this.handleSelectedContacts.bind(this);
@@ -31,24 +20,32 @@ class Dashboard extends React.Component {
     this.handleAddContact = this.handleAddContact.bind(this);
     this.handleUpdateGroup = this.handleUpdateGroup.bind(this);
     this.removeContactFromGroup = this.removeContactFromGroup.bind(this);
-    // this.clearSelectedContacts = this.clearSelectedContacts.bind(this);
   }
-
-
 
   componentDidMount() {
     this.resetGroup();
     this.resetContact();
-    //make ajax calls to server to retrieve all these data from database
-    //make use of props.
-    //console.log(this.state.allContacts[0].contacts)
+  }
+
+  orderContacts(contact) {
+    let orderContacts = [];
+    let signedUpContacts = [];
+    for (let each of contact.contacts) {
+      if (each.isSignedUp) {
+        signedUpContacts.push(each);
+      } else {
+        orderContacts.push(each);
+      }
+    }
+    orderContacts = signedUpContacts.concat(orderContacts);
+    return orderContacts;
   }
 
   resetContact() {
     UserModel.getContact(this.props.user.user._id, (contact) => {
-      // console.log(contact, 'should be a contact list from mongoose');
+
       this.setState({
-        allContacts: contact.contacts,
+        allContacts: this.orderContacts(contact),
         contact: contact
 
       })
@@ -57,7 +54,6 @@ class Dashboard extends React.Component {
 
   resetGroup() {
     UserModel.getGroup(this.props.user.user._id, (group)=>{
-
       this.setState({
         allGroups: group
       })
@@ -65,8 +61,6 @@ class Dashboard extends React.Component {
   }
 
   handleSelectedGroup(group) {
-    //console.log(group, 'here')
-    //console.log(this.state.selectedGroup, 'WHATS THIS');
 
     if (!this.checkExist(this.state.selectedGroup, group)) {
       var addGroup = this.state.selectedGroup.slice();
@@ -82,15 +76,8 @@ class Dashboard extends React.Component {
         selectedGroup: removeGroup
       })
     }
-      // setTimeout(()=> {console.log(this.state.selectedGroup, 'new one IN GROUP');})
   }
 
-  // future implementation
-  // clearSelectedContacts() {
-  //   this.setState({
-  //     selectedContacts: []
-  //   })
-  // }
 
   checkExist(contacts, target) {
     let check = false;
@@ -103,8 +90,6 @@ class Dashboard extends React.Component {
   }
 
   handleSelectedContacts(contact, isContactList) {
-    // console.log(this.state.selectedContacts, 'the array before ');
-    // console.log(this.state.selectedContactsFromGroups, 'the array before GORUPOUFOPDSF');
 
     if (!this.checkExist(this.state.selectedContacts, contact) && isContactList) {
       var addContact = this.state.selectedContacts.slice();
@@ -120,7 +105,7 @@ class Dashboard extends React.Component {
         selectedContacts: removeContact
       })
     }
-    //this is for selecting single contacts from other groups implementation - not accomplished yet
+    //future implementation: this is for selecting single contacts from other groups implementation.
 
     // else if (!this.checkExist(this.state.selectedContactsFromGroups, contact) && !isContactList) {
     //   var addContactGroup = this.state.selectedContactsFromGroups.slice();
@@ -143,6 +128,13 @@ class Dashboard extends React.Component {
 
   }
 
+  // future implementation: clearing out selected contacts everytime an action has taken place.
+  // clearSelectedContacts() {
+  //   this.setState({
+  //     selectedContacts: []
+  //   })
+  // }
+
   handleAddGroup(groupname) {
 
     UserModel.addGroup(groupname, this.props.user.user, (sucess)=> { 
@@ -151,33 +143,26 @@ class Dashboard extends React.Component {
   }
 
   handleAddContact(gmail) {
-    // console.log('check if add contact proc', gmail);
+    
     let checkdup = false;
     this.state.allContacts.forEach((contact) => {
       if (gmail === contact.emailAddress) {
         checkdup = true;
       }
-    })
+    });
 
     let checkgmail = false;
-    // console.log('WHATS THIS', gmail.slice(-10).toUpperCase())
     if (gmail.slice(-10).toUpperCase() !== '@GMAIL.COM') {
       checkgmail = true;
     }
 
     if (!checkdup && !checkgmail) {     
 
-
       UserModel.addContact(gmail, (contact) => {
-        // console.log(contact, 'thios is the stuff from addorfindXXXX', this.state.contact);
         UserModel.addContactToGroup(this.state.contact, contact, ()=>{
-        // console.log('reached here, should added to the contact list XXX');
           this.resetContact();
         })
       })
-
-      //User.Model.addContact(gmail)
-    
 
     } else if (checkdup) {
       alert('Error: Contact already exist.')
@@ -192,8 +177,6 @@ class Dashboard extends React.Component {
         UserModel.addContactToGroup(group, contact, ()=>{
           this.resetGroup();
         })
-      } else {
-        return;
       }
     })
   }
@@ -202,11 +185,8 @@ class Dashboard extends React.Component {
     this.state.selectedContacts.forEach((contact) => {
       if (this.checkExist(group.contacts, contact)) {
         UserModel.removeContactFromGroup(group, contact, ()=>{
-          // console.log('did it remove?==========================');
           this.resetGroup();
         })
-      } else {
-         return;
       }
     })
   }

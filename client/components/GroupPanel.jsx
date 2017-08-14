@@ -9,20 +9,16 @@ class GroupPanel extends React.Component {
     super(props);
     this.state = {
       addContact: false,
-      addGroup: false,
-      addContactToGroup: false,
+      addGroup: false
     }
-    //binding functions here
     this.handleAddContact = this.handleAddContact.bind(this);
     this.handleAddGroup = this.handleAddGroup.bind(this);
     this.willAddContact = this.willAddContact.bind(this);
     this.willAddGroup = this.willAddGroup.bind(this);
     this.handleDeleteGroup = this.handleDeleteGroup.bind(this);
-    // this.handleUpdateGroup = this.handleUpdateGroup.bind(this);
   }
 
   willAddContact() {
-    // console.log(this.state.addContact)
     this.setState({
       addContact: !this.state.addContact      
     })
@@ -34,23 +30,9 @@ class GroupPanel extends React.Component {
     })
   }
 
-  // handleAddGroup(groupname) {
-  //   this._groupName.value = '';
-  //   this.props.addGroup(groupname);
-  //   // console.log('cant add a group yet', groupname)
-  // }
-
   handleDeleteGroup(group) {
     deleteGroup(group, this.props.resetSide);
   }
-
-  // handleAddContact(contactmail) {
-  //   this.props.addContact(contactmail);
-  //   console.log('cant add a contact yet', contactmail)
-  // }
-
-  // handleUpdateGroup() {
-  //   this.props.clearSelectedContacts();
 
   handleAddGroup(e) {
     e.preventDefault();
@@ -62,14 +44,12 @@ class GroupPanel extends React.Component {
       this.props.addGroup(e.target.groupname.value);
     }
     e.target.groupname.value = '';
-    // console.log('cant add a group yet', groupname)
   }
 
   handleAddContact(e) {
     e.preventDefault();
     this.props.addContact(e.target.contactmail.value);
     e.target.contactmail.value = '';
-    //console.log('cant add a contact yet', $('.contactmail').val())
   }
   //reason why e is better than using jquery - there may be some default action taken by react(or who knows what)
   //that will re-render on click and nothing was added to the database
@@ -85,7 +65,7 @@ class GroupPanel extends React.Component {
           <input  className="contactmail" name="contactmail" type="text" placeholder="Contact's Gmail" />
           <input className="submit" type="submit" value="Add"/>
           </form>}
-        { this.props.isContactList && this.props.contacts.map((contact) => <ContactEntry contact={contact} selectContact={this.props.selectContact} selectedContacts={this.props.selectedContacts}/>) }
+        { this.props.isContactList && this.props.contacts.map((contact, i) => <ContactEntry key={i} contact={contact} selectContact={this.props.selectContact} selectedContacts={this.props.selectedContacts}/>) }
 
 
 
@@ -97,7 +77,7 @@ class GroupPanel extends React.Component {
           <input className="submit" type="submit" value="Add" />
           </form>}
         <br />
-        { !this.props.isContactList && this.props.groups.map((group) => <GroupPanelEntry group={group} selectContact={this.props.selectContact} selectGroup={this.props.selectGroup} updateGroup={this.props.updateGroup} removeContactFromGroup={this.props.removeContactFromGroup} deleteGroup={this.handleDeleteGroup}/>)}
+        { !this.props.isContactList && this.props.groups.map((group, i) => <GroupPanelEntry key={i} group={group} selectContact={this.props.selectContact} selectGroup={this.props.selectGroup} updateGroup={this.props.updateGroup} removeContactFromGroup={this.props.removeContactFromGroup} deleteGroup={this.handleDeleteGroup}/>)}
       </div>
 
     );
