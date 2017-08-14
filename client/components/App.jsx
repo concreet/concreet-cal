@@ -15,10 +15,8 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    //functions in here will be invoked when App initiate
     UserModel.getUser((data) => {
       if (data.passport) {
-        //console.log(data.passport.user, 'HERE?');
         this.setState({
           signedIn: true,
           user: data.passport.user
@@ -50,4 +48,3 @@ class App extends React.Component {
 export default App;
 
 
-// {!this.state.signedIn && <SplashLogin></SplashLogin>}

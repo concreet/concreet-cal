@@ -7,11 +7,9 @@ class ContactEntry extends React.Component {
       clicked: false
 
     }
-    //binding functions here
   }
 
   handleOnClick(){
-    // console.log(this.props.contact)
     if (!this.props.groupPanelCheck) {
       this.props.selectContact(this.props.contact, true);
       this.setState({
@@ -19,10 +17,6 @@ class ContactEntry extends React.Component {
       })
     } else {
       return;
-      // this.props.selectContact(this.props.contact, false);
-      // this.setState({
-      //   clicked: !this.state.clicked
-      // })
     }
   }
     
@@ -39,7 +33,7 @@ class ContactEntry extends React.Component {
 
       { !this.props.contact.isSignedUp && 
         <div>
-          <p> {this.props.contact.emailAddress} </p>
+          <p className="contactNotSignedUp"> {this.props.contact.emailAddress} </p>
         </div>
       }
 
