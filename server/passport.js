@@ -17,11 +17,11 @@ passport.deserializeUser( (user, done) => {
 
 //determines which callback URL to use based on the port setting (8000 for local testing, 80 for production)
 var callbackURL;
-// if(process.env.PORT) {
-  callbackURL = 'http://concreet.date/auth/google/callback';
-// } else {
-//   callbackURL = 'http://localhost:8000/auth/google/callback';
-// }
+if(process.env.PORT) {
+  callbackURL = 'http://www.concreet.date/auth/google/callback';
+} else {
+  callbackURL = 'http://localhost:8000/auth/google/callback';
+}
 
 //create the passport Google OAuth2.0 strategy
 var strategy = new GoogleStrategy({
@@ -80,7 +80,6 @@ var strategy = new GoogleStrategy({
       		} else {
             //we have their data, sign them in
             //if a refreshToken is received from Google, we need to save that
-            if(refreshToken) {
               user.doc.refreshToken = refreshToken;
               user.doc.accessToken = accessToken;
               return user.doc.save( function (err, user) {
@@ -88,7 +87,6 @@ var strategy = new GoogleStrategy({
                 console.log('user saved');
                 return user;
               });
-            }
       		}
     		}
     	})
@@ -117,6 +115,7 @@ var strategy = new GoogleStrategy({
     		//return user's Groups
     		auth.groups = groups;
         //return the session.user
+        console.log('made it to end')
       	return done(null, auth);
     	});
     });
