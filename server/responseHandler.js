@@ -4,7 +4,7 @@ var Group = require('../db/group.js');
 var utils = require('./utils.js');
 var refresh = require('passport-oauth2-refresh');
 
-
+//creates a new Group associated to the current user
 exports.createGroup = (req, res) => {
 	//takes in a request, which should contain a user, group name,
 	//and maybe isContactLast
@@ -41,6 +41,7 @@ exports.addOrFindUser = (req, res) => {
 	} );
 };
 
+//gets all of the (non-Contact) groups for a user
 exports.getGroups = (req, res) => {
 	//inputs
 	//req.params.userid
@@ -53,6 +54,7 @@ exports.getGroups = (req, res) => {
 	});
 };
 
+//gets the Contact List for a user
 exports.getContactGroup = (req, res) => {
 	//inputs
 	//req.params.userid
@@ -65,6 +67,7 @@ exports.getContactGroup = (req, res) => {
 	});
 };
 
+//deletes a Group from the database
 exports.deleteGroup = (req, res) => {
 	//inputs
 	//req.body.group
@@ -74,6 +77,7 @@ exports.deleteGroup = (req, res) => {
 	});
 };
 
+//adds a contact(user record) to a Group
 exports.addToGroup = (req, res) => {
 	//inputs
 	//req.body.group
@@ -88,6 +92,7 @@ exports.addToGroup = (req, res) => {
 	})
 };
 
+//removes a contact(user record) from a Group
 exports.removeFromGroup = (req, res) => {
 	//inputs
 	//req.body.group
@@ -98,6 +103,7 @@ exports.removeFromGroup = (req, res) => {
 	});
 };
 
+//pulls a new Access Token for a User and saves the token to the user record, returns that user
 exports.reauth = (req, res) => {
 	//inputs
 	//req.params.userid
@@ -114,6 +120,7 @@ exports.reauth = (req, res) => {
 	})
 };
 
+//destroys the session and logs the user out
 exports.logout = (req, res) => {
 	req.session.destroy();
 	req.logout();

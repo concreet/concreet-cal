@@ -11,10 +11,8 @@ var userSchema = mongoose.Schema({
 	refreshToken: String,
 });
 
+//add static findOrCreate method to all User models
 userSchema.plugin(findOrCreate);
-
-
-
 
 var User = mongoose.model('User', userSchema);
 
