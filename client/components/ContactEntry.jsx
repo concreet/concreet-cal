@@ -19,6 +19,7 @@ class ContactEntry extends React.Component {
       return;
     }
   }
+
     
   render() {
 

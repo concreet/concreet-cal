@@ -16,6 +16,7 @@ class GroupPanel extends React.Component {
     this.willAddContact = this.willAddContact.bind(this);
     this.willAddGroup = this.willAddGroup.bind(this);
     this.handleDeleteGroup = this.handleDeleteGroup.bind(this);
+    this.handleRemoveContact = this.handleRemoveContact.bind(this);
   }
 
   willAddContact() {
@@ -53,7 +54,20 @@ class GroupPanel extends React.Component {
   }
   //reason why e is better than using jquery - there may be some default action taken by react(or who knows what)
   //that will re-render on click and nothing was added to the database
-
+  handleRemoveContact() {
+    let allSelectedNames = [];
+    for (let contact of this.props.selectedContacts) {
+      allSelectedNames.push(contact.emailAddress);
+    }
+    if (this.props.selectedContacts.length === 0) {
+      alert('Error: No contact was selected for deletion.');
+    } else {
+      if (confirm('Warning: Are you sure you want to delete [' + allSelectedNames + '] from your contact list?')) {
+        this.props.removeContactFromGroup(this.props.contactGroup);
+        this.props.clearSelectedContacts();
+      } 
+    }
+  }
 
 
   render() {
@@ -61,11 +75,12 @@ class GroupPanel extends React.Component {
       <div className="grouppanel">
         { this.props.isContactList && <h3 style={{display: 'inline'}}> CONTACTS </h3>}
         { this.props.isContactList && <button className="addbutton" onClick={this.willAddContact}> <i className="fa fa-user-plus" aria-hidden="true"></i> </button>}
+        { this.props.isContactList && <button className="addbutton" onClick={this.handleRemoveContact}> <i className="fa fa-user-times" aria-hidden="true"></i> </button>}
         { this.state.addContact && <form onSubmit={this.handleAddContact}> 
           <input  className="contactmail" name="contactmail" type="text" placeholder="Contact's Gmail" />
           <input className="submit" type="submit" value="Add"/>
           </form>}
-        { this.props.isContactList && this.props.contacts.map((contact, i) => <ContactEntry key={i} contact={contact} selectContact={this.props.selectContact} selectedContacts={this.props.selectedContacts}/>) }
+        { this.props.isContactList && this.props.contacts.map((contact, i) => <ContactEntry key={contact._id} contact={contact} selectContact={this.props.selectContact} selectedContacts={this.props.selectedContacts} />) }
 
 
 
