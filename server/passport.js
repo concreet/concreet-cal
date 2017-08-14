@@ -18,7 +18,7 @@ passport.deserializeUser( (user, done) => {
 //determines which callback URL to use based on the port setting (8000 for local testing, 80 for production)
 var callbackURL;
 if(process.env.PORT) {
-  callbackURL = 'http://www.concreet.date/auth/google/callback';
+  callbackURL = 'http://concreet.date/auth/google/callback';
 } else {
   callbackURL = 'http://localhost:8000/auth/google/callback';
 }
