@@ -7,6 +7,7 @@ class TimeSlot extends React.Component {
 		super(props);
 	}
 
+	// check if contacts already exist to prevent duplicates
 	checkExist(contacts, target) {
 	  let check = false;
 	  for (let contact of contacts) {
@@ -18,6 +19,8 @@ class TimeSlot extends React.Component {
 	}
 
 	handleClick() {
+
+		// put selected contacts and selected contacts from groups into same array
 		var allContacts = this.props.selectedContacts.slice();
 		this.props.selectedGroups.forEach((group)=> {
 		  // console.log('group: ', group)
@@ -38,12 +41,15 @@ class TimeSlot extends React.Component {
 		// convert moment object into an ISO string and pluck only the time aspect of it, without the date
 		var isoTime = moment(momentTime, 'HH:mm:ss').toISOString().split('T')[1]
 
+		// put together the selectedDate with the selectedTime
 		var selectedDateTime = (selectedDate + 'T' + isoTime);
 
+		// end time is selectedTime plus meetingLength
 		var endTime = moment(selectedDateTime).add(this.props.meetingLength, 'minutes').toISOString();
 
 		this.props.getEventDateTime(selectedDateTime);
 
+		// call add event to create google calendar event for all users
 		CalendarModel.addEvent(allContacts, this.props.user.user, this.props.eventTitle, selectedDateTime, endTime, (data) => {
 			this.props.renderEventsToCalendar();
 		})
