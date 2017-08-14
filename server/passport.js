@@ -80,7 +80,6 @@ var strategy = new GoogleStrategy({
       		} else {
             //we have their data, sign them in
             //if a refreshToken is received from Google, we need to save that
-            if(refreshToken) {
               user.doc.refreshToken = refreshToken;
               user.doc.accessToken = accessToken;
               return user.doc.save( function (err, user) {
@@ -88,7 +87,6 @@ var strategy = new GoogleStrategy({
                 console.log('user saved');
                 return user;
               });
-            }
       		}
     		}
     	})
@@ -117,6 +115,7 @@ var strategy = new GoogleStrategy({
     		//return user's Groups
     		auth.groups = groups;
         //return the session.user
+        console.log('made it to end')
       	return done(null, auth);
     	});
     });
