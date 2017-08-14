@@ -1,6 +1,11 @@
 # concreet-cal
 Finds available meeting times and allows quick sending of gcal invites to attendees
 
+## Team
+  - __Product Owner__: Jordan Hoang (GitHub: JordanHoang)
+  - __Scrum Master__: Ben Childs (GitHub: bchilds)
+  - __Development Team Members__: Demetrio Urquidi (GitHub: dmtrio ), Lina Yang (GitHub: t886515), Ben Childs, Jordan Hoang
+
 
 - Server Start
 Start a mongo instance (brew services start mongo)
